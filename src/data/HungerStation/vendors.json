@@ -1,0 +1,2353 @@
+{
+    "pagination": {
+        "limit": 50,
+        "page": 1,
+        "total": 23,
+        "total_count": 1146
+    },
+    "data": [
+        {
+            "id": 66539,
+            "external_id": null,
+            "chain_id": 8282,
+            "chain_name": "شاورما احلى ذوق",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/008/282/1e1369e67e17e8940e12a8aff6a13bb3-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/008/282/dd026bcae9b57f52c91066f27f60cced-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "شاورما",
+                "مشويات"
+            ],
+            "average_rating": "4.3",
+            "rate_count": 110,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 28724,
+            "external_id": null,
+            "chain_id": 13885,
+            "chain_name": "مطعم المرساة للماكولات البحرية",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/013/885/42bdb46a5a344928652d15c03f93bc5f-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/013/885/158d60a8d118e2166540397a8125740b-original.jpg",
+            "kitchens": [
+                "المأكولات البحرية"
+            ],
+            "average_rating": "4.0",
+            "rate_count": 91,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 18818,
+            "external_id": null,
+            "chain_id": 8607,
+            "chain_name": "شواية الحجاز",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/008/607/812a7af2a08efac4a0252639c97ea7a7-original.jpeg",
+            "cover_photo": "https://vendor-search.hungerstation.com//assets/images/restaurants/default_cover_photo.png",
+            "kitchens": [
+                "مأكولات عربية",
+                "المأكولات التقليدية",
+                "مأكولات سعودية"
+            ],
+            "average_rating": "4.6",
+            "rate_count": 280,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 19151,
+            "external_id": null,
+            "chain_id": 7250,
+            "chain_name": "شاورما لنوني",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/007/250/0f7a4f5c9782fb4ccccda668fa3ddd6b-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/007/250/72da34d084300377c630b2e40324144f-original.png",
+            "kitchens": [
+                "مأكولات سريعة",
+                "مشروبات",
+                "شاورما"
+            ],
+            "average_rating": "4.1",
+            "rate_count": 395,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 52414,
+            "external_id": null,
+            "chain_id": 26830,
+            "chain_name": "فطائر الأمور",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/026/830/ef4304a97937afc810f87bedd6016a05-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/026/830/200fd73e121b24d4341a547d0e35213a-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "مأكولات إيطالية"
+            ],
+            "average_rating": "4.5",
+            "rate_count": 38,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 61640,
+            "external_id": null,
+            "chain_id": 32964,
+            "chain_name": "مطعم نور الحلبي",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/032/964/94e459b1d48863de65cb42ac939e2410-original.jpeg",
+            "cover_photo": "https://vendor-search.hungerstation.com//assets/images/restaurants/default_cover_photo.png",
+            "kitchens": [
+                "مأكولات عربية",
+                "مشويات"
+            ],
+            "average_rating": "3.6",
+            "rate_count": 14,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "7 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 5591,
+            "external_id": null,
+            "chain_id": 7,
+            "chain_name": "كنتاكي",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/000/007/b57a2232bd90396d2253251e94e8fe5c-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/000/007/79657de5439ce101aad34acfc427173e-original.jpg",
+            "kitchens": [
+                "برجر",
+                "مشروبات",
+                "مأكولات سريعة",
+                "ساندوتشات",
+                "مأكولات أمريكية"
+            ],
+            "average_rating": "3.8",
+            "rate_count": 538,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 2245,
+            "external_id": null,
+            "chain_id": 6,
+            "chain_name": "هارديز ",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/000/006/2c66cd30e7f6b096e048630bb3fbc549-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/000/006/91cc1cefd472879e9f84879c688e67ad-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "مأكولات أمريكية",
+                "ساندوتشات",
+                "برجر"
+            ],
+            "average_rating": "4.1",
+            "rate_count": 214,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 54831,
+            "external_id": null,
+            "chain_id": 28552,
+            "chain_name": "لذة المنؤشة ",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/028/552/23b7a76f21e7d1992c8824e705dd7ed4-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/028/552/6c072f26c7a7eb21c4df88f28201ea68-original.jpg",
+            "kitchens": [
+                "مأكولات عربية",
+                "مشروبات",
+                "بيتزا",
+                "معجنات وحلويات"
+            ],
+            "average_rating": "4.3",
+            "rate_count": 133,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 21749,
+            "external_id": null,
+            "chain_id": 10296,
+            "chain_name": "الطازج",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/010/296/158b7e926057979141ae5608d9486ea1-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/010/296/47356c0fd5232d407e2c48af3da7f604-original.jpg",
+            "kitchens": [
+                "مأكولات عربية",
+                "مشروبات",
+                "ساندوتشات"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 729,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 57188,
+            "external_id": null,
+            "chain_id": 6874,
+            "chain_name": "مطعم نكهة شاورما",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/006/874/5e031ec06b9e7b237a1d15bb000cd93a-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/006/874/e0be149cd757ff9f46b79b75edff923a-original.jpg",
+            "kitchens": [
+                "شاورما",
+                "عصائر"
+            ],
+            "average_rating": "4.4",
+            "rate_count": 49,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 59200,
+            "external_id": null,
+            "chain_id": 31529,
+            "chain_name": "وقت القرمشة",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/031/529/2222cd1ec5bc28a6c5a69688026d1e7b-original.jpg",
+            "cover_photo": "https://vendor-search.hungerstation.com//assets/images/restaurants/default_cover_photo.png",
+            "kitchens": [
+                "بيتزا",
+                "حلويات",
+                "معجنات وحلويات",
+                "مأكولات عربية"
+            ],
+            "average_rating": "3.4",
+            "rate_count": 5,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 68148,
+            "external_id": null,
+            "chain_id": 37768,
+            "chain_name": "لذاذة سويت ",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/037/768/a7b4eb4fdf12bbaffc6de858240cfd61-original.jpg",
+            "cover_photo": "https://vendor-search.hungerstation.com//assets/images/restaurants/default_cover_photo.png",
+            "kitchens": [
+                "حلويات"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "7 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.1",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 32894,
+            "external_id": null,
+            "chain_id": 4904,
+            "chain_name": "كنافة الطويل",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/004/904/4fbb7779dd3e07700ec6b17a3c70107c-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/004/904/08987376d8b694d56bd474c6730ef9ff-original.jpeg",
+            "kitchens": [
+                "حلويات"
+            ],
+            "average_rating": "4.5",
+            "rate_count": 80,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.2",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 67317,
+            "external_id": null,
+            "chain_id": 37249,
+            "chain_name": "حاشي سنافي",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/037/249/b6aec2df797266f21990c0ceccd8a812-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/037/249/64029dff1270615b22087313e4c25362-original.jpg",
+            "kitchens": [
+                "مأكولات عربية",
+                "المأكولات التقليدية",
+                "مأكولات سعودية"
+            ],
+            "average_rating": "3.7",
+            "rate_count": 14,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "7 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.2",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 8590,
+            "external_id": null,
+            "chain_id": 617,
+            "chain_name": "هرفي",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/000/617/c59ffce2e9a102d7ba32a1850c325feb-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/000/617/ed58d516e37fcadb82cab0e163eeea89-original.png",
+            "kitchens": [
+                "مأكولات سريعة",
+                "ساندوتشات"
+            ],
+            "average_rating": "3.8",
+            "rate_count": 249,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.2",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 56545,
+            "external_id": null,
+            "chain_id": 29794,
+            "chain_name": "لذيز برجر",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/029/794/cfaee28ed4964f9421f81a43b55e1a31-original.jpg",
+            "cover_photo": "https://vendor-search.hungerstation.com//assets/images/restaurants/default_cover_photo.png",
+            "kitchens": [
+                "مأكولات أمريكية",
+                "برجر",
+                "مأكولات سريعة"
+            ],
+            "average_rating": "3.3",
+            "rate_count": 12,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.2",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 9002,
+            "external_id": null,
+            "chain_id": 3518,
+            "chain_name": "بيت الشواية",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/003/518/2311d688894e77c4274cff4484717d8b-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/003/518/74b21ed947b5243edb3b0120a5008eab-original.jpg",
+            "kitchens": [
+                "مأكولات عربية",
+                "المأكولات التقليدية",
+                "مأكولات سعودية"
+            ],
+            "average_rating": "4.1",
+            "rate_count": 487,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ30 ريال)",
+                "minimum_order": "30",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.2",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 6966,
+            "external_id": null,
+            "chain_id": 2950,
+            "chain_name": "كودو",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/002/950/c40a49a5933981c2566a172b1d73c555-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/002/950/bbf582fe8104c7c7731dfeccf5821ace-original.jpg",
+            "kitchens": [
+                "الافطار",
+                "برجر",
+                "مأكولات سريعة",
+                "ساندوتشات"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 1531,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ33 ريال)",
+                "minimum_order": "33",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.3",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 26586,
+            "external_id": null,
+            "chain_id": 12965,
+            "chain_name": "سلطان الجمبري",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/012/965/21137ed39dc10af0a915470a0a289d74-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/012/965/c56cf95c291a8ae183b809bd3ca80033-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "المأكولات البحرية",
+                "ساندوتشات",
+                "عصائر"
+            ],
+            "average_rating": "3.8",
+            "rate_count": 61,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.3",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 77999,
+            "external_id": null,
+            "chain_id": 45331,
+            "chain_name": "كلاسك زنجر",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/045/331/5ebf8b4f0677c63c54086677b42b7b7e-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/045/331/6093a777afe0e0ea3040526afeb50596-original.jpg",
+            "kitchens": [
+                "مأكولات أمريكية"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "7 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.3",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 6107,
+            "external_id": null,
+            "chain_id": 2648,
+            "chain_name": "بيت الطعمية",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/002/648/3f8fb1118853a365a1eee8cef4058f15-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/002/648/ed910b8bb025ebaedee8368741f4197f-original.jpg",
+            "kitchens": [
+                "ساندوتشات",
+                "فلافل",
+                "الافطار",
+                "مأكولات عربية"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 167,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.4",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 19615,
+            "external_id": null,
+            "chain_id": 9059,
+            "chain_name": "ليرز ",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/009/059/d72669d2ed208501a9b5b01e2d08259f-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/009/059/ed53c51e4af35256ddc65f8ae4a2557d-original.jpg",
+            "kitchens": [
+                "مأكولات أمريكية",
+                "مشروبات",
+                "مأكولات سريعة"
+            ],
+            "average_rating": "4.5",
+            "rate_count": 17,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.4",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 63513,
+            "external_id": null,
+            "chain_id": 34241,
+            "chain_name": "مطاعم اليمن السعيد",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/034/241/9e64a429db04563a0ccc0937c8d0db3f-original.jpg",
+            "cover_photo": "https://vendor-search.hungerstation.com//assets/images/restaurants/default_cover_photo.png",
+            "kitchens": [
+                "مأكولات عربية",
+                "المأكولات التقليدية",
+                "مأكولات سعودية"
+            ],
+            "average_rating": "3.2",
+            "rate_count": 9,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.5",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 15456,
+            "external_id": null,
+            "chain_id": 6818,
+            "chain_name": "كتيكت",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/006/818/d3136d15ba975612557488212935e7c4-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/006/818/1401cd761d957e7c9f350c10e82f39a9-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "ساندوتشات"
+            ],
+            "average_rating": "4.4",
+            "rate_count": 195,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.5",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 52380,
+            "external_id": null,
+            "chain_id": 26794,
+            "chain_name": "شاورماروكو",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/026/794/86f087418c22f0adbdef5a80108c3b1c-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/026/794/ac31d50c28dce3010c3fa223683b33ed-original.jpg",
+            "kitchens": [
+                "شاورما",
+                "ساندوتشات",
+                "مأكولات سريعة"
+            ],
+            "average_rating": "4.0",
+            "rate_count": 33,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.5",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 75580,
+            "external_id": null,
+            "chain_id": 43540,
+            "chain_name": "احلى مرسه",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/043/540/b0348d9fafb80986576b2ef6b743ca4b-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/043/540/48e3084ede5bf6a4386b99b3595c3844-original.jpg",
+            "kitchens": [
+                "المأكولات التقليدية",
+                "مأكولات سعودية",
+                "الافطار"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 3817,
+            "external_id": null,
+            "chain_id": 1656,
+            "chain_name": "راسا الإندونيسي",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/001/656/8f5e77ad6c95fbb025fd2cd0ff020c56-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/001/656/b65d46579fee05f5adb955ebea815d18-original.jpg",
+            "kitchens": [
+                "مأكولات آسيوية",
+                "الإندونيسي"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 239,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 78785,
+            "external_id": null,
+            "chain_id": 45792,
+            "chain_name": "سمن و زاد",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/045/792/abc03b5c0c21c20745b92315e7b92962-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/045/792/8c45956b25606f09f50cc9e21851c92d-original.jpeg",
+            "kitchens": [
+                "مأكولات عربية",
+                "الافطار"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 20916,
+            "external_id": null,
+            "chain_id": 9848,
+            "chain_name": "كنافة تال",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/009/848/b5953637126bdd743e1dae42ba52ce4d-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/009/848/3c6b6297ae95bee6f2d30233f8b1e34a-original.jpg",
+            "kitchens": [
+                "حلويات"
+            ],
+            "average_rating": "4.3",
+            "rate_count": 57,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 70345,
+            "external_id": null,
+            "chain_id": 39361,
+            "chain_name": "ركن اللقيمات ",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/039/361/d0466f8f801fefe9bc0cf82df6962819-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/039/361/5a6a0468f6ffefc8d360c9fd261cc1c7-original.jpg",
+            "kitchens": [
+                "حلويات"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "7 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 46386,
+            "external_id": null,
+            "chain_id": 21647,
+            "chain_name": "استوريا ستيك سندوتش",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/021/647/a01cfdcb2d137d70fa13f2e3d5fd8b7d-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/021/647/5b38866a834e5a66e4a237d59741d0c1-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "ساندوتشات"
+            ],
+            "average_rating": "4.9",
+            "rate_count": 34,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 63423,
+            "external_id": null,
+            "chain_id": 11051,
+            "chain_name": "ثري ايجز",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/011/051/bde9412e79531362c63419080abed73d-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/011/051/3fa9331bcb36e0a91d96506cb2dbabd5-original.jpg",
+            "kitchens": [
+                "مأكولات أمريكية",
+                "الافطار",
+                "ساندوتشات"
+            ],
+            "average_rating": "3.9",
+            "rate_count": 102,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "توصيل مجاني (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FREE_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 63520,
+            "external_id": null,
+            "chain_id": 20571,
+            "chain_name": "رباح",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/020/571/609a88c00b68b07da7dc64fe97171a86-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/020/571/154e9b69c773dcbffa89b996718d0508-original.jpg",
+            "kitchens": [
+                "المأكولات البحرية",
+                "مأكولات عربية",
+                "مأكولات سريعة"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 21,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "توصيل مجاني (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FREE_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.6",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 36094,
+            "external_id": null,
+            "chain_id": 11498,
+            "chain_name": "دانكن دونتس",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/011/498/7c3b797bc5b9e81439f78ca52e46a3f7-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/011/498/1ec90111e1d2ecb776df2157625d4b06-original.jpg",
+            "kitchens": [
+                "قهوه",
+                "مشروبات",
+                "حلويات"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 140,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 25316,
+            "external_id": null,
+            "chain_id": 3933,
+            "chain_name": "باسكن روبنز",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/003/933/d8b190d99a2084f640b77604ef7861cb-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/003/933/e3d216d963871734d1f5f3239a2b58d0-original.jpg",
+            "kitchens": [
+                "حلويات",
+                "مشروبات",
+                "ايس كريم"
+            ],
+            "average_rating": "4.4",
+            "rate_count": 117,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "10 ريال رسوم توصيل (عند الطلب بـ25 ريال)",
+                "minimum_order": "25",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 50671,
+            "external_id": null,
+            "chain_id": 1869,
+            "chain_name": "هامبرغيني",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/001/869/51b9157ec8a6a9b7d8fdd7c36ba22acd-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/001/869/ed5a799dd2e62d949820ff6ab27caa25-original.png",
+            "kitchens": [
+                "مأكولات سريعة",
+                "برجر",
+                "ساندوتشات"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 478,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 48655,
+            "external_id": null,
+            "chain_id": 3230,
+            "chain_name": "فن تايم بيتزا ",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/003/230/3c95d460c861989b4fb46f50b3c12a1b-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/003/230/5f2738710a8649cecf8f52c60b4400d0-original.jpg",
+            "kitchens": [
+                "مشروبات",
+                "مأكولات سريعة",
+                "بيتزا"
+            ],
+            "average_rating": "4.2",
+            "rate_count": 273,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "7 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 4083,
+            "external_id": null,
+            "chain_id": 1733,
+            "chain_name": "حلويات سعد الدين",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/001/733/ce87fc9f17a59ff42790577705ce0e0d-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/001/733/dd0abf317635430bc394ab8d5192459c-original.jpg",
+            "kitchens": [
+                "حلويات",
+                "مخبوزات",
+                "مأكولات عربية"
+            ],
+            "average_rating": "4.1",
+            "rate_count": 57,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 69741,
+            "external_id": null,
+            "chain_id": 38992,
+            "chain_name": "كافتيريا قريات",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/038/992/2056e2ee505b0b77bdb1e6855efe2ba4-original.jpeg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/038/992/f6d80d323e3a701cb5af7f5ff4f5dda5-original.jpg",
+            "kitchens": [
+                "ساندوتشات",
+                "الافطار"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 78659,
+            "external_id": null,
+            "chain_id": 45727,
+            "chain_name": "جامبر",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/045/727/2bb36be178c105cd2bb34c2f95042dbd-original.jpeg",
+            "cover_photo": "https://vendor-search.hungerstation.com//assets/images/restaurants/default_cover_photo.png",
+            "kitchens": [
+                "مأكولات سريعة",
+                "ساندوتشات",
+                "المأكولات البحرية"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 22124,
+            "external_id": null,
+            "chain_id": 7949,
+            "chain_name": "ارنوسو فرايز",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/007/949/d756dbb92557fa4192275d121e7841e9-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/007/949/06edb64476ef966e1d05b02887ac6474-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "برجر"
+            ],
+            "average_rating": "4.4",
+            "rate_count": 100,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 39261,
+            "external_id": null,
+            "chain_id": 17428,
+            "chain_name": "روك آند رولا",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/017/428/90794435cfd2572223bb898ef6bf336e-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/017/428/ee2d6791e74ed58906c244c212504628-original.jpg",
+            "kitchens": [
+                "مأكولات إيطالية",
+                "معكرونة",
+                "بيتزا"
+            ],
+            "average_rating": "3.0",
+            "rate_count": 2,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "35",
+                "max": "45",
+                "value": "35 - 45",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 55654,
+            "external_id": null,
+            "chain_id": 14928,
+            "chain_name": "شاورما المهلهل",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/014/928/09fd18b59003dda6add59cc3226954aa-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/014/928/31f289ed17801559183664f284cff19f-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "المأكولات التقليدية",
+                "مأكولات سعودية",
+                "شاورما"
+            ],
+            "average_rating": "4.3",
+            "rate_count": 226,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 33231,
+            "external_id": null,
+            "chain_id": 15090,
+            "chain_name": "أكس بايت",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/015/090/d9694ba56deaef18d8f9df8cdab84e16-original.png",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/015/090/463af59f4c878cbc7dd4f88e0a7c762c-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "برجر"
+            ],
+            "average_rating": "4.5",
+            "rate_count": 340,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 65282,
+            "external_id": null,
+            "chain_id": 35975,
+            "chain_name": "منش بيكري",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/035/975/d7ecd21ecdaca932aff46092a9b3dfb7-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/035/975/a00393879a4d558853eee881db588a38-original.jpg",
+            "kitchens": [
+                "مخبوزات",
+                "حلويات"
+            ],
+            "average_rating": "4.6",
+            "rate_count": 77,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "7 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 43264,
+            "external_id": null,
+            "chain_id": 9782,
+            "chain_name": "لفه",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/009/782/e3466ae14f995c256838213ef8d1bcfd-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/009/782/b33f688a67525c6b025eb8c9235e4add-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "شاورما"
+            ],
+            "average_rating": "3.8",
+            "rate_count": 46,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 32729,
+            "external_id": null,
+            "chain_id": 3062,
+            "chain_name": " مطعم كاليفورنيا برجر",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/003/062/386e7265b4f6f84d492e05e43f979b01-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/003/062/65cf25cc92b4eba01609fe6e3bae59e8-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "مأكولات أمريكية",
+                "مشروبات",
+                "برجر"
+            ],
+            "average_rating": "4.7",
+            "rate_count": 161,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": null,
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "NORMAL"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "25",
+                "max": "35",
+                "value": "25 - 35",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 70201,
+            "external_id": null,
+            "chain_id": 39270,
+            "chain_name": "المذاق السويسري",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/039/270/fdf467c26d60d38464b764ff5b67613f-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/039/270/23294b58dac01e6c3c20d1fe5bec0d9c-original.jpg",
+            "kitchens": [
+                "حلويات"
+            ],
+            "average_rating": "0.0",
+            "rate_count": 0,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "توصيل مجاني (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FREE_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "20",
+                "max": "30",
+                "value": "20 - 30",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        },
+        {
+            "id": 10142,
+            "external_id": null,
+            "chain_id": 4293,
+            "chain_name": "برجر ستيشن ",
+            "chain_type": "RESTAURANT",
+            "logo": "https://hsaa.hsobjects.com/h/restaurants/logos/000/004/293/36dfd08d687c54d9fbb4d5b45d9655c4-original.jpg",
+            "cover_photo": "https://hsaa.hsobjects.com/h/restaurants/android_cover_photos/000/004/293/ec78e00b19f541cb43795bfb151eaf53-original.jpg",
+            "kitchens": [
+                "مأكولات سريعة",
+                "مشروبات",
+                "برجر"
+            ],
+            "average_rating": "3.9",
+            "rate_count": 35,
+            "vertical": "restaurants",
+            "status": "OPEN",
+            "label": null,
+            "minimum_order": "15",
+            "promotion": {
+                "icon_url": "https://platform.hsobjects.com/assets/v2/vendors/offer-ic-e5572a47b917a35211f91750737bed3889762c9f2e8f968f34b2c3b01492b627.png",
+                "name": "9 ريال رسوم توصيل (عند الطلب بـ35 ريال)",
+                "minimum_order": "35",
+                "type": "FLAT_DELIVERY"
+            },
+            "delivery": {
+                "type": "OWN_DELIVERY",
+                "name": "أسرررع شي",
+                "fee": "15",
+                "original_fee": "15",
+                "fee_indicator": "NONE",
+                "fee_style": "HIDDEN"
+            },
+            "distance": {
+                "value": "0.7",
+                "unit": "km"
+            },
+            "time_estimation": {
+                "min": "30",
+                "max": "40",
+                "value": "30 - 40",
+                "unit": "دقائق"
+            },
+            "meta": {
+                "midas": {
+                    "premium_type": null,
+                    "tracking_token": null
+                }
+            }
+        }
+    ]
+}

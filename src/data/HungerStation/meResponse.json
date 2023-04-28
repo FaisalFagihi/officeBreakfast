@@ -1,0 +1,17 @@
+{
+    "id": 8536452,
+    "mobile": "+966552349209",
+    "email": "",
+    "user_type": "normal",
+    "zendesk_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoidXNlci04NTM2NDUyIn0.JvPoEEZu4DG6D_-xaPiyxSCtKBdeYu2uB5dlLUnNIz8",
+    "country_id": 1,
+    "gender": null,
+    "date_of_birth": null,
+    "orders_count": 13,
+    "name": "",
+    "need_survey": true,
+    "referral_code": "",
+    "referral_program": {
+        "already_referred": true
+    }
+}

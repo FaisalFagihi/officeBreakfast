@@ -1,0 +1,735 @@
+
+//https://apigateway.careemdash.com/v2/search/text?q=Al%20Shawarma&fuzziness=true&similar_restaurants=false&device=ACMA
+{
+    "search_info": {
+      "restaurants": {
+        "total": 12,
+        "link": "careemfood://listings/restaurants?q=al+shawarma&section=search&fuzziness=true&controls=false"
+      },
+      "similar_restaurants": null
+    },
+    "categories": [],
+    "dishes": [],
+    "restaurants": [
+      {
+        "id": 1031793,
+        "name": "Shawarma Al Saraya Al Shamiya",
+        "name_localized": "Shawarma Al Saraya Al Shamiya",
+        "link": "careemfood://restaurants/1031793?merchant_type=normal&business_type=restaurants&brand_id=1014972",
+        "superapp_link": "careem://now.careem.com/shops/restaurants/1031793?merchant_type=normal&business_type=restaurants&menu_layout=capsule&back=tosource&opened_from=global_search",
+        "location": "Al Safa",
+        "location_localized": "Al Safa",
+        "coordinate": {
+          "lat": 21.5835639,
+          "lng": 39.21455743
+        },
+        "cuisines": [
+          {
+            "id": 508,
+            "name": "Sandwiches",
+            "name_localized": "Sandwiches",
+            "image_url": null,
+            "keywords": null,
+            "keywords_localized": null
+          }
+        ],
+        "tags": [
+          {
+            "id": 55,
+            "old_id": 117,
+            "name": "Shawarma",
+            "name_localized": "Shawarma",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          },
+          {
+            "id": 659,
+            "old_id": null,
+            "name": "Fast Food",
+            "name_localized": "Fast Food",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          }
+        ],
+        "min_order": 10,
+        "currency": {
+          "id": 2,
+          "code": "SAR",
+          "name": "Saudi Arabian Riyal",
+          "name_localized": "Saudi Arabian Riyal",
+          "label": "SAR",
+          "label_localized": "SAR",
+          "position": "right",
+          "decimals": 2,
+          "purchasing_power_index": 1,
+          "name_short": "Riyals",
+          "cents_100": true
+        },
+        "rating": {
+          "average": 0,
+          "count": 2,
+          "state": "default",
+          "count_text": ""
+        },
+        "image_url": "https://careem-mot.imgix.net/merchants/merchant-media/shawarmaalsarayaalshamiya-iefozkyfj6.jpg",
+        "logo_url": "https://careem-mot.imgix.net/catalogs/merchants-info/logo-dqlxt2lywi.jpg",
+        "price": {
+          "average": 30,
+          "range": "",
+          "scale": {
+            "value": 1,
+            "upper_bound": 3
+          }
+        },
+        "delivery": {
+          "average": 41,
+          "original_in_minutes": 41,
+          "range": "35 - 45",
+          "unit": "min",
+          "unit_localized": "mins",
+          "source": "yoda",
+          "distance": 8000,
+          "fee": 15,
+          "options": "careem",
+          "careem_delivery_fee": 15,
+          "merchant_delivery_fee": 15,
+          "eta_promise_minutes": 0,
+          "pricing_tag": null,
+          "distance_in_km": null,
+          "delivery_method": "on_demand",
+          "schedule_delivery_fee": 15
+        },
+        "delivery_type": "careem",
+        "preparation_time": 15,
+        "contract_id": 1025077,
+        "include_tax": true,
+        "included_tax": 15,
+        "business_type": "restaurants",
+        "merchant_type": "normal",
+        "promotions": [],
+        "is_careem_delivery_supported": false,
+        "menu_layout": "capsule",
+        "order_count_for_days": 0,
+        "item_count": 27,
+        "delivery_zones": [],
+        "delivery_visibility": "IN_RANGE",
+        "closed_status": null,
+        "has_items": true,
+        "is_new": false,
+        "order_count": {
+          "count": 5,
+          "max": 5,
+          "since": 0,
+          "ratio": 0
+        },
+        "brand_id": 1014972,
+        "_score": 13519.313,
+        "closed_overlay_image": null,
+        "closed_overlay_url": null,
+        "merchant_sub_text": []
+      },
+      {
+        "id": 927770,
+        "name": "Najm Al Shawarma - Al Safa",
+        "name_localized": "Najm Al Shawarma - Al Safa",
+        "link": "careemfood://restaurants/927770?merchant_type=normal&business_type=restaurants&brand_id=5454",
+        "superapp_link": "careem://now.careem.com/shops/restaurants/927770?merchant_type=normal&business_type=restaurants&menu_layout=capsule&back=tosource&opened_from=global_search",
+        "location": "Al Safa",
+        "location_localized": "Al Safa",
+        "coordinate": {
+          "lat": 21.56746009,
+          "lng": 39.22156044
+        },
+        "cuisines": [
+          {
+            "id": 653,
+            "name": "Shawarma",
+            "name_localized": "Shawarma",
+            "image_url": null,
+            "keywords": null,
+            "keywords_localized": null
+          }
+        ],
+        "tags": [
+          {
+            "id": 113,
+            "old_id": 112,
+            "name": "Chicken",
+            "name_localized": "Chicken",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          },
+          {
+            "id": 55,
+            "old_id": 117,
+            "name": "Shawarma",
+            "name_localized": "Shawarma",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          }
+        ],
+        "min_order": 10,
+        "currency": {
+          "id": 2,
+          "code": "SAR",
+          "name": "Saudi Arabian Riyal",
+          "name_localized": "Saudi Arabian Riyal",
+          "label": "SAR",
+          "label_localized": "SAR",
+          "position": "right",
+          "decimals": 2,
+          "purchasing_power_index": 1,
+          "name_short": "Riyals",
+          "cents_100": true
+        },
+        "rating": {
+          "average": 4.4,
+          "count": 2264,
+          "state": "highlight",
+          "count_text": "2200+"
+        },
+        "image_url": "https://careem-mot.imgix.net/merchants/merchant-media/najmalshawarmahero-iyvpyrux0b.jpg",
+        "logo_url": null,
+        "price": {
+          "average": 20,
+          "range": "",
+          "scale": {
+            "value": 1,
+            "upper_bound": 3
+          }
+        },
+        "delivery": {
+          "average": 42,
+          "original_in_minutes": 42,
+          "range": "35 - 45",
+          "unit": "min",
+          "unit_localized": "mins",
+          "source": "yoda",
+          "distance": 8000,
+          "fee": 15,
+          "options": "careem",
+          "careem_delivery_fee": 15,
+          "merchant_delivery_fee": 15,
+          "eta_promise_minutes": 0,
+          "pricing_tag": null,
+          "distance_in_km": null,
+          "delivery_method": "on_demand",
+          "schedule_delivery_fee": 15
+        },
+        "delivery_type": "careem",
+        "preparation_time": 10,
+        "contract_id": 1012884,
+        "include_tax": true,
+        "included_tax": 15,
+        "business_type": "restaurants",
+        "merchant_type": "normal",
+        "promotions": [
+          {
+            "id": 1234134,
+            "active": true,
+            "promo_code": "NAJM",
+            "percentage": 7,
+            "internal_subsidize": 0,
+            "total_percentage": 7,
+            "cap": 7,
+            "text": "7 SAR Off delivery (above 40 SAR)",
+            "text_localized": "7 SAR Off delivery (above 40 SAR)",
+            "badge_type": "none",
+            "is_auto_applied": false,
+            "type": "single_promo",
+            "creation_user_type": "careem",
+            "offer_type": "fixed_discount_offer",
+            "offer_value": 7,
+            "image_url": null,
+            "min_basket_value": 40,
+            "terms": [
+              {
+                "term": "Valid on orders above SAR 40",
+                "term_localized": "Valid on orders above SAR 40"
+              },
+              {
+                "term": "Maximum discount is SAR 7",
+                "term_localized": "Maximum discount is SAR 7"
+              },
+              {
+                "term": "Valid until 2023-02-28",
+                "term_localized": "Valid until 2023-02-28"
+              }
+            ],
+            "text_attributes": []
+          }
+        ],
+        "is_careem_delivery_supported": false,
+        "menu_layout": "capsule",
+        "order_count_for_days": 15,
+        "item_count": 22,
+        "delivery_zones": [],
+        "delivery_visibility": "IN_RANGE",
+        "closed_status": null,
+        "has_items": true,
+        "is_new": false,
+        "order_count": {
+          "count": 5,
+          "max": 5,
+          "since": 0,
+          "ratio": 0
+        },
+        "brand_id": 5454,
+        "_score": 13318.51,
+        "closed_overlay_image": null,
+        "closed_overlay_url": null,
+        "merchant_sub_text": [
+          {
+            "type": "promotion",
+            "text": "7 SAR Off delivery (above 40 SAR)"
+          }
+        ]
+      },
+      {
+        "id": 923969,
+        "name": "Shawerma Al Masiyya - Al Safa",
+        "name_localized": "Shawerma Al Masiyya - Al Safa",
+        "link": "careemfood://restaurants/923969?merchant_type=normal&business_type=restaurants&brand_id=3238",
+        "superapp_link": "careem://now.careem.com/shops/restaurants/923969?merchant_type=normal&business_type=restaurants&menu_layout=capsule&back=tosource&opened_from=global_search",
+        "location": "Al Safa",
+        "location_localized": "Al Safa",
+        "coordinate": {
+          "lat": 21.6040536,
+          "lng": 39.21236962
+        },
+        "cuisines": [
+          {
+            "id": 653,
+            "name": "Shawarma",
+            "name_localized": "Shawarma",
+            "image_url": null,
+            "keywords": null,
+            "keywords_localized": null
+          },
+          {
+            "id": 508,
+            "name": "Sandwiches",
+            "name_localized": "Sandwiches",
+            "image_url": null,
+            "keywords": null,
+            "keywords_localized": null
+          }
+        ],
+        "tags": [
+          {
+            "id": 55,
+            "old_id": 117,
+            "name": "Shawarma",
+            "name_localized": "Shawarma",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          },
+          {
+            "id": 659,
+            "old_id": null,
+            "name": "Fast Food",
+            "name_localized": "Fast Food",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          }
+        ],
+        "min_order": 10,
+        "currency": {
+          "id": 2,
+          "code": "SAR",
+          "name": "Saudi Arabian Riyal",
+          "name_localized": "Saudi Arabian Riyal",
+          "label": "SAR",
+          "label_localized": "SAR",
+          "position": "right",
+          "decimals": 2,
+          "purchasing_power_index": 1,
+          "name_short": "Riyals",
+          "cents_100": true
+        },
+        "rating": {
+          "average": 4.1,
+          "count": 1772,
+          "state": "default",
+          "count_text": "1700+"
+        },
+        "image_url": "https://careem-mot.imgix.net/v3/delivery_menu_images/15585650015ce5d0896e9d3.jpg",
+        "logo_url": null,
+        "price": {
+          "average": 10,
+          "range": "",
+          "scale": {
+            "value": 1,
+            "upper_bound": 3
+          }
+        },
+        "delivery": {
+          "average": 37,
+          "original_in_minutes": 37,
+          "range": "30 - 40",
+          "unit": "min",
+          "unit_localized": "mins",
+          "source": "yoda",
+          "distance": 8000,
+          "fee": 15,
+          "options": "careem",
+          "careem_delivery_fee": 15,
+          "merchant_delivery_fee": 15,
+          "eta_promise_minutes": 0,
+          "pricing_tag": null,
+          "distance_in_km": null,
+          "delivery_method": "on_demand",
+          "schedule_delivery_fee": 15
+        },
+        "delivery_type": "careem",
+        "preparation_time": 20,
+        "contract_id": 1011846,
+        "include_tax": true,
+        "included_tax": 15,
+        "business_type": "restaurants",
+        "merchant_type": "normal",
+        "promotions": [
+          {
+            "id": 2016503,
+            "active": true,
+            "promo_code": "SAVE12",
+            "percentage": 12,
+            "internal_subsidize": 0,
+            "total_percentage": 12,
+            "cap": 12,
+            "text": "12 SAR Off delivery (above 40 SAR)",
+            "text_localized": "12 SAR Off delivery (above 40 SAR)",
+            "badge_type": "none",
+            "is_auto_applied": false,
+            "type": "single_promo",
+            "creation_user_type": "careem",
+            "offer_type": "fixed_discount_offer",
+            "offer_value": 12,
+            "image_url": null,
+            "min_basket_value": 40,
+            "terms": [
+              {
+                "term": "Valid on orders above SAR 40",
+                "term_localized": "Valid on orders above SAR 40"
+              },
+              {
+                "term": "Maximum discount is SAR 12",
+                "term_localized": "Maximum discount is SAR 12"
+              },
+              {
+                "term": "Valid until 2023-02-28",
+                "term_localized": "Valid until 2023-02-28"
+              }
+            ],
+            "text_attributes": []
+          }
+        ],
+        "is_careem_delivery_supported": false,
+        "menu_layout": "capsule",
+        "order_count_for_days": 0,
+        "item_count": 35,
+        "delivery_zones": [],
+        "delivery_visibility": "IN_RANGE",
+        "closed_status": null,
+        "has_items": true,
+        "is_new": false,
+        "order_count": {
+          "count": 5,
+          "max": 5,
+          "since": 0,
+          "ratio": 0
+        },
+        "brand_id": 3238,
+        "_score": 12883.298,
+        "closed_overlay_image": null,
+        "closed_overlay_url": null,
+        "merchant_sub_text": [
+          {
+            "type": "promotion",
+            "text": "12 SAR Off delivery (above 40 SAR)"
+          }
+        ]
+      },
+      {
+        "id": 1031415,
+        "name": "Shawaya Al Bukhari",
+        "name_localized": "Shawaya Al Bukhari",
+        "link": "careemfood://restaurants/1031415?merchant_type=normal&business_type=restaurants&brand_id=1014810",
+        "superapp_link": "careem://now.careem.com/shops/restaurants/1031415?merchant_type=normal&business_type=restaurants&menu_layout=capsule&back=tosource&opened_from=global_search",
+        "location": "Al Marwa",
+        "location_localized": "Al Marwa",
+        "coordinate": {
+          "lat": 21.61468783,
+          "lng": 39.21195203
+        },
+        "cuisines": [
+          {
+            "id": 25,
+            "name": "Arabic",
+            "name_localized": "Arabic",
+            "image_url": "https://careem-mot.imgix.net/v3/cuisines/arabian1.jpg",
+            "keywords": null,
+            "keywords_localized": null
+          },
+          {
+            "id": 777,
+            "name": "Chicken",
+            "name_localized": "Chicken",
+            "image_url": null,
+            "keywords": null,
+            "keywords_localized": null
+          }
+        ],
+        "tags": [
+          {
+            "id": 598,
+            "old_id": null,
+            "name": "Mandi",
+            "name_localized": "Mandi",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          },
+          {
+            "id": 757,
+            "old_id": null,
+            "name": "5 SAR Delivery",
+            "name_localized": "5 SAR Delivery",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          }
+        ],
+        "min_order": 10,
+        "currency": {
+          "id": 2,
+          "code": "SAR",
+          "name": "Saudi Arabian Riyal",
+          "name_localized": "Saudi Arabian Riyal",
+          "label": "SAR",
+          "label_localized": "SAR",
+          "position": "right",
+          "decimals": 2,
+          "purchasing_power_index": 1,
+          "name_short": "Riyals",
+          "cents_100": true
+        },
+        "rating": {
+          "average": 4.3,
+          "count": 443,
+          "state": "highlight",
+          "count_text": "443"
+        },
+        "image_url": "https://careem-mot.imgix.net/merchants/merchant-media/shawayaalbukhari-svoypttskz.jpg",
+        "logo_url": null,
+        "price": {
+          "average": 22,
+          "range": "",
+          "scale": {
+            "value": 1,
+            "upper_bound": 3
+          }
+        },
+        "delivery": {
+          "average": 38,
+          "original_in_minutes": 38,
+          "range": "30 - 40",
+          "unit": "min",
+          "unit_localized": "mins",
+          "source": "yoda",
+          "distance": 8000,
+          "fee": 15,
+          "options": "careem",
+          "careem_delivery_fee": 15,
+          "merchant_delivery_fee": 15,
+          "eta_promise_minutes": 0,
+          "pricing_tag": null,
+          "distance_in_km": null,
+          "delivery_method": "on_demand",
+          "schedule_delivery_fee": 15
+        },
+        "delivery_type": "careem",
+        "preparation_time": 10,
+        "contract_id": 1024790,
+        "include_tax": true,
+        "included_tax": 15,
+        "business_type": "restaurants",
+        "merchant_type": "normal",
+        "promotions": [],
+        "is_careem_delivery_supported": false,
+        "menu_layout": "capsule",
+        "order_count_for_days": 15,
+        "item_count": 33,
+        "delivery_zones": [],
+        "delivery_visibility": "IN_RANGE",
+        "closed_status": null,
+        "has_items": true,
+        "is_new": false,
+        "order_count": {
+          "count": 5,
+          "max": 5,
+          "since": 0,
+          "ratio": 0
+        },
+        "brand_id": 1014810,
+        "_score": 12299.338,
+        "closed_overlay_image": null,
+        "closed_overlay_url": null,
+        "merchant_sub_text": []
+      },
+      {
+        "id": 1041616,
+        "name": "Shawaya Al Khaleej",
+        "name_localized": "Shawaya Al Khaleej",
+        "link": "careemfood://restaurants/1041616?merchant_type=normal&business_type=restaurants&brand_id=1019210",
+        "superapp_link": "careem://now.careem.com/shops/restaurants/1041616?merchant_type=normal&business_type=restaurants&menu_layout=capsule&back=tosource&opened_from=global_search",
+        "location": "Al Naeem",
+        "location_localized": "Al Naeem",
+        "coordinate": {
+          "lat": 21.61522142,
+          "lng": 39.14379622
+        },
+        "cuisines": [
+          {
+            "id": 25,
+            "name": "Arabic",
+            "name_localized": "Arabic",
+            "image_url": "https://careem-mot.imgix.net/v3/cuisines/arabian1.jpg",
+            "keywords": null,
+            "keywords_localized": null
+          },
+          {
+            "id": 777,
+            "name": "Chicken",
+            "name_localized": "Chicken",
+            "image_url": null,
+            "keywords": null,
+            "keywords_localized": null
+          }
+        ],
+        "tags": [
+          {
+            "id": 113,
+            "old_id": 112,
+            "name": "Chicken",
+            "name_localized": "Chicken",
+            "link": "",
+            "image_url": null,
+            "global": false,
+            "keywords": null,
+            "keywords_localized": null,
+            "type": "tag"
+          }
+        ],
+        "min_order": 10,
+        "currency": {
+          "id": 2,
+          "code": "SAR",
+          "name": "Saudi Arabian Riyal",
+          "name_localized": "Saudi Arabian Riyal",
+          "label": "SAR",
+          "label_localized": "SAR",
+          "position": "right",
+          "decimals": 2,
+          "purchasing_power_index": 1,
+          "name_short": "Riyals",
+          "cents_100": true
+        },
+        "rating": {
+          "average": 4.2,
+          "count": 99,
+          "state": "highlight",
+          "count_text": "99"
+        },
+        "image_url": "https://careem-mot.imgix.net/merchants/merchant-media/shawayaalkhaleej-jsrkvmspdu.jpg",
+        "logo_url": "https://careem-mot.imgix.net/catalogs/merchants-info/shawayalogo-xsmtutv0hr.jpg",
+        "price": {
+          "average": 15,
+          "range": "",
+          "scale": {
+            "value": 1,
+            "upper_bound": 3
+          }
+        },
+        "delivery": {
+          "average": 45,
+          "original_in_minutes": 45,
+          "range": "40 - 50",
+          "unit": "min",
+          "unit_localized": "mins",
+          "source": "yoda",
+          "distance": 10000,
+          "fee": 15,
+          "options": "careem",
+          "careem_delivery_fee": 15,
+          "merchant_delivery_fee": 15,
+          "eta_promise_minutes": 0,
+          "pricing_tag": null,
+          "distance_in_km": null,
+          "delivery_method": "on_demand",
+          "schedule_delivery_fee": 15
+        },
+        "delivery_type": "careem",
+        "preparation_time": 15,
+        "contract_id": 1030756,
+        "include_tax": false,
+        "included_tax": 0,
+        "business_type": "restaurants",
+        "merchant_type": "normal",
+        "promotions": [],
+        "is_careem_delivery_supported": false,
+        "menu_layout": "capsule",
+        "order_count_for_days": 7,
+        "item_count": 53,
+        "delivery_zones": [],
+        "delivery_visibility": "IN_RANGE",
+        "closed_status": null,
+        "has_items": true,
+        "is_new": false,
+        "order_count": {
+          "count": 5,
+          "max": 5,
+          "since": 0,
+          "ratio": 0
+        },
+        "brand_id": 1019210,
+        "_score": 12150.1,
+        "closed_overlay_image": null,
+        "closed_overlay_url": null,
+        "merchant_sub_text": []
+      }
+    ],
+    "similar_restaurants": []
+  }
+
+  

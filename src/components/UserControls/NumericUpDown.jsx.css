@@ -1,0 +1,31 @@
+div.NumericUpDownBody{
+    display: grid;
+    grid-template-columns: 30px auto 30px;
+    text-align: center;
+    width: 100px;
+}
+div.NumericUpDownButton{
+    border: 1px solid #ffcd99;
+    width: 25px;
+    height: 25px;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 100%;
+    position: relative;
+    background-color: #efa14e;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: inset 2px -3px 4px #ffd769;
+}
+
+div.NumericUpDownButton:hover{
+    background-color:#ffc181;
+}
+
+
+div.NumericUpDownValue{
+    width: 100%;
+    font-weight: bold;
+    padding: 3px;
+}

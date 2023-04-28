@@ -1,0 +1,27 @@
+// https://sagateway.careem-engineering.com/identity/client/otp?device=ACMA
+{
+    "client_id": "562c8b61-bb1f-4198-8b30-8d637a37ded3.acma.careem.com",
+    "identifier": "+966552349209",
+    "type": "SMS",
+    "locale": "en",
+    "multiTimeUse": false
+}
+// https://sagateway.careem-engineering.com/identity/client/otp/verification?device=ACMA
+{
+    "client_id": "562c8b61-bb1f-4198-8b30-8d637a37ded3.acma.careem.com",
+    "identifier": "+966552349209",
+    "code": "4032"
+}
+// Post  https://identity.careem.com/token
+
+grant_type=urn%3Acareem%3Aoauth2%3Agrant_type%3Aphone&device_id=D75F4794-B026-48B2-9279-CF938DA13A3C&phone=966552349209&otp_code=bdf8145b-f9fc-49f0-ad32-f0bbc913b13f&client_id=562c8b61-bb1f-4198-8b30-8d637a37ded3.acma.careem.com&client_secret=34bf524f-91f5-447c-abfd-1700f8140425
+
+{
+    "access_token": "eyJraWQiOiI4MjNiZTEwNy1jYjQ3LTQ1N2UtYTJiZC03NzhhYzdkODcyZWYiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1NzY1NDEwIiwiYXVkIjoiY29tLmNhcmVlbS5pbnRlcm5hbCIsImFjY2Vzc190eXBlIjoiQ1VTVE9NRVIiLCJ1c2VyX2lkIjo1NzY1NDEwLCJhenAiOiI1NjJjOGI2MS1iYjFmLTQxOTgtOGIzMC04ZDYzN2EzN2RlZDMuYWNtYS5jYXJlZW0uY29tIiwia2luZCI6IkNVU1RPTUVSIiwic2NvcGUiOiJzdWJzY3JpcHRpb25zIGVtYWlsIGxvY2F0aW9ucyBvZmZsaW5lX2FjY2VzcyBvcGVuaWQgYWRkcmVzcyB3ZWJsb2dpbl9hdXRoZW50aWNhdG9yIGRlbGl2ZXJpZXMgYm9va2luZ3MgcHJvZmlsZSB3YWxsZXQgY2xpZW50X21hbmFnZW1lbnQgcGhvbmUgYXV0aF92MV90b2tlbiBwYXltZW50cyB4Y21hIiwiaXNzIjoiaHR0cHM6XC9cL2lkZW50aXR5LmNhcmVlbS5jb21cLyIsImV4cCI6MTY3NzUyNTQ5NiwiaWF0IjoxNjc3NDM5MDk2LCJqdGkiOiIyZjZmNzhlNi02ZmQzLTRjYjYtYjBiNC00ZjljNWQwZGExMzEifQ.me83wLjRUx4OyUZdNbG0g9vLf4lXWZL9av_Iywr1DTJqimxxWGrNrCwVGEfPRtzVf2QN9rvuUd3Cg1GShbJYESHx8DaBC5ZgeqaCnvMUVYFyvsUZQWVg-1JUwHreB6EuQOx47Pu8GDFYlN2e5wXQzCoGiDzG__UV4Tp4WFVYi2CZu3ztJmONLjSNjCezH82dKP0RZpybz4izQnqN84173i5nNCTsgkXfgJJhyJSRLlJki2wmEMlPOG8crtLgv90R6URuKu_yCIR-Y3vDaTKcn_74CpdEXoH1SNnOhkuow7kGvDYi5ZFWbtJwq3Y1gLISxj2snnjrFH3PSpJFQ2oXqw",
+    "token_type": "Bearer",
+    "refresh_token": "eyJhbGciOiJub25lIn0.eyJqdGkiOiI4YjA2Y2NmMy1hOGZkLTQ5OTQtYjVmMi1hZDVkZTc3NTNkYWUifQ.",
+    "expires_in": 86399,
+    "scope": "subscriptions email locations offline_access openid address weblogin_authenticator deliveries bookings profile wallet client_management phone auth_v1_token payments xcma",
+    "id_token": "eyJraWQiOiI4MjNiZTEwNy1jYjQ3LTQ1N2UtYTJiZC03NzhhYzdkODcyZWYiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1NzY1NDEwIiwiYXVkIjoiNTYyYzhiNjEtYmIxZi00MTk4LThiMzAtOGQ2MzdhMzdkZWQzLmFjbWEuY2FyZWVtLmNvbSIsImtpZCI6IjgyM2JlMTA3LWNiNDctNDU3ZS1hMmJkLTc3OGFjN2Q4NzJlZiIsImlzcyI6Imh0dHBzOlwvXC9pZGVudGl0eS5jYXJlZW0uY29tXC8iLCJleHAiOjE2Nzc0Mzk2OTYsImlhdCI6MTY3NzQzOTA5NiwianRpIjoiOWRjYjE3MWItYTU5Zi00MTEyLTg0NTktYjZlN2Y5OWU0MjQyIn0.OiRr3ND318Eeh7EoCRZ2B05jCvlsHntOcLpy33y3zioQa24rLPLBUL3PWPOnho9b1WTLKFKCKZN22D9fFFLplwxPSJtKmB5jlAhuaJNnytZASRs6zBAdSOxKzcDzNMtP3O7JxazErcnMNpU2vwNgUAXEOjeSgde-gQTDGXTXlVy0417GG-Me3BJ30m3pLVtDX3tVppMt8pTGCcS86eOTd4vauiMOWYEvWyi1Kj9RQQZEKJxXwYz6EJKwI6R33w8rMtbI0xGQ-d4ydt-Di4j-2LK10KdJJjdhtita8bBmlj1E1zSIVcTUMl2DJK1ukwNr7cc7nTf-AIoaehDDzwbcpg",
+    "auth_v1_token": "eyJhbGciOiJSUzUxMiJ9.eyJzZXJ2aWNlUHJvdmlkZXJJZCI6MSwicyI6MjQsImlzcyI6ImF1dGgwIiwiZXhwIjoxNzA4OTc1MDk2LCJpYXQiOjE2Nzc0MzkwOTYsImp0aSI6IjU3NjU0MTAiLCJ1c2VyQWNjZXNzVHlwZSI6IkNVU1RPTUVSIiwibGltb0NvbXBhbnlJZCI6MH0.HS4nh-06my3kJM8TIER2i0DsYaDtgDYGJpBmTRO23sfKoT49dYU-JFC1rpCSazTcAiALElicqiGdlNH7CcaPkXqXBA3PGqxDPsUjDQFp_VAe4ACMEvnDsPsJAHyFYS0iNZRkOi4jnPkeZsXGITBlGTaVg0qQ08euGIiEOegpFmQ"
+  }
