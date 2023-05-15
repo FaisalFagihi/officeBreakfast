@@ -33,7 +33,7 @@ export default function MenuItemModifiers({ modifierGroups, selectModifers }) {
                     modifierGroup?.modifierItems?.map((item, index) => {
                         return (
                             <div key={item.id} className="ModifierGroup">
-                                <input key={item.id} id={item.id}
+                                <input key={item.id} id={item.id} className=""
                                     type={(modifierGroup.minQty === 1 && modifierGroup.maxQty === 1) ? 'radio' : 'checkbox'}
                                     defaultChecked={index === 0 && modifierGroup.minQty > 0}
                                     onChange={() => handleModifierChange(modifierGroup, item)}

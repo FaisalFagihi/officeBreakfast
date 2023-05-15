@@ -13,7 +13,7 @@ export function VendorCustom({ name, logo, image, kitchens, promotion, minimumOr
             <Grid fluid onClick={onCardClik} className="my-2">
                 <Row>
                     <Col style={{width:90}}>
-                        <img className="VendorLogo" src={logo} alt='' />
+                        <img className="VendorLogo" src={logo} alt='' draggable="false" />
                     </Col>
                     <Col className='m-2'>
                         <Row>

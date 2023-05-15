@@ -3,12 +3,16 @@
 // @import '@fontsource/roboto/500.css';
 // @import '@fontsource/roboto/700.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 * {
-  font-family: 'Roboto';
+  font-family: 'Tajawal', sans-serif;
   unicode-bidi: embed;
+  font-weight: 500;
+}
+
+*:focus {
+  /* width: 100%; */
+  outline: none;
 }
 
 
@@ -194,7 +198,7 @@ div.VendorRating {
 div.VendorPromotion {
   @include Delivery();
   position: absolute;
-  top: $ImageHeight - 22;
+  top: $ImageHeight - 54;
   font-size: 12px;
   border-radius: 0px 10px 0px 0px;
   overflow: hidden;
@@ -484,7 +488,17 @@ button.VendorSelect {
   font-size: 10pt;
   border-radius: 0px 0px 5px 5px;
   width: 100%;
+  padding: 0;
 }
+
+button.VendorSelect:focus {
+  outline: none;
+}
+
+button.VendorSelect:hover {
+  outline: none;
+}
+
 
 .VendorLogo {
   width: 90px;
@@ -676,4 +690,72 @@ th {
   overflow-x: auto;
   overflow-y: scroll;
   color: #000;
+}
+
+
+button.normal {
+  padding: 8px;
+  background: #efa14e;
+  border: 1px solid #ffcd99;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+  box-shadow: inset 2px -3px 4px #ffd769;
+  display: block;
+}
+
+button.normal:hover {
+  background-color: #ffc181;
+  border: 1px solid #ffcd99;
+  // color: #fff;
+}
+
+
+button.secondary {
+  padding: 8px;
+  background: #51a7e5;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+button.secondary:hover {
+  background-color: #ffcd99;
+  color: #fff;
+}
+
+button.secondary:disabled {
+  background-color: #eee;
+  color: #aaa;
+}
+
+.input {
+  padding: 8px 20px;
+  width: 100%;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  box-shadow: inset 2px -2px 4px 2px #f0f0f0;
+}
+
+.panel {
+  background-color: linear-gradient(0deg, rgba(252, 252, 252, 1) 0%, rgba(255, 255, 255, 1) 100%) !important;
+}
+
+th,
+td,
+thead {
+  padding: 4px !important;
+}
+
+td {
+  border: 1px solid #eee;
+}
+
+thead {
+  background: #eee;
+  color: black
 }

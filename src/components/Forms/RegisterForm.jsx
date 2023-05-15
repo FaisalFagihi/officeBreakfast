@@ -62,36 +62,20 @@ export function RegisterForm() {
         .isRequired('This field is required.')
 
     return (
-        <Form fluid layout='vertical'>
-            <div>
+        <div className="px-0">
+            <div hidden={!message} className="p-2 text-sm text-center">
                 {message}
             </div>
-            <Divider className='my-3' />
-            <Form.Group controlId="email" >
-                <Form.Control placeholder='Email' name="email" onChange={(e) => setUsername(e)} />
-            </Form.Group>
-            <Form.Group>
-                <Row>
-                    <Col xs={12}>
-                        <Form.Group controlId="firstName">
-                            <Form.Control placeholder='First Name' name="firstName" onChange={(e) => { setFirstName(e) }} />
-                        </Form.Group>
-                    </Col>
-                    <Col xs={12}>
-                        <Form.Group controlId="lastName">
-                            <Form.Control placeholder='Last Name' name="lastName" onChange={(e) => { setLastName(e) }} />
-                        </Form.Group>
-                    </Col>
-                </Row>
-            </Form.Group>
-            <Form.Group controlId="password">
-                <Form.Control placeholder='Password' name="password" type="password" autoComplete="off" onChange={(e) => { setPassword(e) }} />
-            </Form.Group>
-            <Form.Group>
-                <FlexboxGrid justify="center">
-                    <IconButton onClick={() => Register(username, password, firstName, lastName)} loading={registerLoad} icon={<ArrowRightLineIcon />} circle size="lg" />
-                </FlexboxGrid>
-            </Form.Group>
-        </Form>
+            <div hidden={message} className="m-2 text-sm text-left">
+                Fill the fields with the required information:
+            </div>
+            <input className='input rounded-full mt-3' placeholder='Email' onChange={(e) => setUsername(e)} />
+            <div className="grid grid-cols-2 mt-3">
+                <input className='input rounded-full rounded-r-none' placeholder='First Name' name="firstName" onChange={(e) => { setFirstName(e) }} />
+                <input className='input rounded-full rounded-l-none' placeholder='Last Name' name="lastName" onChange={(e) => { setLastName(e) }} />
+            </div>
+            <input className='input mt-3 rounded-full' placeholder='Password' name="password" type="password" autoComplete="off" onChange={(e) => { setPassword(e) }} />
+            <button onClick={() => Register(username, password, firstName, lastName)} className='normal m-auto mt-5 w-10 h-10 !rounded-full'> <ArrowRightLineIcon /></button>
+        </div>
     );
 }

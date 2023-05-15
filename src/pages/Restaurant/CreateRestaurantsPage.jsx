@@ -183,7 +183,7 @@ export default function CreateRestaurantsPage() {
                                         <Input value={vendor?.photo} onChange={(e) => handleVendorEdit('photo', e)} />
                                     </Col>
                                     <Col xs={6}>
-                                        <img src={vendor?.photo} className="RestaurantImage" alt="not found" />
+                                        <img src={vendor?.photo} className="RestaurantImage" alt="not found" draggable="false" />
                                     </Col>
                                 </Row>
                                 <Divider>logo</Divider>
@@ -192,7 +192,7 @@ export default function CreateRestaurantsPage() {
                                         <Input value={vendor?.logo} onChange={(e) => handleVendorEdit('logo', e)} />
                                     </Col>
                                     <Col xs={6}>
-                                        <img src={vendor?.logo} className="RestaurantImage" alt="not found" />
+                                        <img src={vendor?.logo} className="RestaurantImage" alt="not found" draggable="false"/>
                                     </Col>
                                 </Row>
                             </Col>

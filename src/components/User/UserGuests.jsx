@@ -87,7 +87,7 @@ export default function UserGuests() {
   }
 
   return (
-    <Panel header={<h5>Guests</h5>} bordered>
+    <Panel header={<h5>Guests</h5>} className="bg-white">
       <Row >
         <Col xs={22}>
           {/* <Input value={guestPhone} onChange={(e) => setGuestPhone(e)} placeholder="Guest Phone" /> */}
@@ -110,10 +110,6 @@ export default function UserGuests() {
         <Column flexGrow={1}>
           <HeaderCell>Username</HeaderCell>
           <Cell dataKey="username" />
-        </Column>
-        <Column flexGrow={1}>
-          <HeaderCell>Phone</HeaderCell>
-          <Cell dataKey="phone" />
         </Column>
         <Column width={100}>
           <HeaderCell>...</HeaderCell>

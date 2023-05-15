@@ -6,13 +6,13 @@ export default function SendMessageForm ({ sendMessage }) {
 
     return <Form
         onSubmit={e => {
-            e.preventDefault();
             sendMessage(message);
+            console.log(e)
             setMessage('');
         }}>
         <InputGroup>
             <Input placeholder="message..."
-                onChange={e => setMessage(e.target.value)} value={message} />
+                onChange={e => setMessage(e)} value={message} />
                 <Button type="submit" disabled={!message}>Send</Button>
         </InputGroup>
     </Form>

@@ -18,7 +18,7 @@ export default function MenuItemComponents({ components, selectComponents }) {
         components?.map((item, index) => {
             return (
                 <div key={item.id} className="ModifierGroup">
-                    <input key={item.id} id={item.id}
+                    <input key={item.id} id={item.id} 
                         type='checkbox'
                         name={item.productId}
                         defaultChecked={false}

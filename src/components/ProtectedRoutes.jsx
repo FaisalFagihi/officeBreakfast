@@ -13,7 +13,10 @@ const ProtectedRoutes = () => {
       <TailwindNavbar />
       <div className="mb-20"></div>
       <br />
+      <div className="xl:w-[1200px] mx-auto">
+
         <Outlet />
+      </div>
     </>
     :
     <Navigate to="/login" />;

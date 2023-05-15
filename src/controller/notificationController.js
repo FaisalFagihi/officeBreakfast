@@ -12,7 +12,7 @@ class Notification {
             this.setLogs = setLogs;
 
             this.connection ??= new HubConnectionBuilder()
-                .withUrl("https://127.0.0.1:7211/notification", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl("https://localhost:44369/notification", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             console.log("init")

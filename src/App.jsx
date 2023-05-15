@@ -1,4 +1,3 @@
-import './App.scss';
 import HomePage from "./pages/Home/HomePage";
 import LoginPage from "./pages/Login/LoginPage";
 import MenuPage from "./pages/Restaurant/MenuPage";
@@ -9,11 +8,12 @@ import GroupPage from "./pages/Group/GroupPage";
 import DeliveryAppLinkPage from './pages/User/DeliveryAppLinkPage';
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import { Route, Routes } from "react-router-dom";
-import 'rsuite/dist/rsuite.min.css';
 import CreateRestaurantsPage from './pages/Restaurant/CreateRestaurantsPage';
 import WalletPage from './pages/User/WalletPage';
 import OrdersPage from './pages/Group/OrdersPage';
-import 'rsuite/dist/rsuite-no-reset.min.css';
+// import 'rsuite/dist/rsuite-no-reset.min.css';
+import 'rsuite/dist/rsuite.min.css';
+import './App.scss';
 
 function App() {
   return (

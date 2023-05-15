@@ -54,7 +54,7 @@ export default function MenuItemControl({ name, photo, description, options, com
             </Modal.Header>
             <Modal.Body>
                 <div className="ModifierImageContainer">
-                    <img className="ModifierImage" src={photo} alt="" onDragStart={(e) => e.preventDefault()} />
+                    <img className="ModifierImage" src={photo} alt="" draggable="false" />
                 </div>
                 <div className="ModifierGroupDescription"> {description} </div>
                 <MenuItemOptions options={options} selectOption={selectMenuItemOption} />

@@ -150,7 +150,7 @@ export default function GroupCreationPage({afterSubmit}) {
                     </InputGroup.Button>
                 </InputGroup>
                 {!loadRestaurants ?
-                    <Stack  style={{ overflow: "auto", height: "250px" }}  justifyContent='flex-start' spacing={20}  >
+                    <Stack  style={{ overflow: "auto", height: "300px" }}  justifyContent='flex-start' spacing={20}  >
                         {vendorsResult?.map((restaurant) =>
                             <RestaurantItem
                                 isSelected={selectedRestaurant?.restaurantID === restaurant?.id}
@@ -169,7 +169,7 @@ export default function GroupCreationPage({afterSubmit}) {
 
             </Panel>
 
-            <Panel header={<h6>Custom</h6>} style={{ overflow: "auto", height: "auto" }} className="mt-3">
+            <Panel header={<h6>Custom</h6>} bordered style={{ overflow: "auto", height: "auto" }} className="mt-3" hidden={customs?.length === 0}>
                 {!loadCustomRestaurants ?
                     <Stack wrap alignItems='center' justifyContent='center' spacing={20} className="mt-0 py-2" style={{ overflow: "auto" }} >
                         {customs?.map((custom) =>
@@ -185,8 +185,8 @@ export default function GroupCreationPage({afterSubmit}) {
                 }
 
             </Panel>
-            <Row className='mt-3'>
-                <Button block onClick={() => create()}>Submit</Button>
+            <Row className='mt-3 px-2'>
+                <Button className='secondary' block onClick={() => create()}>Submit</Button>
             </Row>
 
             <Modal overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>

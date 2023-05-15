@@ -23,9 +23,8 @@ export default function Transactions({ records }) {
     }
 
     return (<>
-        <table bordered size='sm' align='center' responsive="sm">
-            <thead style={{ background: "#333", color: "white" }}>
-                <tr></tr>
+        <table bordered  className="w-full text-left">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Amount</th>

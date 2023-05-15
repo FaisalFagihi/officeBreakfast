@@ -9,7 +9,7 @@ export function MenuItem({ name, price, calories, photo, onClick }) {
             <Row>
                 <Col style={{ width: 160 }}>
                     {caloriesContent}
-                    <img className="MenuItemImage" src={photo} alt="" onDragStart={(e) => e.preventDefault()} />
+                    <img draggable="false" className="MenuItemImage" src={photo} alt="" onDragStart={(e) => e.preventDefault()} />
                 </Col>
                 <Col style={{ width: 165, padding: 5 }}>
                     <Row style={{ height: 80 }}>

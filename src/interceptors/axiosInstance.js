@@ -2,12 +2,12 @@ import axios from "axios";
 import auth from "../modules/auth";
 
 export const axiosInstance = axios.create({
-  // baseURL: 'https://127.0.0.1:7211/api/',
+  // baseURL: 'https://127.0.0.1:44369/api/',
   timeout: 15000,
   headers: { Authorization: auth.getToken() }
 }, console.log("Authorization", auth.getToken()));
 
-axiosInstance.defaults.baseURL = 'https://127.0.0.1:7211/api/';
+axiosInstance.defaults.baseURL = 'https://localhost:44369/api/';
 
 axiosInstance.interceptors.request.use((config)=> {
   axiosInstance.defaults.headers['Authorization'] =  auth.getToken();

@@ -62,7 +62,7 @@ export default function AccountInfo() {
   let navigate = useNavigate();
 
   return (
-    <Panel header={<h5>Info</h5>} bordered>
+    <Panel header={<h5>Info</h5>} className="bg-white shadow-sm">
       <Grid fluid>
         <Row className="mb-2">
           <Col xs={12}>

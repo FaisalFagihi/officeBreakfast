@@ -4,7 +4,7 @@ import groupController from '../../controller/groupController';
 
 export const OrdersTable = ({ orders }) => {
   return (
-    <table bordered size='sm' align='center' responsive="sm">
+    <table bordered className='w-full text-left'>
       <thead>
         <tr>
           <th>ID</th>
@@ -21,7 +21,7 @@ export const OrdersTable = ({ orders }) => {
       </thead>
       <tbody>
         {orders.map((item) => {
-          return <tr key={item.id}>
+          return <tr key={item.id} className="border-t">
             <td>{item.id}</td>
             <td>{item.groupID}</td>
             <td>{item.itemName}</td>

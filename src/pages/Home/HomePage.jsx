@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Stack, Input, Grid, Panel, Button, Divider, InputGroup, Row, Col, ButtonToolbar, Dropdown, AutoComplete, Avatar, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal } from "rsuite";
+import { Stack, Grid, Panel, Button, Divider, InputGroup, Row, Col, Dropdown, AutoComplete, Avatar, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal } from "rsuite";
 import groupController from "../../controller/groupController";
 import { Loader } from 'rsuite';
-import chatController from "../../controller/chatController";
 import UserController from "../../controller/userController";
 import Toaster from "../../components/Toaster";
-import MemberIcon from '@rsuite/icons/Member';
 import userController from "../../controller/userController";
 import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 import Username from "../../components/User/Username";
-import BlockIcon from '@rsuite/icons/Block';
 import { MdNoFood } from 'react-icons/md';
 import GroupCreationPage from "../Group/GroupCreationPage";
 
@@ -49,9 +46,9 @@ const Group = ({ item, isOwner, setRemoveLoad }) => {
     }, []);
 
 
-    return <Panel bodyFill shaded xs={24} style={{filter: (item.status === 4) ? "grayscale(90%)" : "grayscale(0%)" }}>
-        <div className="GroupItem" onClick={() => { navigate("/Group/" + item.id); }}>
-            <img src={item.photo} className="object-cover h-32 w-full" alt='' />
+    return <Panel className="bg-white shadow-md" bodyFill xs={24} style={{ filter: (item.status === 4) ? "grayscale(90%)" : "grayscale(0%)" }}>
+        <div className="GroupItem panel" onClick={() => { navigate("/Group/" + item.id); }}>
+            <img src={item.photo} className="object-cover h-32 w-full" alt='' draggable="false" />
             <div className="p-3">
                 <Stack direction="row" justifyContent="space-between">
                     <h5>{item.name}</h5>
@@ -99,6 +96,7 @@ export default function HomePage() {
         }).finally(() => {
             setAllGroupsLoader(false)
         });
+
     }, []);
 
     useEffect(() => {
@@ -192,7 +190,8 @@ export default function HomePage() {
     }
 
     return (
-        <Grid>
+        <div>
+
             <Panel hidden={(!(myGroups?.length < 1 && allGroups?.length < 1)) || (allGroupsLoader || myGroupLoader)}>
                 <FlexboxGrid justify="start" > <h6>
                     Host or join
@@ -245,7 +244,7 @@ export default function HomePage() {
                         <AutoComplete onChange={(e) => setHostUsername(e)}
                             placeholder="host name or email.. "
                             value={hostUsername}
-                            size="md"
+                            size="lg"
                             data={searchUsername}
                             renderMenuItem={usrename => {
                                 let user = searchData.find(x => x.username === usrename.split(':')[1]);
@@ -271,7 +270,7 @@ export default function HomePage() {
                             <FlexboxGridItem>
                                 <Row className="mt-2">
                                     <Col xs={24}>
-                                        <Button block onClick={() => setNewRestaurantState(true)}> + </Button>
+                                        <Button className="bg-borderGray" block onClick={() => setNewRestaurantState(true)}> + </Button>
                                     </Col>
                                 </Row>
                             </FlexboxGridItem>
@@ -310,6 +309,6 @@ export default function HomePage() {
                     } />
                 </Modal.Body>
             </Modal>
-        </Grid >
+        </div>
     );
 }

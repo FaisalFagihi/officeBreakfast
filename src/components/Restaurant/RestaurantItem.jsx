@@ -7,17 +7,17 @@ import CheckRoundIcon from '@rsuite/icons/CheckRound';
 export function RestaurantItem({ name, logo, rating, rateCount, image, delivey, status, promotion, minimumOrder, timeEstimation, distance, previewButton, isSelected, onCardClik }) {
     return (
         <Panel bodyFill bordered style={{ width: "220px" }}>
-            <div className="RestaurantItem" onClick={onCardClik}>
+            <div className="RestaurantItem bg-white" onClick={onCardClik}>
                 <div className="RestaurantImage">
-                    <img className="VendorStickyLogo" src={logo} alt='' />
-                    <img className="RestaurantImage" src={image} alt='' />
+                    <img className="VendorStickyLogo" src={logo} alt=''  draggable="false"/>
+                    <img className="RestaurantImage" src={image} alt='' draggable="false" />
                 </div>
                 <div className="RestaurantDetails">
                     <div className="RestaurantName">
                         {name}
                     </div>
-                    <div className="RestaurantDelivery flex" hidden={delivey == null}>
-                        {delivey} SAR <TbTruckDelivery  style={{ fontSize: "16px" }} />
+                    <div className="RestaurantDelivery flex text-[12px] font-semibold" hidden={delivey == null}>
+                        {delivey} SAR <TbTruckDelivery  className='m-auto ml-1 text-[18px] ' />
                     </div>
                     {/* <div className="VendorRating" hidden={rating == null}>
                         <TiStarFullOutline className="Star" /> <div> {rating} ({rateCount})</div>

@@ -88,7 +88,7 @@ export default function RestaurantsPage() {
     const navigate = useNavigate();
     return (
         <>
-            <Panel shaded style={{ height: "auto" }} className="mt-3">
+            <Panel shaded style={{ height: "auto" }} className="bg-white mt-3">
                 <InputGroup inside>
                     <Input placeholder="Search.." name='restaurant' onKeyDown={handleKeyDown} />
                     <InputGroup.Button tabIndex={-1}>
@@ -115,7 +115,7 @@ export default function RestaurantsPage() {
                 <Button disabled={selectedRestaurant == null} block onClick={() => navigate("./customize/", { state: selectedRestaurant })}>Customize</Button>
             </Panel>
 
-            <Panel header={<h4>Customs</h4>} shaded style={{ height: "auto" }} className="mt-3">
+            <Panel header={<h4>Customs</h4>} shaded style={{ height: "auto" }} className="mt-3 bg-white" hidden={customs?.length === 0}>
                 <Stack wrap spacing={10}>
                     {customs?.map((item) =>
                         <VendorCustom key={item.vendor.id} name={item.vendor.name} logo={item.vendor?.logo}

@@ -63,6 +63,8 @@ export default function GroupPage({ id }) {
             return
 
         setIsOwner(auth.getUsername() === group.ownerName)
+        console.log(group.ownerName)
+        console.log(auth.getUsername())
         setSelectedGroupStatus(group.status)
         setEndDate(group.endDate)
         setDeliveryCost(group.delivery)
@@ -90,15 +92,20 @@ export default function GroupPage({ id }) {
         if (endDate === null)
             return;
 
-        clearInterval(interval);
-
         getTime(endDate)
         if (Date.parse(endDate) >= Date.now()) {
             setTimerInterval(setInterval(() => getTime(), 1000));
         }
 
-    }, [endDate]);
+    }, [endDate])
 
+    useEffect(() => {
+        
+    
+        return () => {
+            clearInterval(interval)
+        }
+    }, [interval]);
 
     const isEqual = (a, b) => {
         a = a.sort((a, b) => (a.id > b.id ? 1 : 0));
@@ -151,6 +158,8 @@ export default function GroupPage({ id }) {
     }
 
     const changeTimer = (timer) => {
+        clearInterval(interval);
+
         groupController.changeTimer(parseInt(groupID), timer).catch(({ response }) => {
             toaster.push(response?.data, "error")
         })
@@ -209,37 +218,37 @@ export default function GroupPage({ id }) {
                     <InputPicker defaultValue={orderStatus[0].value} data={orderStatus} style={{ width: 224 }} />
                 </Row> */}
                 <Row>
-                    <Col className='mb-3' xs={24} lg={3} hidden={!isOwner}>
+                    <Col className='mb-3' xs={24} lg={4} hidden={!isOwner}>
                         {/* <Row>
                             <Panel shaded bordered={borderd} header={<h6>Connected ({users.length})</h6>}>
                                 <ConnectedUsers users={users} />
                             </Panel>
                         </Row> */}
-                        <Panel shaded bordered={borderd} header={<h6>Control</h6>} >
-                                <label className='mb-1' for="timerInput">Timer</label>
-                            <InputGroup disabled={selectedGroupStatus !== 0} 
+                        <Panel bordered={borderd} header={<h6>Control</h6>} className="bg-white shadow-sm">
+                            <label className='mb-1' for="timerInput">Timer</label>
+                            <InputGroup disabled={selectedGroupStatus !== 0}
                             >
                                 <Input type='Number' id="timerInput" onChange={(e) => setTimer(e)} value={timer} min={0} />
                                 <InputGroup.Button onClick={() => changeTimer(timer)}>
                                     <ReloadIcon>Reset</ReloadIcon>
                                 </InputGroup.Button>
                             </InputGroup>
-                            <label className='mt-2 mb-1'for="deliverInput">Delivery</label>
+                            <label className='mt-2 mb-1' for="deliverInput">Delivery</label>
                             <InputGroup disabled={selectedGroupStatus >= 3} >
-                                <Input id='deliverInput' type='Number'  onChange={(e) => setDeliveryCost(e)} value={deliveryCost} min={0} />
+                                <Input id='deliverInput' type='Number' onChange={(e) => setDeliveryCost(e)} value={deliveryCost} min={0} />
                                 <InputGroup.Button onClick={() => changeDeliveryCost(deliveryCost)}>
                                     <ReloadIcon>Reset</ReloadIcon>
                                 </InputGroup.Button>
                             </InputGroup>
-                            <Divider className="my-3"/>
+                            <Divider className="my-3" />
                             <Stack alignItems='stretch' justifyContent='center' divider={<Divider vertical />} direction="column" disabled={selectedGroupStatus >= 4}>
-                                <Button block disabled={selectedGroupStatus === 0} onClick={() => changeOrderStatus(0)}>Collecting</Button>
-                                <Button block disabled={selectedGroupStatus === 1 || cartItems?.length === 0} onClick={() => changeOrderStatus(1)}>Ordering</Button>
-                                <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 2} onClick={() => changeOrderStatus(2)}>Ordered</Button>
-                                <Button block disabled={selectedGroupStatus !== 2} onClick={() => changeOrderStatus(3)}>Arrived</Button>
+                                <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(0)} className='secondary'>Collecting</Button>
+                                <Button block disabled={selectedGroupStatus === 1 || cartItems?.length === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(1)} className='secondary'>Ordering</Button>
+                                <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(2)} className='secondary'>Ordered</Button>
+                                <Button block disabled={selectedGroupStatus !== 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(3)} className='secondary'>Arrived</Button>
                             </Stack>
                             <Divider className="my-3" />
-                            <Button disabled={selectedGroupStatus >= 4} block style={{ background: "#bd5353", color: "white" }} onClick={() => setIsModalOpen(true)}>Cancel ?</Button>
+                            <Button hidden={selectedGroupStatus >= 4} block style={{ background: "#bd5353", color: "white" }} onClick={() => setIsModalOpen(true)}>Cancel ?</Button>
 
                             <Modal backdrop="static" role="alertdialog" keyboard={false} open={isModalOpen} onClose={() => setIsModalOpen(false)}>
                                 <Modal.Header>
@@ -251,7 +260,7 @@ export default function GroupPage({ id }) {
                                     Are you sure that you want to cancel this group?!
                                 </Modal.Body>
                                 <Modal.Footer>
-                                    <Button onClick={() => { changeOrderStatus(4); setIsModalOpen(false) }} appearance="primary">
+                                    <Button onClick={() => { changeOrderStatus(4); setIsModalOpen(false) }} appearance="default">
                                         Yes
                                     </Button>
                                     <Button onClick={() => setIsModalOpen(false)} appearance="subtle">
@@ -262,13 +271,13 @@ export default function GroupPage({ id }) {
                         </Panel>
 
                     </Col>
-                    <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 15}>
-                        <Panel shaded bordered={borderd} header={<h5>{group?.name}</h5>} style={{ position: "relative", minHeight: 843 }} >
+                    <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
+                        <Panel className="bg-white shadow-sm" bordered={borderd} header={<div className='text-lg'>{group?.name}</div>} style={{ position: "relative", minHeight: 843 }} >
                             <Row>
                                 <Col xs={6}>
                                     <Stack spacing={5}>
                                         <StackItem>
-                                            <h6>Delivery {delivery} SAR </h6>
+                                            <div className="text-base float-left font-bold">Delivery {delivery} SAR </div>
                                         </StackItem>
                                         <StackItem>
                                             {group?.promotionName != null ? <div className='Promotion'> ({group.promotionName}) </div> : <></>}
@@ -276,15 +285,15 @@ export default function GroupPage({ id }) {
                                     </Stack>
                                 </Col>
                                 <Col xs={12} style={{ textAlign: "center" }}>
-                                    <h6>
+                                    <div className="text-base">
                                         {groupStatus[selectedGroupStatus]}
-                                    </h6>
+                                    </div>
                                 </Col>
                                 <Col xs={6}>
 
-                                    <h6 style={{ float: "right" }}> {time} </h6>
+                                    <div className="text-base float-right font-bold" > {time} </div>
                                 </Col>
-                                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-14' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} />
+                                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-14' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" />
                             </Row>
                             <Row>
                                 <Divider className='mt-0' />
@@ -326,15 +335,15 @@ export default function GroupPage({ id }) {
                                         : <>There are no orders</>
                                     }
                                 </Panel>
-                                <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' />
+                                <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
                             </Row>
 
                             <Row hidden={selectedGroupStatus !== 2}>
                                 <Panel header="Receipt Check" hidden={!isOwner}>
                                     <p>Compare the actual receipt with the following one, they should be matched.</p>
-                                    <p>If not guests will be refunded/charged manually.</p>
+                                    <p>If not guests shall be refunded/charged manually.</p>
                                     <br />
-                                    <table bordered size='sm' align='center' responsive="sm">
+                                    <table bordered className='w-full text-left'>
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -348,12 +357,11 @@ export default function GroupPage({ id }) {
                                         </thead>
                                         <tbody>
                                             {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }) => {
-                                                return <tr key={uid}>
+                                                return <tr key={uid} className='border-t'>
                                                     <td>{itemName}</td>
                                                     <td>{itemPrice.toFixed(2)}</td>
                                                     <td className='p-0'>
-                                                        <table size="sm" className='m-0' style={{ borderColor: "transparent" }}
-                                                            align="center" >
+                                                        <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
                                                             <tbody>
                                                                 {modifiersList?.length > 0 ?
                                                                     modifiersList.map((item) => {
@@ -375,7 +383,7 @@ export default function GroupPage({ id }) {
                                         </tbody>
                                     </table>
                                 </Panel>
-                                <img src='https://j.gifs.com/J6NyEv.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' />
+                                <img src='https://j.gifs.com/J6NyEv.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
 
                             </Row>
 
@@ -383,17 +391,17 @@ export default function GroupPage({ id }) {
                                 <Panel hidden={!isOwner}>
                                     <p>By checking out all the guests will be charged and cart will be cleared.</p>
                                     <br />
-                                    <Button block disabled={selectedGroupStatus !== 2 && selectedGroupStatus !== 3} onClick={() => checkOut()}>Checkout</Button>
+                                    <Button className='secondary' block disabled={selectedGroupStatus !== 2 && selectedGroupStatus !== 3} onClick={() => checkOut()}>Checkout</Button>
 
                                 </Panel>
-                                <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' />
+                                <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
 
                             </Row>
                             <Row hidden={selectedGroupStatus !== 4}>
                                 <Panel>
                                     <h5>Group is closed</h5>
-                                    <Button hidden={!isOwner} block onClick={() => changeOrderStatus(0)}>Open</Button>
-                                    <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' />
+                                    <Button  className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(0)} >Open</Button>
+                                    <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
 
                                 </Panel>
                             </Row>
@@ -402,7 +410,7 @@ export default function GroupPage({ id }) {
                     <Col xs={24} lg={6} >
                         {/* <Divider className='mt-1 mb-3'>Cart</Divider> */}
 
-                        <Panel shaded bordered={borderd} header={
+                        <Panel className="bg-white shadow-sm" bordered={borderd} header={
                             <>
                                 <h6>Cart ({cartItems.length})</h6>
                                 <Whisper
@@ -429,7 +437,7 @@ export default function GroupPage({ id }) {
                             {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
 
                         </Panel>
-                        <Panel shaded bordered={borderd} header={<h6>Chat</h6>} className="mt-3">
+                        <Panel bordered={borderd} header={<h6>Chat</h6>} className="mt-3 bg-white shadow-sm">
                             {chatController.connection ? <>
                                 <MessageContainer messages={messages} />
                                 <br />

@@ -14,7 +14,7 @@ class Cart {
     joinRoom = async () => {
         try {
             this.connection ??= new HubConnectionBuilder()
-                .withUrl("https://127.0.0.1:7211/cart", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl("https://localhost:44369/cart", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             this.connection.on("OrdersInCart", (orders) => {
