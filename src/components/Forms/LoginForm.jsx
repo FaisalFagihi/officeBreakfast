@@ -1,12 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import auth from '../../modules/auth'
 import { useNavigate } from 'react-router-dom';
-import { Form, InputGroup, Input, IconButton, FlexboxGrid, Button, Divider } from 'rsuite';
-import EmailFillIcon from '@rsuite/icons/EmailFill';
-import EyeIcon from '@rsuite/icons/legacy/Eye';
-import EyeSlashIcon from '@rsuite/icons/legacy/EyeSlash';
-import { useDispatch } from 'react-redux'
-import { RiLockPasswordFill } from 'react-icons/ri';
+import { Divider, Loader } from 'rsuite';
 import ArrowRightLineIcon from '@rsuite/icons/ArrowRightLine';
 import { GoogleLogin, useGoogleLogin } from 'react-google-login';
 import { gapi } from "gapi-script"
@@ -17,7 +12,7 @@ import '../../App.scss'
 export function LoginForm() {
     const username = useRef();
     const password = useRef();
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("Use email and password");
     const [loginLoad, setLoginLoad] = useState(false);
 
     const navigate = useNavigate();
@@ -60,6 +55,7 @@ export function LoginForm() {
 
     const login = async () => {
         setLoginLoad(true);
+        setMessage("signing..")
         auth.login(username.current.value, password.current.value).then(async (response) => {
             if (response?.status === 200) {
                 auth.setToken(response.data['token'])
@@ -70,14 +66,18 @@ export function LoginForm() {
                 navigate("/")
             }
         }).catch((response) => {
-            console.log("ss", response?.response?.data)
-            setMessage(response?.response?.data);
+            console.log(response)
+            if (response?.response?.status === 401) {
+                setMessage(response.response.data)
+                return
+            }
+            response?.response?.data ? setMessage(response.response.data) : setMessage(response.message)
         }).finally(() => setLoginLoad(false));
     }
     return (
         <>
-            <div  onClick={() => signIn()} className="flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-mainOrange">
-                    <BsGoogle size={20} />
+            <div onClick={() => signIn()} className="flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-mainOrange">
+                <BsGoogle size={20} />
                 <div className="my-auto ml-2 !text-black">
                     Sign in with google
                 </div>
@@ -94,7 +94,10 @@ export function LoginForm() {
                     <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3'> forgot password ?</a>
                 </div>
             </div>
-            <button onClick={() => login()} className="m-auto mt-5 normal w-10 h-10 !rounded-full" ><ArrowRightLineIcon className='text-lg' /></button>
+            <button onClick={() => login()} className="m-auto mt-5 normal w-10 h-10 !rounded-full" >
+                {loginLoad ? <Loader /> :
+                    <ArrowRightLineIcon className='text-lg' />}
+            </button>
         </>
     )
 }

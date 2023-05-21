@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(function (response) {
   // Do something with response data
   return response;
 }, function (error) {
-  if (error.response.status === 401) {
+  if (error?.response?.status === 401) {
     localStorage.removeItem('token')
   }
   // Any status codes that falls outside the range of 2xx cause this function to trigger

@@ -1,31 +1,28 @@
-import { useState } from 'react';
+import { createRef, useState } from 'react';
 import axiosInstance from "../../interceptors/axiosInstance"
-import { Form, Button, Schema, Row, Col, FlexboxGrid, IconButton, Divider } from "rsuite"
+import { Form, Button, Schema, Row, Col, FlexboxGrid, IconButton, Divider, Loader } from "rsuite"
 import ArrowRightLineIcon from '@rsuite/icons/ArrowRightLine';
 import auth from '../../modules/auth';
 import { useNavigate } from 'react-router-dom';
 
 export function RegisterForm() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const username = createRef();
+    const password = createRef();
+    const firstName = createRef();
+    const lastName = createRef();
     const [message, setMessage] = useState("");
     const [registerLoad, setRegisterLoad] = useState(false);
 
     const navigate = useNavigate();
 
     function Register(username, password, firstName, lastName) {
-        console.log(username, password)
+        setMessage("Registering..")
         const data = {
             "Username": username,
             "Password": password,
             "FirstName": firstName,
             "LastName": lastName,
         }
-
-        console.log(data);
-
         setRegisterLoad(true);
         axiosInstance.post("register", data)
             .then(async (response) => {
@@ -35,12 +32,17 @@ export function RegisterForm() {
                     await localStorage.setItem('firstName', response.data['firstName'])
                     await localStorage.setItem('lastName', response.data['lastName'])
                     setMessage(response.data['message'])
-
+                    
                     navigate("/")
                 }
             }).catch(function (response) {
-                console.log("ss", response?.response?.data)
-                setMessage(response?.response?.data);
+
+                if (response?.response?.status === 401) {
+                    setMessage(response.response.data)
+                    return;
+                }
+
+                response?.response?.data ? setMessage(response.response.data) : setMessage(response.message)
             }).finally(() => setRegisterLoad(false));
     }
 
@@ -69,13 +71,16 @@ export function RegisterForm() {
             <div hidden={message} className="m-2 text-sm text-left">
                 Fill the fields with the required information:
             </div>
-            <input className='input rounded-full mt-3' placeholder='Email' onChange={(e) => setUsername(e)} />
+            <input className='input rounded-full mt-3' placeholder='Email' ref={username} />
             <div className="grid grid-cols-2 mt-3">
-                <input className='input rounded-full rounded-r-none' placeholder='First Name' name="firstName" onChange={(e) => { setFirstName(e) }} />
-                <input className='input rounded-full rounded-l-none' placeholder='Last Name' name="lastName" onChange={(e) => { setLastName(e) }} />
+                <input className='input rounded-full rounded-r-none' placeholder='First Name' name="firstName" ref={firstName} />
+                <input className='input rounded-full rounded-l-none' placeholder='Last Name' name="lastName" ref={lastName} />
             </div>
-            <input className='input mt-3 rounded-full' placeholder='Password' name="password" type="password" autoComplete="off" onChange={(e) => { setPassword(e) }} />
-            <button onClick={() => Register(username, password, firstName, lastName)} className='normal m-auto mt-5 w-10 h-10 !rounded-full'> <ArrowRightLineIcon /></button>
+            <input className='input mt-3 rounded-full' placeholder='Password' name="password" type="password" autoComplete="off" ref={password} />
+            <button onClick={() => Register(username.current.value, password.current.value, firstName.current.value, lastName.current.value)} className='normal m-auto mt-5 w-10 h-10 !rounded-full'>
+                {registerLoad ? <Loader /> :
+                    <ArrowRightLineIcon className='text-lg' />}
+            </button>
         </div>
     );
 }
