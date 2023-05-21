@@ -23,8 +23,7 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm install -g npm
-          npm install --save --legacy-peer-deps
+          npm install
           npm run build --if-present
           npm run test --if-present
 
@@ -53,5 +52,5 @@ jobs:
         with:
           app-name: 'OfficeBreakfastReact'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1D4AD96C04F64924BC08F5F4749DE209 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8ECBC87201DC4FA88B1233A0E33545B5 }}
           package: .
