@@ -23,12 +23,6 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm install @headlessui/react 
-          npm install @heroicons/react
-          npm install @microsoft/signalr
-          npm install @react-icons/all-files
-          npm install @reduxjs/toolkit
-          npm install axios
           npm install --legacy-peer-deps
           npm run build --if-present
           npm run test --if-present
