@@ -11,6 +11,7 @@
     "watch": "vite build --watch"
   },
   "dependencies": {
+    "myrepo": "FaisalFagihi/officebreakfast#master",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@microsoft/signalr": "^7.0.5",
