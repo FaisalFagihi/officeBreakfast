@@ -44,10 +44,11 @@ export function LoginForm() {
             }).catch((response) => {
                 console.log("ss", response)
                 console.log("ss", response?.response?.data)
-            }).finally(() => { });
+            }).finally(() => { setLoginLoad(false)});
         },
         onFailure: (e) => {
             console.log('Login Failed', e);
+            setLoginLoad(false)
         },
         clientId: clientID,
     })
@@ -76,7 +77,7 @@ export function LoginForm() {
     }
     return (
         <>
-            <div onClick={() => signIn()} className="flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-mainOrange">
+            <div onClick={() => { setLoginLoad(true); signIn() }} className="flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-mainOrange">
                 <BsGoogle size={20} />
                 <div className="my-auto ml-2 !text-black">
                     Sign in with google
