@@ -12,8 +12,8 @@ import { Badge, Button, Divider, List, Modal, Nav, Stack } from 'rsuite';
 import Avatar from 'react-avatar';
 import SimpleNotification from './SimpleNotification';
 
-import { Notifications } from 'react-push-notification';
-import addNotification from 'react-push-notification';
+// import { Notifications } from 'react-push-notification';
+// import addNotification from 'react-push-notification';
 import { useLocation } from 'react-router-dom';
 
 
@@ -29,8 +29,8 @@ export default function TailwindNavbar() {
   
   
   useEffect(() => {
-    successNotification()
-    warningNotification()
+    // successNotification()
+    // warningNotification()
 
     console.log(location.pathname )
   }, []);
@@ -55,27 +55,27 @@ export default function TailwindNavbar() {
     })
   }
 
-  function warningNotification() {
-    addNotification({
-      title: 'Warning',
-      subtitle: 'Please fill it',
-      message: 'You have to enter name',
-      theme: 'red',
-      closeButton: "X",
-    })
-  };
+  // function warningNotification() {
+  //   addNotification({
+  //     title: 'Warning',
+  //     subtitle: 'Please fill it',
+  //     message: 'You have to enter name',
+  //     theme: 'red',
+  //     closeButton: "X",
+  //   })
+  // };
 
-  function successNotification() {
-    addNotification({
-      title: 'Success',
-      subtitle: 'You have successfully submitted',
-      message: 'Welcome to GeeksforGeeks',
-      theme: 'light',
-      closeButton: "X",
-      backgroundTop: "green",
-      backgroundBottom: "yellowgreen"
-    })
-  };
+  // function successNotification() {
+  //   addNotification({
+  //     title: 'Success',
+  //     subtitle: 'You have successfully submitted',
+  //     message: 'Welcome to GeeksforGeeks',
+  //     theme: 'light',
+  //     closeButton: "X",
+  //     backgroundTop: "green",
+  //     backgroundBottom: "yellowgreen"
+  //   })
+  // };
 
 
   return (
