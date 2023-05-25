@@ -12,7 +12,7 @@ class Notification {
             this.setLogs = setLogs;
 
             this.connection ??= new HubConnectionBuilder()
-                .withUrl("https://localhost:44369/notification", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl("https://officebreakfast.azurewebsites.net/notification", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             console.log("init")

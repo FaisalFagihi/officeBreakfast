@@ -14,7 +14,7 @@ class Chat {
     joinRoom = async (id) => {
         try {
             this.connection ??= new HubConnectionBuilder()
-                .withUrl("https://localhost:44369/chat", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl("https://officebreakfast.azurewebsites.net/chat", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             this.connection.on("ReceiveMessage", (user, message, time) => {

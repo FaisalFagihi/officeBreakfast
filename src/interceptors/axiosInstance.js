@@ -7,7 +7,7 @@ export const axiosInstance = axios.create({
   headers: { Authorization: auth.getToken() }
 }, console.log("Authorization", auth.getToken()));
 
-axiosInstance.defaults.baseURL = 'https://localhost:44369/api/';
+axiosInstance.defaults.baseURL = 'https://officebreakfast.azurewebsites.net/api/';
 
 axiosInstance.interceptors.request.use((config)=> {
   axiosInstance.defaults.headers['Authorization'] =  auth.getToken();
