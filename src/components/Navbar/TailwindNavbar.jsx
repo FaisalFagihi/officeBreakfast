@@ -12,8 +12,6 @@ import { Badge, Button, Divider, List, Modal, Nav, Stack } from 'rsuite';
 import Avatar from 'react-avatar';
 import SimpleNotification from './SimpleNotification';
 
-// import { Notifications } from 'react-push-notification';
-import addNotification from 'react-push-notification';
 import { useLocation } from 'react-router-dom';
 
 
@@ -27,13 +25,6 @@ export default function TailwindNavbar() {
   
   const location = useLocation()
   
-  
-  useEffect(() => {
-    successNotification()
-    warningNotification()
-
-    console.log(location.pathname )
-  }, []);
   
   const navigation = [
     { name: 'Home', href: '/', current: location.pathname == '/' },
@@ -55,33 +46,13 @@ export default function TailwindNavbar() {
     })
   }
 
-  function warningNotification() {
-    addNotification({
-      title: 'Warning',
-      subtitle: 'Please fill it',
-      message: 'You have to enter name',
-      theme: 'red',
-      closeButton: "X",
-    })
-  };
-
-  function successNotification() {
-    addNotification({
-      title: 'Success',
-      subtitle: 'You have successfully submitted',
-      message: 'Welcome to GeeksforGeeks',
-      theme: 'light',
-      closeButton: "X",
-      backgroundTop: "green",
-      backgroundBottom: "yellowgreen"
-    })
-  };
 
 
   return (
     <Disclosure as="nav" className="bg-darkGray fixed top-0 left-0 right-0 z-50 border-b-4 border-white text-base">
       {({ open }) => (
         <>
+        <SimpleNotification />
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-14 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
