@@ -14,6 +14,7 @@ import OrdersPage from './pages/Group/OrdersPage';
 // import 'rsuite/dist/rsuite-no-reset.min.css';
 import 'rsuite/dist/rsuite.min.css';
 import './App.scss';
+import { ResetPasswordPage } from "./pages/Login/ResetPasswordPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       </Route>
       <Route exact path="/login" element={<LoginPage />} />
       <Route path="*" element={<div>404 NOT FOUND</div>} />
+      <Route path="/ResetPassword/:resetToken" element={<ResetPasswordPage />} />
     </Routes>
   );
 }

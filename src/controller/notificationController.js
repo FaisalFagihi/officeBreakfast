@@ -1,5 +1,6 @@
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import auth from '../modules/auth';
+import GlobalNotificationService from '../components/Navbar/GlobalNotificationService';
 
 class Notification {
 
@@ -12,13 +13,13 @@ class Notification {
             this.setLogs = setLogs;
 
             this.connection ??= new HubConnectionBuilder()
-                .withUrl("https://officebreakfast.azurewebsites.net/notification", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl(import.meta.env.VITE_API_URL+'/notification', { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             console.log("init")
             this.connection.on("ReceiveNotification", (message, time, isOld) => {
-                console.log("ReceiveNotification")
-                console.log(message)
+
+                GlobalNotificationService.showNotification(message)
                 this.setLogs(logs => [...logs, { message:message, time:time, isOld }]);
             });
 

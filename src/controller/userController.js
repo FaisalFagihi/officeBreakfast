@@ -55,6 +55,15 @@ class UserController {
     searchGuest = (word) => {
         return axiosInstance.get("Search", {params:{word}});
     }
+
+    resetPassword = (email) => {
+        return axiosInstance.get("ForgotPassword", {params:{email}});
+    }
+
+    updatePassword = (newPassword, token) => {
+        console.log(newPassword, token)
+        return axiosInstance.post("UpdatePassword", { newPassword: newPassword, token: token })
+    }
 }
 
 export default new UserController();

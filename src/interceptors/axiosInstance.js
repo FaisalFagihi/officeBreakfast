@@ -7,7 +7,7 @@ export const axiosInstance = axios.create({
   headers: { Authorization: auth.getToken() }
 }, console.log("Authorization", auth.getToken()));
 
-axiosInstance.defaults.baseURL = 'https://officebreakfast.azurewebsites.net/api/';
+axiosInstance.defaults.baseURL = import.meta.env.VITE_API_URL+'/api/';
 
 axiosInstance.interceptors.request.use((config)=> {
   axiosInstance.defaults.headers['Authorization'] =  auth.getToken();

@@ -14,7 +14,7 @@ class Chat {
     joinRoom = async (id) => {
         try {
             this.connection ??= new HubConnectionBuilder()
-                .withUrl("https://officebreakfast.azurewebsites.net/chat", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl(import.meta.env.VITE_API_URL+'/chat', { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             this.connection.on("ReceiveMessage", (user, message, time) => {

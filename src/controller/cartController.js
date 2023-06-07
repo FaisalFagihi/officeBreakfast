@@ -14,7 +14,7 @@ class Cart {
     joinRoom = async () => {
         try {
             this.connection ??= new HubConnectionBuilder()
-                .withUrl("https://officebreakfast.azurewebsites.net/cart", { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl(import.meta.env.VITE_API_URL+'/cart', { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             this.connection.on("OrdersInCart", (orders) => {

@@ -5,12 +5,16 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: { https: true, port:3000 },
+  server: {https: true, port:3000 },
   plugins: [
     react(),
     VitePWA(
       {
         registerType: 'autoUpdate',
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        },
+        injectRegister: 'script',
         devOptions: {
           enabled: true
           /* other options */

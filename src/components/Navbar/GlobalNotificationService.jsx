@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class SimpleNotification extends Component {
+class GlobalNotificationService extends Component {
   constructor() {
     super();
     this.showNotification = this.showNotification.bind(this);
@@ -14,19 +14,10 @@ class SimpleNotification extends Component {
     }
   }
 
-  showNotification() {
-    new Notification('Hey')
-  }
-
-  render() {
-    return (
-      <div>
-        <button onClick={this.showNotification}>
-          Click to show notification
-        </button>
-      </div>
-    );
+  showNotification(text) {
+    console.log("Global", text)
+    new Notification(text)
   }
 }
 
-export default SimpleNotification;
+export default new GlobalNotificationService();

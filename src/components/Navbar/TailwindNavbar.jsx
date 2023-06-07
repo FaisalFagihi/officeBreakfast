@@ -10,9 +10,9 @@ import userController from "../../controller/userController"
 
 import { Badge, Button, Divider, List, Modal, Nav, Stack } from 'rsuite';
 import Avatar from 'react-avatar';
-import SimpleNotification from './SimpleNotification';
 
 import { useLocation } from 'react-router-dom';
+import GlobalNotificationService from './GlobalNotificationService';
 
 
 function classNames(...classes) {
@@ -22,16 +22,16 @@ function classNames(...classes) {
 export default function TailwindNavbar() {
   const [logs, setLogs] = useState([]);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  
+
   const location = useLocation()
-  
-  
+
+
   const navigation = [
     { name: 'Home', href: '/', current: location.pathname == '/' },
-    { name: 'Restaurants', href: '/restaurants', current: location.pathname == '/restaurants'},
+    { name: 'Restaurants', href: '/restaurants', current: location.pathname == '/restaurants' },
     { name: 'Wallet', href: '/wallet', current: location.pathname == '/wallet' },
   ]
-  
+
   const getUserLogs = () => {
     userController.getUserLogs().then(({ data }) => {
       console.log(data)
@@ -41,10 +41,14 @@ export default function TailwindNavbar() {
   }
 
   const clearLogs = () => {
-    userController.clearLogs().then(() => {
+    userController.clearUserLogs().then(() => {
       getUserLogs()
     })
   }
+
+  useEffect(() => {
+    getUserLogs()
+  }, []);
 
 
 
@@ -52,7 +56,6 @@ export default function TailwindNavbar() {
     <Disclosure as="nav" className="bg-darkGray fixed top-0 left-0 right-0 z-50 border-b-4 border-white text-base">
       {({ open }) => (
         <>
-        <SimpleNotification />
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-14 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -91,7 +94,7 @@ export default function TailwindNavbar() {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                 <Badge content={logs.length} color="green" className='mx-4 mt-4'>
-                  <button onClick={() => setIsNotificationOpen(true)}
+                  <button onClick={() => { setIsNotificationOpen(true); GlobalNotificationService.showNotification("test") }}
                     type="button"
                     className="bg-none p-0 border-0 outline-none"
                   >
@@ -125,8 +128,8 @@ export default function TailwindNavbar() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
                   <div>
-                    <Menu.Button className="flex rounded-full bg-gray-800 text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-0.5">                      
-                    <span className="sr-only">Open user msenu</span>
+                    <Menu.Button className="flex rounded-full bg-gray-800 text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-0.5">
+                      <span className="sr-only">Open user msenu</span>
                       <Avatar name={auth.getName()} size={40} round={true} />
                     </Menu.Button>
                   </div>
