@@ -13,7 +13,7 @@ class Notification {
             this.setLogs = setLogs;
 
             this.connection ??= new HubConnectionBuilder()
-                .withUrl(import.meta.env.VITE_API_URL+'/notification', { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .withUrl(import.meta.env.BASE_URL+'/notification', { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
                 .build();
 
             console.log("init")
