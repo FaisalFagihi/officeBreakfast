@@ -15,8 +15,32 @@ import OrdersPage from './pages/Group/OrdersPage';
 import 'rsuite/dist/rsuite.min.css';
 import './App.scss';
 import { ResetPasswordPage } from "./pages/Login/ResetPasswordPage";
-
+import { messaging } from './modules/firebase'
+import { getToken, onMessage  } from 'firebase/messaging'
+import { useEffect } from "react";
+import GlobalNotificationService from "./components/Navbar/GlobalNotificationService";
 function App() {
+
+  const requestPermission = async () => {
+    const perimission = await Notification.requestPermission()
+    if (perimission === 'granted'){
+      const token = await getToken(messaging, { vapidKey: 'BAusTrWhr_PENeKaWEJnjxpZJJ1BeuEgANFHrM3e0gOM41y4JatuCsO-2TNgMKy_xSmu9RKT81OZM5moNDdtBXg' })
+      console.log('token',token)
+    }
+  }
+
+  useEffect(() => {
+
+    requestPermission()
+
+    onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload);
+      // ...
+      GlobalNotificationService.showNotification(payload?.notification?.body)
+    });
+
+  }, []);
+
   return (
     <Routes>
       <Route element={<ProtectedRoutes />}>

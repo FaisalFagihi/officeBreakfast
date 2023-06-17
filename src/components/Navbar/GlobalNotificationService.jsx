@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 class GlobalNotificationService extends Component {
   constructor() {
     super();
@@ -12,12 +11,16 @@ class GlobalNotificationService extends Component {
     } else {
       Notification.requestPermission();
     }
+
+
   }
 
   showNotification(text) {
     console.log("Global", text)
     new Notification(text)
   }
+
+
 }
 
 export default new GlobalNotificationService();
