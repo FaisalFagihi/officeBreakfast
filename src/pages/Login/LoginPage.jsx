@@ -24,7 +24,7 @@ export default function LoginPage() {
 
         gapi.load('client:auth2', start)
 
-        console.log("import.meta.env.API_URL", import.meta.env.VITE_API_URL)
+        console.log("VITE_API_URL", 'import.meta\u200b.env.VITE_API_URL')
     }, []);
 
     const { signIn, loaded } = useGoogleLogin({
