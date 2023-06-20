@@ -16,8 +16,9 @@ class GlobalNotificationService extends Component {
   }
 
   showNotification(text) {
-    console.log("Global", text)
-    new Notification(text)
+    new Notification(text, {
+      body: 'My Notification Message',
+    })
   }
 
 
