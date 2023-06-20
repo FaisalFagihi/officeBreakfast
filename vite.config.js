@@ -51,13 +51,13 @@ export default defineConfig({
         manifest: {
           icons: [
             {
-              src: "src/assets/logo.png",
+              src: "https://lh3.googleusercontent.com/u/0/drive-viewer/AFGJ81oBe4w5efa7Omi3PdQR74_Q2LfSf8po9SrGE5FMstI4wIcbeBupKtYw3TMlQiMxF42p1ULGK3hxh5g6Yo7YLccrJ6wlRw=w1278-h1279",
               sizes: "150x150",
               type: "image/png",
               purpose: "any maskable"
             },
             {
-              src: "src/assets/logo_512.png",
+              src: "https://lh3.googleusercontent.com/u/0/drive-viewer/AFGJ81prsOf8tsf9Qv5wYt8kr6ykIHohQ7x0PcREp77_JV_tt94J0-rmquTcHurlyTJL2afypcg2w_JCp4iT1KgYQraafuk4lg=w1278-h1279",
               sizes: "512x512",
               type: "image/png",
               purpose: "any maskable"
