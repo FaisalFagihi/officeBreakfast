@@ -64,6 +64,10 @@ class UserController {
         console.log(newPassword, token)
         return axiosInstance.post("UpdatePassword", { newPassword: newPassword, token: token })
     }
+
+    registerFcmToken = (token) => {
+        return axiosInstance.post("registerFcmToken", { fcmToken: token })
+    }
 }
 
 export default new UserController();

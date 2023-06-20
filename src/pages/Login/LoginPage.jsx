@@ -43,7 +43,7 @@ export default function LoginPage() {
             }).catch((response) => {
                 console.log("ss", response)
                 console.log("ss", response?.response?.data)
-            }).finally(() => { setLoginLoad(false) });
+            }).finally(() => {  });
         },
         onFailure: (e) => {
             console.log('Login Failed', e);

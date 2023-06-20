@@ -11,7 +11,7 @@ import userController from "../../controller/userController"
 import { Badge, Button, Divider, List, Modal, Nav, Stack } from 'rsuite';
 import Avatar from 'react-avatar';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import GlobalNotificationService from './GlobalNotificationService';
 
 
@@ -51,6 +51,7 @@ export default function TailwindNavbar() {
   }, []);
 
 
+  const navigate = useNavigate();
 
   return (
     <Disclosure as="nav" className="bg-darkGray fixed top-0 left-0 right-0 z-50 border-b-4 border-white text-base">
@@ -78,7 +79,7 @@ export default function TailwindNavbar() {
                     {navigation.map((item) => (
                       <a
                         key={item.name}
-                        href={item.href}
+                        onClick={()=> navigate(item.href)}
                         className={classNames(
                           item.current ? ' text-mainOrange' : 'text-white hover:text-mainOrange hover:no-underline',
                           'px-3 py-2 text-base font-medium'
@@ -94,7 +95,7 @@ export default function TailwindNavbar() {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                 <Badge content={logs.length} color="green" className='mx-4 mt-4'>
-                  <button onClick={() => { setIsNotificationOpen(true); GlobalNotificationService.showNotification("test") }}
+                  <button onClick={() => { setIsNotificationOpen(true); }}
                     type="button"
                     className="bg-none p-0 border-0 outline-none"
                   >
@@ -146,7 +147,7 @@ export default function TailwindNavbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/profile"
+                            onClick={()=> navigate("./profile")}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-base text-gray-700')}
                           >
                             Your Profile
@@ -156,8 +157,7 @@ export default function TailwindNavbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/"
-                            onClick={() => auth.logout()}
+                            onClick={() => {auth.logout(); navigate('/')} }
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-base text-gray-700')}
                           >
                             Sign out
@@ -177,7 +177,7 @@ export default function TailwindNavbar() {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
+                  onClick={()=> navigate(item.href)}
                   className={classNames(
                     item.current ? 'text-mainOrange' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'

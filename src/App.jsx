@@ -16,16 +16,26 @@ import 'rsuite/dist/rsuite.min.css';
 import './App.scss';
 import { ResetPasswordPage } from "./pages/Login/ResetPasswordPage";
 import { messaging } from './modules/firebase'
-import { getToken, onMessage  } from 'firebase/messaging'
+import { getToken, onMessage } from 'firebase/messaging'
 import { useEffect } from "react";
 import GlobalNotificationService from "./components/Navbar/GlobalNotificationService";
+import userController from "./controller/userController";
+import auth from "./modules/auth";
 function App() {
 
   const requestPermission = async () => {
+    if (!auth.isAuthenticated())
+      return
     const perimission = await Notification.requestPermission()
-    if (perimission === 'granted'){
+    if (perimission === 'granted') {
       const token = await getToken(messaging, { vapidKey: 'BAusTrWhr_PENeKaWEJnjxpZJJ1BeuEgANFHrM3e0gOM41y4JatuCsO-2TNgMKy_xSmu9RKT81OZM5moNDdtBXg' })
-      console.log('token',token)
+      if (!token)
+        return
+      userController.registerFcmToken(token).then((data) => {
+        console.log('regisetered token')
+      }).catch((err) => {
+        console.log('regiseter token error:', err)
+      })
     }
   }
 
