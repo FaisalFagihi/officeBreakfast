@@ -12,21 +12,21 @@ const firebaseConfig = {
     storageBucket: "office-breakfast.appspot.com",
     messagingSenderId: "400832963899",
     appId: "1:400832963899:web:ccf4ee10ead891dacd431e",
-    measurementId: "G-LVE0Z9PM03"
+    measurementId: "G-LVE0Z9PM03",
 }
  firebase.initializeApp(firebaseConfig)
  const messaging = firebase.messaging();
 
- messaging.onMessage((payload) => {
-  // GlobalNotificationService.showNotification(payload?.notification?.title)
+//  messaging.onMessage((payload) => {
+//   // GlobalNotificationService.showNotification(payload?.notification?.title)
 
-   self.registration.showNotification(payload?.notification?.title,
-    {
-      body: payload?.notification?.body,
-      icon:"../dist/assets/windows11/Square44x44Logo.scale-200.png"
-    })
+//    self.registration.showNotification(payload?.notification?.title,
+//     {
+//       body: payload?.notification?.body,
+//       icon:"../dist/assets/windows11/Square44x44Logo.scale-200.png"
+//     })
 
-});
+// });
 
 //  messaging.onBackgroundMessage((payload) => {
 //     // Customize notification here
