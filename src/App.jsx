@@ -44,9 +44,12 @@ function App() {
     requestPermission()
 
     onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload);
-      // ...
-      GlobalNotificationService.showNotification(payload?.notification?.body)
+      // GlobalNotificationService.showNotification(payload?.notification?.title)
+      self.registration.showNotification(payload?.notification?.title,
+        {
+          body: payload?.notification?.body,
+          icon:"https://lh3.googleusercontent.com/u/0/drive-viewer/AFGJ81oBe4w5efa7Omi3PdQR74_Q2LfSf8po9SrGE5FMstI4wIcbeBupKtYw3TMlQiMxF42p1ULGK3hxh5g6Yo7YLccrJ6wlRw=w1278-h1279",
+        })
     });
 
   }, []);
