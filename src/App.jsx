@@ -18,7 +18,6 @@ import { ResetPasswordPage } from "./pages/Login/ResetPasswordPage";
 import { messaging } from './modules/firebase'
 import { getToken, onMessage } from 'firebase/messaging'
 import { useEffect } from "react";
-import GlobalNotificationService from "./components/Navbar/GlobalNotificationService";
 import userController from "./controller/userController";
 import auth from "./modules/auth";
 function App() {
@@ -45,11 +44,13 @@ function App() {
 
     onMessage(messaging, (payload) => {
       // GlobalNotificationService.showNotification(payload?.notification?.title)
-      self.registration.showNotification(payload?.notification?.title,
+      navigator.serviceWorker.ready.then((registration) => { 
+        registration.showNotification(payload?.notification?.title,
         {
           body: payload?.notification?.body,
           icon:"https://lh3.googleusercontent.com/u/0/drive-viewer/AFGJ81oBe4w5efa7Omi3PdQR74_Q2LfSf8po9SrGE5FMstI4wIcbeBupKtYw3TMlQiMxF42p1ULGK3hxh5g6Yo7YLccrJ6wlRw=w1278-h1279",
         })
+      })
     });
 
   }, []);

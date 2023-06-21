@@ -3,7 +3,6 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import auth from '../../modules/auth'
-import notificationController from '../../controller/notificationController';
 import { IoNotificationsOffOutline } from 'react-icons/io5';
 import userController from "../../controller/userController"
 
@@ -12,7 +11,6 @@ import { Badge, Button, Divider, List, Modal, Nav, Stack } from 'rsuite';
 import Avatar from 'react-avatar';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import GlobalNotificationService from './GlobalNotificationService';
 
 
 function classNames(...classes) {
@@ -36,7 +34,6 @@ export default function TailwindNavbar() {
     userController.getUserLogs().then(({ data }) => {
       console.log(data)
       setLogs(data)
-      notificationController.init(setLogs)
     })
   }
 
