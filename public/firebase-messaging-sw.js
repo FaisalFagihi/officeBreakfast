@@ -17,13 +17,13 @@ const firebaseConfig = {
  firebase.initializeApp(firebaseConfig)
  const messaging = firebase.messaging();
 
- messaging.onBackgroundMessage((payload) => {
-    // Customize notification here
-    const notificationTitle = 'Background Message Title';
-    const notificationOptions = {
-      body: 'Background Message body.',
-      icon: '/firebase-logo.png'
-    };
+//  messaging.onBackgroundMessage((payload) => {
+//     // Customize notification here
+//     const notificationTitle = 'Background Message Title';
+//     const notificationOptions = {
+//       body: 'Background Message body.',
+//       icon: '/firebase-logo.png'
+//     };
   
-    self.registration.showNotification(notificationTitle, notificationOptions);
-  });
+//     self.registration.showNotification(notificationTitle, notificationOptions);
+//   });
