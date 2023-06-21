@@ -47,8 +47,8 @@ function App() {
       navigator.serviceWorker.ready.then((registration) => { 
         registration.showNotification(payload?.notification?.title,
         {
-          body: payload?.notification?.body,
-          icon:"https://lh3.googleusercontent.com/u/0/drive-viewer/AFGJ81oBe4w5efa7Omi3PdQR74_Q2LfSf8po9SrGE5FMstI4wIcbeBupKtYw3TMlQiMxF42p1ULGK3hxh5g6Yo7YLccrJ6wlRw=w1278-h1279",
+          body: payload?.notification?.body + 's',
+          icon:"../dist/assets/windows11/Square44x44Logo.scale-200.png",
         })
       })
     });
