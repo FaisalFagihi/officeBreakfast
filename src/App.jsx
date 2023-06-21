@@ -48,7 +48,7 @@ function App() {
         registration.showNotification(payload?.notification?.title,
         {
           body: payload?.notification?.body + 's',
-          icon:"../dist/assets/windows11/Square44x44Logo.scale-200.png",
+          icon:"../dist/assets/android/android-launchericon-48-48.png",
         })
       })
     });
