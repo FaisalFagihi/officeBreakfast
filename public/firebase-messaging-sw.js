@@ -28,13 +28,13 @@ const firebaseConfig = {
 
 // });
 
-//  messaging.onBackgroundMessage((payload) => {
-//     // Customize notification here
-//     const notificationTitle = 'Background Message Title';
-//     const notificationOptions = {
-//       body: 'Background Message body.',
-//       icon: '/firebase-logo.png'
-//     };
+ messaging.onBackgroundMessage((payload) => {
+    // Customize notification here
+    const notificationTitle = payload?.notification?.title;
+    const notificationOptions = {
+      body: payload?.notification?.body,
+      icon:"/assets/logo-96.png",
+    };
   
-//     self.registration.showNotification(notificationTitle, notificationOptions);
-//   });
+    self.registration.showNotification(notificationTitle, notificationOptions);
+  });

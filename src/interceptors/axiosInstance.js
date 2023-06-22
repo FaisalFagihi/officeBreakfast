@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({
   // baseURL: 'https://127.0.0.1:44369/api/',
   timeout: 15000,
   headers: { Authorization: auth.getToken() }
-}, console.log("Authorization", auth.getToken()));
+});
 
 
 axiosInstance.defaults.baseURL = import.meta.env.VITE_API_URL+'/api/';

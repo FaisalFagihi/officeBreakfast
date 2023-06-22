@@ -41,18 +41,18 @@ function App() {
   useEffect(() => {
 
     requestPermission()
-
-    onMessage(messaging, (payload) => {
-      // GlobalNotificationService.showNotification(payload?.notification?.title)
-      navigator.serviceWorker.ready.then((registration) => { 
-        registration.showNotification(payload?.notification?.title,
-        {
-          body: payload?.notification?.body + 's',
-          // icon:"../dist/assets/android/android-launchericon-48-48.png",
-          icon:"/assets/logo-96.png",
-        })
-      })
-    });
+    
+    // onMessage(messaging, (payload) => {
+    //   // GlobalNotificationService.showNotification(payload?.notification?.title)
+    //   navigator.serviceWorker.ready.then((registration) => { 
+    //     registration.showNotification(payload?.notification?.title,
+    //     {
+    //       body: payload?.notification?.body + 's',
+    //       // icon:"../dist/assets/android/android-launchericon-48-48.png",
+    //       icon:"/assets/logo-96.png",
+    //     })
+    //   })
+    // });
 
   }, []);
 
