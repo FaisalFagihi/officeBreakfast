@@ -49,7 +49,7 @@ function App() {
         {
           body: payload?.notification?.body + 's',
           // icon:"../dist/assets/android/android-launchericon-48-48.png",
-          icon:"logo.png",
+          icon:"logo-96.png",
         })
       })
     });
