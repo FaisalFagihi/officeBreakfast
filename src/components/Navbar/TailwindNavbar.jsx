@@ -76,7 +76,7 @@ export default function TailwindNavbar() {
                     {navigation.map((item) => (
                       <a
                         key={item.name}
-                        onClick={()=> navigate(item.href)}
+                        onClick={() => navigate(item.href)}
                         className={classNames(
                           item.current ? ' text-mainOrange' : 'text-white hover:text-mainOrange hover:no-underline',
                           'px-3 py-2 text-base font-medium'
@@ -144,7 +144,7 @@ export default function TailwindNavbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={()=> navigate("./profile")}
+                            onClick={() => navigate("./profile")}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-base text-gray-700')}
                           >
                             Your Profile
@@ -154,7 +154,8 @@ export default function TailwindNavbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={() => {auth.logout(); navigate('/')} }
+                            href='/'
+                            onClick={() => { auth.logout(); }}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-base text-gray-700')}
                           >
                             Sign out
@@ -174,7 +175,7 @@ export default function TailwindNavbar() {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  onClick={()=> navigate(item.href)}
+                  onClick={() => navigate(item.href)}
                   className={classNames(
                     item.current ? 'text-mainOrange' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'

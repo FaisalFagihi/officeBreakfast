@@ -15,32 +15,19 @@ import OrdersPage from './pages/Group/OrdersPage';
 import 'rsuite/dist/rsuite.min.css';
 import './App.scss';
 import { ResetPasswordPage } from "./pages/Login/ResetPasswordPage";
-import { messaging } from './modules/firebase'
-import { getToken, onMessage } from 'firebase/messaging'
+// import { messaging } from './modules/firebase'
+// import { getToken, onMessage } from 'firebase/messaging'
+// import { onBackgroundMessage } from 'firebase/messaging/sw'
 import { useEffect } from "react";
 import userController from "./controller/userController";
 import auth from "./modules/auth";
 function App() {
 
-  const requestPermission = async () => {
-    if (!auth.isAuthenticated())
-      return
-    const perimission = await Notification.requestPermission()
-    if (perimission === 'granted') {
-      const token = await getToken(messaging, { vapidKey: 'BAusTrWhr_PENeKaWEJnjxpZJJ1BeuEgANFHrM3e0gOM41y4JatuCsO-2TNgMKy_xSmu9RKT81OZM5moNDdtBXg' })
-      if (!token)
-        return
-      userController.registerFcmToken(token).then((data) => {
-        console.log('regisetered token')
-      }).catch((err) => {
-        console.log('regiseter token error:', err)
-      })
-    }
-  }
+ 
 
   useEffect(() => {
 
-    requestPermission()
+    //requestPermission()
     
     // onMessage(messaging, (payload) => {
     //   // GlobalNotificationService.showNotification(payload?.notification?.title)
@@ -52,6 +39,17 @@ function App() {
     //       icon:"/assets/logo-96.png",
     //     })
     //   })
+    // })
+
+    // messaging.onBackgroundMessage((payload) => {
+    //   // Customize notification here
+    //   const notificationTitle = payload?.notification?.title;
+    //   const notificationOptions = {
+    //     body: payload?.notification?.body,
+    //     icon:"/assets/logo-96.png",
+    //   };
+    
+    //   self.registration.showNotification(notificationTitle, notificationOptions);
     // });
 
   }, []);
