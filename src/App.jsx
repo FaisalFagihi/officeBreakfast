@@ -48,7 +48,8 @@ function App() {
         registration.showNotification(payload?.notification?.title,
         {
           body: payload?.notification?.body + 's',
-          icon:"../dist/assets/android/android-launchericon-48-48.png",
+          // icon:"../dist/assets/android/android-launchericon-48-48.png",
+          icon:"logo.png",
         })
       })
     });

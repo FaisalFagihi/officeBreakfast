@@ -82,7 +82,7 @@ define(['./workbox-e12f14c0'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "registerSW.js",
-    "revision": "5766d4ae6f29ab9fb27032107e75a1b6"
+    "revision": "7ac8b8fbb4018c265dc6fac009367412"
   }, {
     "revision": null,
     "url": "index.html"
