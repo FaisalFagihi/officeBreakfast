@@ -106,7 +106,7 @@ export default function WalletPage() {
       </Nav>
       <div hidden={active !== 1}>
         {wallets?.map((wallet, index) => {
-          return (<Panel className='my-3 bg-white' collapsible bordered key={index} header={(wallet.ownerName === auth.getUsername()) ? "My" : "Owe " + wallet.name + ` (${wallet.balence.toFixed(2)})`} >
+          return (<Panel className='my-3 bg-white' collapsible bordered key={index} header={(wallet.ownerName === auth.getUsername()) ? "My Transactions" : "Owe " + wallet.name + ` (${wallet.balence.toFixed(2)})`} >
             <Transactions records={wallet.records} />
           </Panel>)
         })}

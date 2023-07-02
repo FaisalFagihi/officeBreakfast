@@ -25,9 +25,10 @@ export default function TailwindNavbar() {
 
 
   const navigation = [
-    { name: 'Home', href: '/', current: location.pathname == '/' },
-    { name: 'Restaurants', href: '/restaurants', current: location.pathname == '/restaurants' },
+    { name: 'Groups', href: '/', current: location.pathname == '/' },
+    { name: 'Me', href: '/me', current: location.pathname == '/me' },
     { name: 'Wallet', href: '/wallet', current: location.pathname == '/wallet' },
+    { name: 'Restaurants', href: '/restaurants', current: location.pathname == '/restaurants' },
   ]
 
   const getUserLogs = () => {

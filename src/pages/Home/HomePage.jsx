@@ -62,9 +62,7 @@ const Group = ({ item, isOwner, setRemoveLoad }) => {
 }
 
 export default function HomePage() {
-    const [myGroups, setmyGroups] = useState([]);
     const [allGroups, setAllGroups] = useState([]);
-    const [myGroupLoader, setMyGroupLoader] = useState(true);
     const [allGroupsLoader, setAllGroupsLoader] = useState(true);
     const [removeLoad, setRemoveLoad] = useState(false);
     const [hostUsername, setHostUsername] = useState('');
@@ -72,7 +70,6 @@ export default function HomePage() {
     const [searchUsername, setSearchUsername] = useState([]);
     const [searchData, setSearchData] = useState([]);
     const [userOwners, setUserOwners] = useState([]);
-    const [isNewRestaurant, setNewRestaurantState] = useState(false);
 
     const toaster = Toaster();
 
@@ -98,36 +95,6 @@ export default function HomePage() {
         });
 
     }, []);
-
-    useEffect(() => {
-
-        if (!removeLoad) {
-            setMyGroupLoader(true)
-            groupController.getMyGroups().then(({ data }) => {
-                setmyGroups(data)
-            }).finally(() => {
-                setMyGroupLoader(false)
-            });
-        }
-    }, [removeLoad]);
-
-    const removeGroup = (id) => {
-        setRemoveLoad(true)
-        groupController.removeGroup(id).then(({ data }) => {
-            setMessage(data)
-            toaster.push("Group been removed successfully", "success")
-        }).catch(({ response }) => {
-            toaster.push(response?.data, "error")
-        }).finally(() => {
-            setRemoveLoad(false)
-        })
-    }
-
-    const SizeDropdown = ({ groupID, ...props }) => (
-        <Dropdown {...props} >
-            <Dropdown.Item onClick={() => removeGroup(groupID)}>remove</Dropdown.Item>
-        </Dropdown>
-    );
 
     const joinToGroup = () => {
         UserController.sendJoinRequest(hostUsername?.split(':')[1]).then(({ data }) => {
@@ -192,9 +159,9 @@ export default function HomePage() {
     return (
         <div>
 
-            <Panel hidden={(!(myGroups?.length < 1 && allGroups?.length < 1)) || (allGroupsLoader || myGroupLoader)}>
+            <Panel hidden={(!allGroups?.length < 1) || allGroupsLoader}>
                 <FlexboxGrid justify="start" > <h6>
-                    Host or join
+                  join to group
                 </h6>
                 </FlexboxGrid>
             </Panel>
@@ -256,59 +223,10 @@ export default function HomePage() {
                         </InputGroup.Button>
                         {/* <Input type="text" value={hostUsername} onChange={(e) => setHostUsername(e)} placeholder="Host email or name..join " /> */}
                     </InputGroup>
-                    <Divider className="my-3" />
                 </Panel>
             </PanelGroup>
 
-            <Panel header={
-                <Grid fluid>
-                    <Row>
-                        <FlexboxGrid justify="space-between" align="middle">
-                            <FlexboxGridItem>
-                                My Host
-                            </FlexboxGridItem>
-                            <FlexboxGridItem>
-                                <Row className="mt-2">
-                                    <Col xs={24}>
-                                        <Button className="bg-borderGray" block onClick={() => setNewRestaurantState(true)}> + </Button>
-                                    </Col>
-                                </Row>
-                            </FlexboxGridItem>
-                        </FlexboxGrid>
-                    </Row>
-                    <Row>
-                        {/* <Divider className="mt-2" /> */}
-                    </Row>
-                </Grid>
-            }>
-                {(!removeLoad && !myGroupLoader) ?
-                    (myGroups?.length != 0) ? myGroups?.map((item) => {
-                        return (
-                            <Row key={item.id} style={{ position: "relative" }} className="mb-3 mx-0">
-                                <Group item={item} isOwner={true} />
-                                <SizeDropdown placement="topEnd" groupID={item.id} title="..." size="xs" style={{ position: "absolute", bottom: 1, right: 1, zIndex: 20 }} />
-                            </Row>
-                        )
-                    })
-                        : <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
-                    : <FlexboxGrid justify="center">
-                        <Loader size="md" content="Loading" />
-                    </FlexboxGrid>
-                }
-            </Panel>
 
-            <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
-                <Modal.Header>
-                    New Host
-                </Modal.Header>
-                <Modal.Body>
-                    <GroupCreationPage afterSubmit={() => {
-                        setNewRestaurantState(false)
-                        getAllGroups()
-                    }
-                    } />
-                </Modal.Body>
-            </Modal>
         </div>
     );
 }

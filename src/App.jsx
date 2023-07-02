@@ -15,20 +15,43 @@ import OrdersPage from './pages/Group/OrdersPage';
 import 'rsuite/dist/rsuite.min.css';
 import './App.scss';
 import { ResetPasswordPage } from "./pages/Login/ResetPasswordPage";
-// import { messaging } from './modules/firebase'
-// import { getToken, onMessage } from 'firebase/messaging'
+import { messaging } from './modules/firebase'
+import { getToken, onMessage } from 'firebase/messaging'
 // import { onBackgroundMessage } from 'firebase/messaging/sw'
 import { useEffect } from "react";
 import userController from "./controller/userController";
 import auth from "./modules/auth";
+import MePage from "./pages/Home/MePage";
 function App() {
 
- 
+  const requestPermission = async () => {
+    if (!auth.isAuthenticated())
+      return
+
+    if ('Notification' in window) {
+
+      const perimission = await Notification.requestPermission()
+      console.log('perimission ', perimission)
+      if (perimission === 'granted') {
+        const token = await getToken(messaging, { vapidKey: 'BAusTrWhr_PENeKaWEJnjxpZJJ1BeuEgANFHrM3e0gOM41y4JatuCsO-2TNgMKy_xSmu9RKT81OZM5moNDdtBXg' })
+
+        console.log('TOKEN '.token)
+
+        if (!token)
+          return
+        userController.registerFcmToken(token).then((data) => {
+          console.log('regisetered token')
+        }).catch((err) => {
+          console.log('regiseter token error:', err)
+        })
+      }
+    }
+  }
 
   useEffect(() => {
 
-    //requestPermission()
-    
+    requestPermission()
+
     // onMessage(messaging, (payload) => {
     //   // GlobalNotificationService.showNotification(payload?.notification?.title)
     //   navigator.serviceWorker.ready.then((registration) => { 
@@ -48,7 +71,7 @@ function App() {
     //     body: payload?.notification?.body,
     //     icon:"/assets/logo-96.png",
     //   };
-    
+
     //   self.registration.showNotification(notificationTitle, notificationOptions);
     // });
 
@@ -58,6 +81,7 @@ function App() {
     <Routes>
       <Route element={<ProtectedRoutes />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/me" element={<MePage />} />
         <Route path="/restaurants" element={<RestaurantsPage />} />
         <Route path="/restaurants/customize" element={<CreateRestaurantsPage />} />
         <Route path="/GroupCreation" element={<GroupCreationPage />} />

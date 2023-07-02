@@ -14,7 +14,7 @@ export default function MessageContainer({ messages }) {
         {messages.map((m, index) =>
             <div key={index} style={{ width: "100%", display: "inline-block" }}>
                 <div className={'Message' + m.type}>
-                    <div hidden={m.user === "Alter" || m.type === "Sender"} className="MessageUser">{m.user}</div>
+                    <div hidden={m.type === "Alter" || m.type === "Sender"} className="MessageUser">{m.user}</div>
                     <div className="MessageContent">
                         <div className='Message'>{m.message}</div>
                         <div className="MessageTime">{m.time}</div>

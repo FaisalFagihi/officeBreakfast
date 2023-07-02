@@ -64,7 +64,6 @@ export default function GroupCreationPage({afterSubmit}) {
 
     const create = () => {
         GroupController.submitGroup(selectedRestaurant).then(function ({ data }) {
-            navigate("/")
             toaster.push("Group has been created successfully", 'success')
             afterSubmit()
         }).catch(function (error) {

@@ -14,44 +14,55 @@ const firebaseConfig = {
     appId: "1:400832963899:web:ccf4ee10ead891dacd431e",
     measurementId: "G-LVE0Z9PM03",
 }
+
  firebase.initializeApp(firebaseConfig)
  const messaging = firebase.messaging();
 
- const requestPermission = async () => {
-    if (!auth.isAuthenticated())
-      return
-    const perimission = await Notification.requestPermission()
-    if (perimission === 'granted') {
-      const token = await getToken(messaging, { vapidKey: 'BAusTrWhr_PENeKaWEJnjxpZJJ1BeuEgANFHrM3e0gOM41y4JatuCsO-2TNgMKy_xSmu9RKT81OZM5moNDdtBXg' })
-      if (!token)
-        return
-      userController.registerFcmToken(token).then((data) => {
-        console.log('regisetered token')
-      }).catch((err) => {
-        console.log('regiseter token error:', err)
-      })
-    }
-  }
-  requestPermission()
-
 //  messaging.onMessage((payload) => {
-//   // GlobalNotificationService.showNotification(payload?.notification?.title)
-
-//    self.registration.showNotification(payload?.notification?.title,
-//     {
+//     return
+//   //  self.registration.showNotification(payload?.notification?.title,
+//   //   {
+//   //     body: payload?.notification?.body,
+//   //     icon:"../dist/assets/windows11/Square44x44Logo.scale-200.png"
+//   //   })
+//     const notificationTitle = payload?.notification?.title;
+//     const notificationOptions = {
 //       body: payload?.notification?.body,
-//       icon:"../dist/assets/windows11/Square44x44Logo.scale-200.png"
-//     })
-
+//       icon:"/assets/logo-96.png",
+//     };
+//     self.registration.showNotification(notificationTitle, notificationOptions);
 // });
+
+// self.addEventListener("notificationclick", (event) => {
+//   console.log("On notification click: ", event.notification.tag);
+//   event.notification.close();
+
+//   // This looks to see if the current is already open and
+//   // focuses if it is
+//   event.waitUntil(
+//     clients
+//       .matchAll({
+//         type: "window",
+//       })
+//       .then((clientList) => {
+//         for (const client of clientList) {
+//           if (client.url === "/" && "focus" in client) return client.focus();
+//         }
+//         if (clients.openWindow) return clients.openWindow("/");
+//       })
+//   );
+// });
+
 
  messaging.onBackgroundMessage((payload) => {
     // Customize notification here
-    const notificationTitle = payload?.notification?.title;
+    const notificationTitle = payload?.data?.title;
     const notificationOptions = {
-      body: payload?.notification?.body,
+      body: payload?.data?.body,
       icon:"/assets/logo-96.png",
     };
+
+    console.log(payload)
   
     self.registration.showNotification(notificationTitle, notificationOptions);
-  });
+  })

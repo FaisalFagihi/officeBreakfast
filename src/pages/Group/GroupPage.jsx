@@ -51,7 +51,7 @@ export default function GroupPage({ id }) {
     useEffect(() => {
         groupController.getGroup(groupID == null ? id : groupID).then(({ data }) => {
             setGroup(data)
-
+console.log("setGroup")
         }).finally(() => {
             setLoader(true)
         })
@@ -138,7 +138,7 @@ export default function GroupPage({ id }) {
     const time = ((hours + minutes + seconds) > 0) ? <> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </>
         : <>Time Is Over</>
     const items = cartItems.filter(x => x.username === auth.getUsername()).map(x => x.total).reduce((a, v) => a + v, 0);
-    const userDelivery = cartItems.length > 0 ? delivery / Object.keys(groupBy(cartItems, 'username')).length : delivery;
+    const userDelivery = cartItems?.length > 0 ? delivery / Object.keys(groupBy(cartItems, 'username')).length : delivery;
 
     const groupStatus = ['Collecting Orders..', 'Ordering..', 'Ship has sailed', 'Orders have arrived']
     const [selectedGroupStatus, setSelectedGroupStatus] = useState(0);
@@ -225,7 +225,7 @@ export default function GroupPage({ id }) {
                             </Panel>
                         </Row> */}
                         <Panel bordered={borderd} header={<h6>Control</h6>} className="bg-white shadow-sm">
-                            <label className='mb-1' for="timerInput">Timer</label>
+                            <label className='mb-1' htmlFor="timerInput">Timer</label>
                             <InputGroup disabled={selectedGroupStatus !== 0}
                             >
                                 <Input type='Number' id="timerInput" onChange={(e) => setTimer(e)} value={timer} min={0} />
@@ -233,7 +233,7 @@ export default function GroupPage({ id }) {
                                     <ReloadIcon>Reset</ReloadIcon>
                                 </InputGroup.Button>
                             </InputGroup>
-                            <label className='mt-2 mb-1' for="deliverInput">Delivery</label>
+                            <label className='mt-2 mb-1' htmlFor="deliverInput">Delivery</label>
                             <InputGroup disabled={selectedGroupStatus >= 3} >
                                 <Input id='deliverInput' type='Number' onChange={(e) => setDeliveryCost(e)} value={deliveryCost} min={0} />
                                 <InputGroup.Button onClick={() => changeDeliveryCost(deliveryCost)}>
@@ -343,7 +343,7 @@ export default function GroupPage({ id }) {
                                     <p>Compare the actual receipt with the following one, they should be matched.</p>
                                     <p>If not guests shall be refunded/charged manually.</p>
                                     <br />
-                                    <table bordered className='w-full text-left'>
+                                    <table className='w-full text-left'>
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -412,22 +412,22 @@ export default function GroupPage({ id }) {
 
                         <Panel className="bg-white shadow-sm" bordered={borderd} header={
                             <>
-                                <h6>Cart ({cartItems.length})</h6>
+                                <h6>Cart ({cartItems?.length})</h6>
                                 <Whisper
                                     placement="top"
                                     controlId="control-id-context-menu"
                                     trigger="click"
                                     speaker={<Popover><ConnectedUsers users={cartUsers?.map((user) => {
-                                        return cartItems.find(x => x.username === user)
+                                        return cartItems?.find(x => x.username === user)
                                     })} /></Popover>}
                                 >
-                                    <small>{cartUsers.length} people share the cart.</small>
+                                    <small>{cartUsers?.length} people share the cart.</small>
                                 </Whisper>
                             </>
                         }>
 
 
-                            {cartItems?.length !== 0 ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0} removeFromCart={cartController.removeFromCart} height={305} />
+                            {(cartItems && cartItems?.length !== 0 )? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0} removeFromCart={cartController.removeFromCart} height={305} />
                                 : <div style={{ textAlign: 'center', color: "#ccc", height: 305 }}>Empty</div>}
                             <br />
                             <div>Items: {items} SAR</div>
