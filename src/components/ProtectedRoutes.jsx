@@ -12,11 +12,8 @@ const ProtectedRoutes = () => {
     <>
       {/* <BootstrapNavbar appearance="subtle" activeKey={activeKey} onSelect={setActiveKey} /> */}
       {/* <TailwindNavbar /> */}
-      <div className="xl:w-[1200px] mx-auto">
-      <Navbar/>
-      <div className="mb-20"></div>
-      <br />
-
+      <div className="xl:w-[1200px] mx-auto border">
+        <Navbar />        
         <Outlet />
       </div>
       {/* <MaterialNavbar/> */}

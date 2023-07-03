@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import userController from "./controller/userController";
 import auth from "./modules/auth";
 import MePage from "./pages/Home/MePage";
+import NotificationsPage from "./pages/User/NotificationsPage";
 function App() {
 
   const requestPermission = async () => {
@@ -91,6 +92,7 @@ function App() {
         <Route path="/Wallet/" element={<WalletPage />} />
         <Route path="/Orders/" element={<OrdersPage />} />
         <Route path="/DeliveryAppLink/" element={<DeliveryAppLinkPage />} />
+        <Route path="/notifications/" element={<NotificationsPage />} />
       </Route>
       <Route exact path="/login" element={<LoginPage />} />
       <Route path="*" element={<div>404 NOT FOUND</div>} />

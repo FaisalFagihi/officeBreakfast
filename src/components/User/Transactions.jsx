@@ -9,7 +9,7 @@ import Toaster from '../Toaster';
 
 export default function Transactions({ records }) {
     const [selectedOrderItem, setSelectedOrderItem] = useState();
-    const [isOrderModalOpen, setIsOrderModalOpen] = useState();
+    const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
     
     const toaster = Toaster();
     
@@ -23,7 +23,7 @@ export default function Transactions({ records }) {
     }
 
     return (<>
-        <table bordered  className="w-full text-left">
+        <table className="w-full text-left">
             <thead>
                 <tr>
                     <th>ID</th>

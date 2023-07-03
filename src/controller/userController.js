@@ -48,8 +48,15 @@ class UserController {
         return axiosInstance.get("MyLogs",);
     }
 
+    getUserLogsCount = () => {
+        return axiosInstance.get("LogsCount",);
+    }
+
     clearUserLogs = () => {
         return axiosInstance.get("ClearLogs",);
+    }
+    readUserLogs = () => {
+        return axiosInstance.get("ReadLogs",);
     }
 
     searchGuest = (word) => {

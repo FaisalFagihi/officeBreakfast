@@ -224,7 +224,7 @@ console.log("setGroup")
                                 <ConnectedUsers users={users} />
                             </Panel>
                         </Row> */}
-                        <Panel bordered={borderd} header={<h6>Control</h6>} className="bg-white shadow-sm">
+                        <Panel bordered={borderd}  header={<h6>Control</h6>} className="bg-white shadow-sm">
                             <label className='mb-1' htmlFor="timerInput">Timer</label>
                             <InputGroup disabled={selectedGroupStatus !== 0}
                             >
@@ -437,7 +437,7 @@ console.log("setGroup")
                             {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
 
                         </Panel>
-                        <Panel bordered={borderd} header={<h6>Chat</h6>} className="mt-3 bg-white shadow-sm">
+                        <Panel bordered header={<h6>Chat</h6>} className="mt-3 bg-white shadow-sm">
                             {chatController.connection ? <>
                                 <MessageContainer messages={messages} />
                                 <br />
