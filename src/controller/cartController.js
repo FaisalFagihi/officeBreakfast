@@ -41,6 +41,7 @@ class Cart {
                 });
 
                 this.connection.on("ChangedGroupTimer", (endDate) => {
+                  console.log(endDate)
                     this.setEndDate(endDate);
                 });
 

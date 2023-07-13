@@ -24,7 +24,7 @@ const Group = ({ item, isOwner, setRemoveLoad }) => {
 
 
     const getTime = () => {
-        let time = Date.parse(item.endDate) - Date.now()
+        let time = Date.parse(item.endDate + " GMT") - Date.parse(new Date().toUTCString())
         setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
         setMinutes(Math.floor((time / 1000 / 60) % 60));
         setSeconds(Math.floor((time / 1000) % 60));
@@ -39,8 +39,8 @@ const Group = ({ item, isOwner, setRemoveLoad }) => {
 
         clearInterval(interval);
 
-        getTime(item.endDate)
-        if (Date.parse(item.endDate) >= Date.now()) {
+        getTime()
+        if (Date.parse(item.endDate + " GMT") >= Date.parse(new Date().toUTCString())) {
             setTimerInterval(setInterval(() => getTime(), 1000));
         }
     }, []);

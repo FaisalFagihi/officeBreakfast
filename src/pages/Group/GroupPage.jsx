@@ -78,7 +78,8 @@ export default function GroupPage({ id }) {
     }, [group]);
 
     const getTime = () => {
-        let time = Date.parse(endDate) - Date.now()
+        let time = Date.parse(endDate + " GMT") - Date.parse(new Date().toUTCString())
+
         setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
         setMinutes(Math.floor((time / 1000 / 60) % 60));
         setSeconds(Math.floor((time / 1000) % 60));
@@ -91,9 +92,8 @@ export default function GroupPage({ id }) {
     useEffect(() => {
         if (endDate === null)
             return;
-
-        getTime(endDate)
-        if (Date.parse(endDate) >= Date.now()) {
+getTime()
+        if (Date.parse(endDate +" GMT") >= Date.parse(new Date().toUTCString())) {
             setTimerInterval(setInterval(() => getTime(), 1000));
         }
 
