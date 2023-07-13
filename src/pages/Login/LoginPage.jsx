@@ -12,7 +12,6 @@ export default function LoginPage() {
     const [active, setActive] = useState(form.login);
     let navigate = useNavigate();
 
-    
     const clientID = "727515938547-5knpt0voai55equqiu8okhaaoh2h26du.apps.googleusercontent.com"
     useEffect(() => {
         const start = () => {
@@ -23,8 +22,6 @@ export default function LoginPage() {
         }
 
         gapi.load('client:auth2', start)
-
-        console.log("VITE_API_URL", import.meta.env.VITE_API_URL)
     }, []);
 
     const { signIn, loaded } = useGoogleLogin({
@@ -32,7 +29,6 @@ export default function LoginPage() {
         onSuccess: credentialResponse => {
             console.log(credentialResponse);
             auth.loginByGoogleAuth(credentialResponse.tokenId).then(async (response) => {
-                console.log("sff", response)
                 if (response?.status === 200) {
                     auth.setToken(response.data['token'])
                      localStorage.setItem('username', response.data['username'])
@@ -41,8 +37,6 @@ export default function LoginPage() {
                     navigate("/")
                 }
             }).catch((response) => {
-                console.log("ss", response)
-                console.log("ss", response?.response?.data)
             }).finally(() => {  });
         },
         onFailure: (e) => {
@@ -50,7 +44,7 @@ export default function LoginPage() {
         },
     })
 
-     return loaded && (
+     return  (
         auth.isAuthenticated() ?
             <Navigate to="/" /> :
             <div className="w-screen h-screen">

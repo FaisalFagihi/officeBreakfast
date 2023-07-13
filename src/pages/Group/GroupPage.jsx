@@ -51,7 +51,7 @@ export default function GroupPage({ id }) {
     useEffect(() => {
         groupController.getGroup(groupID == null ? id : groupID).then(({ data }) => {
             setGroup(data)
-console.log("setGroup")
+            console.log("setGroup")
         }).finally(() => {
             setLoader(true)
         })
@@ -100,8 +100,8 @@ console.log("setGroup")
     }, [endDate])
 
     useEffect(() => {
-        
-    
+
+
         return () => {
             clearInterval(interval)
         }
@@ -224,7 +224,7 @@ console.log("setGroup")
                                 <ConnectedUsers users={users} />
                             </Panel>
                         </Row> */}
-                        <Panel bordered={borderd}  header={<h6>Control</h6>} className="bg-white shadow-sm">
+                        <Panel bordered={borderd} header={<h6>Control</h6>} className="bg-white shadow-sm">
                             <label className='mb-1' htmlFor="timerInput">Timer</label>
                             <InputGroup disabled={selectedGroupStatus !== 0}
                             >
@@ -400,7 +400,7 @@ console.log("setGroup")
                             <Row hidden={selectedGroupStatus !== 4}>
                                 <Panel>
                                     <h5>Group is closed</h5>
-                                    <Button  className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(0)} >Open</Button>
+                                    <Button className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(0)} >Open</Button>
                                     <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
 
                                 </Panel>
@@ -427,17 +427,20 @@ console.log("setGroup")
                         }>
 
 
-                            {(cartItems && cartItems?.length !== 0 )? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0} removeFromCart={cartController.removeFromCart} height={305} />
+                            {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0} removeFromCart={cartController.removeFromCart} height={305} />
                                 : <div style={{ textAlign: 'center', color: "#ccc", height: 305 }}>Empty</div>}
                             <br />
-                            <div>Items: {items} SAR</div>
+                            
+                            <div className=''>
+                                <div>Items: {items} SAR</div>
 
-                            <div>Delivery: {userDelivery} SAR</div>
-                            {(items > 0) ? <b>Total: {items + userDelivery} SAR</b> : <>Total: 0</>}
-                            {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
+                                <div>Delivery: {userDelivery} SAR</div>
+                                {(items > 0) ? <b>Total: {items + userDelivery} SAR</b> : <>Total: 0</>}
+                                {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
 
+                            </div>
                         </Panel>
-                        <Panel bordered header={<h6>Chat</h6>} className="mt-3 bg-white shadow-sm">
+                        <Panel className="bg-white mt-3 shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >
                             {chatController.connection ? <>
                                 <MessageContainer messages={messages} />
                                 <br />

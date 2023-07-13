@@ -4,7 +4,7 @@ import UserGuests from "../../components/User/UserGuests";
 export  default function ProfilePage() {
 
     return (
-        <Container className="h-screen p-5">
+        <Container className="p-5">
             <AccountInfo />
             <br />
             <UserGuests />

@@ -56,7 +56,7 @@ console.log(response)
     }
 
     return (<>
-        <div onClick={() => { setLoginLoad(true); googleLogin() }} className="flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-mainOrange"  >
+        <div onClick={() => { googleLogin() }} className="flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-mainOrange"  >
             <BsGoogle size={20} />
             <div className="my-auto ml-2 !text-black">
                 Sign in with google

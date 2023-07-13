@@ -47,9 +47,9 @@ const Group = ({ item, isOwner, setRemoveLoad }) => {
 
 
     return <Panel className="bg-white shadow-md" bodyFill xs={24} style={{ filter: (item.status === 4) ? "grayscale(90%)" : "grayscale(0%)" }}>
-        <div className="GroupItem panel" onClick={() => { navigate("/Group/" + item.id); }}>
-            <img src={item.photo} className="object-cover h-32 w-full" alt='' draggable="false" />
-            <div className="p-3">
+        <div className="grid sm:grid-cols-5 panel" onClick={() => { navigate("/Group/" + item.id); }}>
+            <img src={item.photo} className="object-cover h-32 w-full sm:col-span-1" alt='' draggable="false" />
+            <div className="p-3 sm:col-span-4">
                 <Stack direction="row" justifyContent="space-between">
                     <h5>{item.name}</h5>
                     {time}
@@ -60,7 +60,6 @@ const Group = ({ item, isOwner, setRemoveLoad }) => {
         </div>
     </Panel>
 }
-
 export default function MePage() {
     const [myGroups, setmyGroups] = useState([]);
     const [myGroupLoader, setMyGroupLoader] = useState(true);

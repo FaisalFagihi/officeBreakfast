@@ -18,6 +18,8 @@ import Avatar from 'react-avatar';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { messaging } from '../../modules/firebase'
+import { getToken, onMessage } from 'firebase/messaging'
 
 export default function Navbar() {
     // const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -44,22 +46,40 @@ export default function Navbar() {
         })
     }
 
-    useEffect(() => {
-        getLogsCount();
-    }, [])
+    const requestPermission = async () => {
+        if (!auth.isAuthenticated())
+            return
 
-    const [interval, setTimerInterval] = useState();
+        if ('Notification' in window) {
 
+            const perimission = await Notification.requestPermission()
+            console.log('perimission ', perimission)
+            if (perimission === 'granted') {
+                const token = await getToken(messaging, { vapidKey: 'BAusTrWhr_PENeKaWEJnjxpZJJ1BeuEgANFHrM3e0gOM41y4JatuCsO-2TNgMKy_xSmu9RKT81OZM5moNDdtBXg' })
 
-    useEffect(() => {
-        setTimerInterval(setInterval(() => getLogsCount(), 5000));
+                console.log('TOKEN '.token)
 
-
-        return () => {
-            clearInterval(interval)
+                if (!token)
+                    return
+                userController.registerFcmToken(token).then((data) => {
+                    console.log('regisetered token')
+                }).catch((err) => {
+                    console.log('regiseter token error:', err)
+                })
+            }
         }
-    }, []);
+    }
 
+    useEffect(() => {
+
+        getLogsCount()
+
+        requestPermission()
+
+        onMessage(messaging, (payload) => {
+            setLogsCount((prevCount) => prevCount + 1)
+        })
+    }, []);
 
     const navigate = useNavigate();
 
@@ -67,17 +87,24 @@ export default function Navbar() {
         <>
             {/* <div className='fixed px-4 bg-[#333] shadow-sm w-full p-2 sm:pr-4 top-0 left-0 z-50 text-base flex h-12 sm:collapse'  /> */}
             {/* <div className='fixed px-4  bottom-0 sm:bottom-auto bg-[#333] shadow-sm w-full py-3 sm:pr-4 sm:top-0 sm:left-0 sm:rounded-none z-50 text-base flex'> */}
-            <div className='bg-[#f5f5f5] border-b w-full py-1  z-50 text-base flex justify-between sm:justify-start' >
-
+            <div className='w-full p-2 z-50 text-base flex justify-between sm:justify-start 2xl:w-auto 2xl:flex-col shadow-md 2xl:shadow-none' >
+                <div className='hidden 2xl:flex mt-3'>
+                    <button onClick={() => navigate("./profile")} className="flex rounded-full focus:outline-none p-0">
+                        <Avatar name={auth.getName()} size={36} round={true} />
+                    </button>
+                    <div className='mx-2 my-auto text-lg font-medium'>
+                        {auth.getName()}
+                    </div>
+                </div>
+                <Divider className='hidden my-2 mr-2 2xl:block' />
                 {navigationItems.map((item, id) => (
-
                     <div
                         key={item.name}
-                        onClick={() => navigate(item.href)}
-                        className={` ${id == 0 ? 'place-content-start' : id == navigationItems.length - 1 ? 'flex-grow' : 'flex-grow'}  my-auto sm:flex-none text-center px-2 text-base font-medium ${"text-black"} `}
+                        onClick={() => {navigate(item.href); getLogsCount()}}
+                        className={` ${id == 0 ? 'place-content-start' : id == navigationItems.length - 1 ? 'place-content-end' : 'flex-grow'}  my-auto 2xl:my-2 sm:flex-none text-center px-2 text-base font-medium ${"text-black"} `}
                         aria-current={item.current ? 'page' : undefined}
                     >
-                        <div className='flex cursor-pointer place-content-center place-items-center'>
+                        <div className='flex cursor-pointer place-content-center place-items-center sm:place-content-start sm:place-items-start'>
                             <Badge content={logsCount > 0 && item.name == 'Notifications' ? logsCount : false} color="green" >
                                 {item.current ? item.iconFill : item.iconLine}
                             </Badge>
@@ -87,11 +114,7 @@ export default function Navbar() {
                         </div>
                     </div>
                 ))}
-                <div className='px-2 ml-auto'>
-                    <button onClick={() => navigate("./profile")} className="flex rounded-full bg-black text-base focus:outline-none  p-0">
-                        <Avatar name={auth.getName()} size={36} round={true} />
-                    </button>
-                </div>
+
                 {/* <button onClick={() => { setIsNotificationOpen(true); }}
                         type="button"
                         className="bg-none p-0 border-0 outline-none"
