@@ -75,6 +75,40 @@ class UserController {
     registerFcmToken = (token) => {
         return axiosInstance.post("registerFcmToken", { fcmToken: token })
     }
+
+    confirmOwner = (ownerUsername) => {
+        return axiosInstance.get("ConfirmOwner", {params:{ownerUsername}});
+    }
+
+    confirmGuest = (guestUsername) => {
+        return axiosInstance.get("ConfirmGuest", {params:{guestUsername}});
+    }
+
+    getJoinedGuests = () => {
+        return axiosInstance.get("JoinedGuests/",);
+    }
+
+    getOwnersInvitations = () => {
+        return axiosInstance.get("OwnersInvitations/",);
+    }
+
+    getMyJoinRequests = () => {
+        return axiosInstance.get("MyJoinRequests/",);
+    }
+
+    getMyInvitations = () => {
+        return axiosInstance.get("MyInvitations/",);
+    }
+
+    cancelJoinRequest = (guestUsername) => {
+        return axiosInstance.get("CancelJoinRequest", {params:{username:guestUsername}});
+    }
+
+    cancelInvitation = (guestUsername) => {
+        return axiosInstance.get("CancelInvitation", {params:{username:guestUsername}});
+    }
+
+
 }
 
 export default new UserController();

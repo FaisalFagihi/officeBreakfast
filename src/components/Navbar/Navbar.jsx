@@ -87,8 +87,8 @@ export default function Navbar() {
         <>
             {/* <div className='fixed px-4 bg-[#333] shadow-sm w-full p-2 sm:pr-4 top-0 left-0 z-50 text-base flex h-12 sm:collapse'  /> */}
             {/* <div className='fixed px-4  bottom-0 sm:bottom-auto bg-[#333] shadow-sm w-full py-3 sm:pr-4 sm:top-0 sm:left-0 sm:rounded-none z-50 text-base flex'> */}
-            <div className='w-full p-2 z-50 text-base flex justify-between sm:justify-start 2xl:w-auto 2xl:flex-col shadow-md 2xl:shadow-none' >
-                <div className='hidden 2xl:flex mt-3'>
+            <div className='w-full p-2 z-50 text-base flex justify-between sm:justify-start xl:w-auto xl:flex-col shadow-md xl:shadow-none' >
+                <div className='hidden xl:flex mt-3'>
                     <button onClick={() => navigate("./profile")} className="flex rounded-full focus:outline-none p-0">
                         <Avatar name={auth.getName()} size={36} round={true} />
                     </button>
@@ -96,12 +96,12 @@ export default function Navbar() {
                         {auth.getName()}
                     </div>
                 </div>
-                <Divider className='hidden my-2 mr-2 2xl:block' />
+                <Divider className='hidden my-2 mr-2 xl:block' />
                 {navigationItems.map((item, id) => (
                     <div
                         key={item.name}
                         onClick={() => {navigate(item.href); getLogsCount()}}
-                        className={` ${id == 0 ? 'place-content-start' : id == navigationItems.length - 1 ? 'place-content-end' : 'flex-grow'}  my-auto 2xl:my-2 sm:flex-none text-center px-2 text-base font-medium ${"text-black"} `}
+                        className={` ${id == 0 ? 'place-content-start' : id == navigationItems.length - 1 ? 'place-content-end' : 'flex-grow'}  my-auto xl:my-2 sm:flex-none text-center px-2 text-base font-medium ${"text-black"} `}
                         aria-current={item.current ? 'page' : undefined}
                     >
                         <div className='flex cursor-pointer place-content-center place-items-center sm:place-content-start sm:place-items-start'>

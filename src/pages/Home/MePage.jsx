@@ -10,56 +10,11 @@ import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 import Username from "../../components/User/Username";
 import { MdNoFood } from 'react-icons/md';
 import GroupCreationPage from "../Group/GroupCreationPage";
+import GroupCard from "../Group/GroupCard";
+import { Panel as CustomPanel } from "../../style/Style";
+import Fatch from "../../Helpers/Fatcher";
+import { LeadersTable } from "../Group/UsersTable";
 
-const Group = ({ item, isOwner, setRemoveLoad }) => {
-    const [hours, setHours] = useState(0);
-    const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(0);
-    const [interval, setTimerInterval] = useState();
-    const navigate = useNavigate();
-    const time = ((hours + minutes + seconds) > 0) ? <> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </>
-        : <>Time Is Over</>
-
-    const groupStatus = ['Collecting Orders..', 'Ordering..', 'Ship has sailed', 'Orders have arrived', 'Closed']
-
-
-    const getTime = () => {
-        let time = Date.parse(item.endDate + " GMT") - Date.parse(new Date().toUTCString())
-        setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
-        setMinutes(Math.floor((time / 1000 / 60) % 60));
-        setSeconds(Math.floor((time / 1000) % 60));
-        if (time < 0) {
-            clearInterval(interval);
-            setTimerInterval(undefined)
-        }
-    }
-
-
-    useEffect(() => {
-
-        clearInterval(interval);
-
-        getTime()
-        if (Date.parse(item.endDate + " GMT") >= Date.parse(new Date().toUTCString())) {
-            setTimerInterval(setInterval(() => getTime(), 1000));
-        }
-    }, []);
-
-
-    return <Panel className="bg-white shadow-md" bodyFill xs={24} style={{ filter: (item.status === 4) ? "grayscale(90%)" : "grayscale(0%)" }}>
-        <div className="grid sm:grid-cols-5 panel" onClick={() => { navigate("/Group/" + item.id); }}>
-            <img src={item.photo} className="object-cover h-32 w-full sm:col-span-1" alt='' draggable="false" />
-            <div className="p-3 sm:col-span-4">
-                <Stack direction="row" justifyContent="space-between">
-                    <h5>{item.name}</h5>
-                    {time}
-                </Stack>
-                <Divider className="my-2" />
-                <p>{groupStatus[item.status]}</p>
-            </div>
-        </div>
-    </Panel>
-}
 export default function MePage() {
     const [myGroups, setmyGroups] = useState([]);
     const [myGroupLoader, setMyGroupLoader] = useState(true);
@@ -69,9 +24,23 @@ export default function MePage() {
     const [userOwners, setUserOwners] = useState([]);
     const [isNewRestaurant, setNewRestaurantState] = useState(false);
 
+    const [guests, setGuests] = useState([]);
+    const [guestsReload, setGuestsReload] = useState(false);
+
+
+    const [myInvitations, setMyInvitations] = useState([]);
+    const [invatationReload, setInvatationReload] = useState(false);
+    const [searchUsername, setSearchUsername] = useState([]);
+    const [searchData, setSearchData] = useState([]);
+    const [searchWord, setSearchWord] = useState("");
+
+    const [joinRequests, setJoinRequests] = useState([]);
+    const [requestReload, setRequestReload] = useState(false);
+
     const toaster = Toaster();
 
     const navigate = useNavigate();
+
     const fetchMyGroups = () => {
         setMyGroupLoader(true)
         groupController.getMyGroups().then(({ data }) => {
@@ -106,39 +75,42 @@ export default function MePage() {
     );
 
 
-
     const userCard = (username, name) => {
         return (
-            <Row>
-                <Col>
-                    <Avatar circle src="https://avatars.githubusercontent.com/u/12592949" alt="@superman66" />
-                </Col>
-                <Col>
-                    <Row>
-                        {name}
-                    </Row>
-                    <Row>
-                        <small>{username}</small>
-                    </Row>
-                </Col>
-            </Row>
+            <div className='flex flex-row'>
+
+                <Avatar circle src="https://avatars.githubusercontent.com/u/12592949" alt="@superman66" />
+                <div className='flex flex-col px-2'>
+                    {name}
+                    <small>{username}</small>
+                </div>
+            </div>
+
         )
     }
 
 
+    const submitGuest = (guestUsername) => {
+        userController.submitGuest(guestUsername).then(({ data }) => {
+            setGuestsReload(!guestsReload)
 
-    // Accepts the array and key
-    const groupBy = (array, key) => {
-        // Return the end result
-        return array.reduce((result, currentValue) => {
-            // If an array already present for key, push it to the array. Else create an array and push the object
-            (result[currentValue[key]] = result[currentValue[key]] || []).push(
-                currentValue
-            );
-            // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-            return result;
-        }, {}); // empty object is the initial value for result object
+        }).catch(({ response }) => {
+            toaster.push(response?.data, "error")
+        })
     }
+
+    useEffect(() => {
+        if (searchWord === "")
+            return
+
+        userController.searchGuest(searchWord).then(({ data }) => {
+            setSearchData(data)
+            let usernames = data.map(x => x.name + ":" + x.username)
+            setSearchUsername(usernames)
+            console.log(data)
+        })
+    }, [searchWord]);
+
 
     return (
         <div>
@@ -175,7 +147,7 @@ export default function MePage() {
                     (myGroups?.length != 0) ? myGroups?.map((item) => {
                         return (
                             <Row key={item.id} style={{ position: "relative" }} className="mb-3 mx-0">
-                                <Group item={item} isOwner={true} />
+                                <GroupCard item={item} isOwner={true} />
                                 <SizeDropdown placement="topEnd" groupID={item.id} title="..." size="xs" style={{ position: "absolute", bottom: 1, right: 1, zIndex: 20 }} />
                             </Row>
                         )
@@ -195,11 +167,30 @@ export default function MePage() {
                     <GroupCreationPage afterSubmit={() => {
                         setNewRestaurantState(false)
                         fetchMyGroups()
-
                     }
                     } />
                 </Modal.Body>
             </Modal>
+
+            <div className='flex flex-row'>
+                {/* <Input value={guestPhone} onChange={(e) => setGuestPhone(e)} placeholder="Guest Phone" /> */}
+                <AutoComplete
+                    className="w-full"
+                    placeholder="Search by Guest email or name.."
+                    value={searchWord} onChange={(e) => setSearchWord(e)}
+                    data={searchUsername}
+                    renderMenuItem={usrename => {
+                        let user = searchData.find(x => x.username === usrename.split(':')[1]);
+                        return userCard(user.name, user.username)
+                    }}
+                />
+                <button onClick={() => submitGuest(searchWord?.split(':')[1])}>add</button>
+            </div>
+            <CustomPanel header={'Guests'}>
+                <Fatch request={userController.getGuests} setData={setGuests} reload={guestsReload}>
+                    <LeadersTable items={guests} onAction={()=>setGuestsReload(!guestsReload)} />
+                </Fatch>
+            </CustomPanel>
         </div>
     );
 }

@@ -431,11 +431,11 @@ getTime()
                                 : <div style={{ textAlign: 'center', color: "#ccc", height: 305 }}>Empty</div>}
                             <br />
                             
-                            <div className=''>
+                            <div className='bg-white fixed z-10 w-full left-0 bottom-0 border-t p-2 xl:relative xl:p-0'>
                                 <div>Items: {items} SAR</div>
 
                                 <div>Delivery: {userDelivery} SAR</div>
-                                {(items > 0) ? <b>Total: {items + userDelivery} SAR</b> : <>Total: 0</>}
+                                <b>Total: {items + userDelivery} SAR</b>
                                 {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
 
                             </div>

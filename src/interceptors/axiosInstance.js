@@ -1,6 +1,5 @@
 import axios from "axios";
 import auth from "../modules/auth";
-
 export const axiosInstance = axios.create({
   // baseURL: 'https://127.0.0.1:44369/api/',
   timeout: 15000,
@@ -34,6 +33,7 @@ axiosInstance.interceptors.response.use(function (response) {
 }, function (error) {
   if (error?.response?.status === 401) {
     localStorage.removeItem('token')
+    window.location.href  = './' 
   }
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
