@@ -16,7 +16,7 @@ const ProtectedRoutes = () => {
         <div className='xl:flex'>
           <Navbar />
           {/* <VerticalBar /> */}
-          <div className="w-full sm:border-b-0 sm:border sm:px-4">
+          <div className="w-full sm:border-b-0 sm:border p-5">
             <Outlet />
           </div>
         </div>

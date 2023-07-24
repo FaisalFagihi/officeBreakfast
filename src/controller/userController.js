@@ -1,7 +1,7 @@
 import axiosInstance from "../interceptors/axiosInstance"
 
 class UserController {
-    getCurrentUser = (callback)=> {
+    getCurrentUser = (callback) => {
         axiosInstance.get("me")
             .then(({ data }) => {
                 console.log(data)
@@ -32,18 +32,21 @@ class UserController {
     }
 
     submitWalletRecord = (guestUserName, amount, remark) => {
-        console.log({ guestName:guestUserName, amount:amount, remark:remark })
-        return axiosInstance.post("AddWalletRecord", { guestName:guestUserName, amount:amount, remark:remark });
+        console.log({ guestName: guestUserName, amount: amount, remark: remark })
+        return axiosInstance.post("AddWalletRecord", { guestName: guestUserName, amount: amount, remark: remark });
     }
 
     sendJoinRequest = (ownerUsername) => {
-        return axiosInstance.get("JoinToGroup", {params:{ownerUsername}});
+        return axiosInstance.get("JoinToGroup", { params: { ownerUsername } });
     }
 
     removeGuest = (guestUsername) => {
-        return axiosInstance.get("RemoveGuest", {params:{guestUsername}});
+        return axiosInstance.get("RemoveGuest", { params: { guestUsername } });
     }
 
+    removeOwner = (ownerUsername) => {
+        return axiosInstance.get("RemoveOwner", { params: { ownerUsername } });
+    }
     getUserLogs = () => {
         return axiosInstance.get("MyLogs",);
     }
@@ -60,11 +63,11 @@ class UserController {
     }
 
     searchGuest = (word) => {
-        return axiosInstance.get("Search", {params:{word}});
+        return axiosInstance.get("Search", { params: { word } });
     }
 
     resetPassword = (email) => {
-        return axiosInstance.get("ForgotPassword", {params:{email}});
+        return axiosInstance.get("ForgotPassword", { params: { email } });
     }
 
     updatePassword = (newPassword, token) => {
@@ -77,11 +80,11 @@ class UserController {
     }
 
     confirmOwner = (ownerUsername) => {
-        return axiosInstance.get("ConfirmOwner", {params:{ownerUsername}});
+        return axiosInstance.get("ConfirmOwner", { params: { ownerUsername } });
     }
 
     confirmGuest = (guestUsername) => {
-        return axiosInstance.get("ConfirmGuest", {params:{guestUsername}});
+        return axiosInstance.get("ConfirmGuest", { params: { guestUsername } });
     }
 
     getJoinedGuests = () => {
@@ -101,11 +104,11 @@ class UserController {
     }
 
     cancelJoinRequest = (guestUsername) => {
-        return axiosInstance.get("CancelJoinRequest", {params:{username:guestUsername}});
+        return axiosInstance.get("CancelJoinRequest", { params: { username: guestUsername } });
     }
 
     cancelInvitation = (guestUsername) => {
-        return axiosInstance.get("CancelInvitation", {params:{username:guestUsername}});
+        return axiosInstance.get("CancelInvitation", { params: { username: guestUsername } });
     }
 
 

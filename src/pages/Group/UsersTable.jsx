@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { Dropdown } from 'rsuite'
+import { Dropdown, useToaster } from 'rsuite'
 import userController from '../../controller/userController'
 import { GuestStatus, LeaderStatus } from '../../components/User/UserStatus';
-import { AiFillCheckCircle } from "react-icons/ai"
-import { GiCancel } from "react-icons/gi"
+import { MdCheckCircle } from "react-icons/md"
+import { MdCancel } from "react-icons/md"
 
-export function GuestsTable({ items, onAction }) {
+export function LeadersTable({ items, onAction }) {
     return items?.length > 0 ?
         <div className="table w-full px-2 py-2 bg-white ">
             <div className='table-row-group '>
@@ -14,11 +14,11 @@ export function GuestsTable({ items, onAction }) {
                 })}
             </div>
         </div>
-        : <></>
+        : <div className='text-center p-3 text-gray-500 font-normal'>no leaders</div>
 
 }
 
-export function LeadersTable({ items, onAction }) {
+export function GuestsTable({ items, onAction }) {
     return items?.length > 0 ?
         <div className="table w-full px-2 py-2 bg-white ">
             <div className='table-row-group '>
@@ -27,7 +27,7 @@ export function LeadersTable({ items, onAction }) {
                 })}
             </div>
         </div>
-        : <></>
+        : <div className='text-center p-3 text-gray-500 font-normal'>no guests</div>
 
 }
 
@@ -39,7 +39,7 @@ function UsersTable({ item, options, status }) {
         </div>
         <div className='table-cell text-left p-2 border-b border-gray-100'>{item.username} </div>
         <div className='table-cell text-left p-2 border-b border-gray-100'>{item.balance ?? '-'} </div>
-        <div className='table-cell text-right p-0 border-b border-gray-100'>
+        <div className='table-cell text-right p-0 border-b border-gray-100 w-16 align-middle'>
             {options}
         </div>
     </div>
@@ -48,6 +48,7 @@ function UsersTable({ item, options, status }) {
 
 const GuestOptions = ({ leaderName, status, onAction }) => {
 
+    const toaster = useToaster()
 
     const cancelJoinRequest = (username) => {
         userController.cancelJoinRequest(username).then(() => {
@@ -66,6 +67,13 @@ const GuestOptions = ({ leaderName, status, onAction }) => {
         })
     }
 
+    const removeOwner = (ownerUsername) => {
+        userController.removeOwner(ownerUsername).then(() => {
+            onAction()
+        })
+    }
+
+    const ownerActionItems = [{ label: "remove", onClick: removeOwner }]
     const myRequestsActionItems = [{ label: "remove", onClick: cancelJoinRequest }]
 
 
@@ -83,12 +91,18 @@ const GuestOptions = ({ leaderName, status, onAction }) => {
             </Dropdown>
             break;
         case 2:
-            return <div>
-                <button onClick={() => invitationActionItems[0].onClick(leaderName)}> <AiFillCheckCircle /></button>
-                <button onClick={() => invitationActionItems[1].onClick(leaderName)}><GiCancel /></button>
+            return <div className='flex justify-start'>
+                <MdCheckCircle color='#a3ba61' size={28} onClick={() => invitationActionItems[0].onClick(leaderName)} className='cursor-pointer hover:opacity-75' />
+                <MdCancel color='#444' size={28} onClick={() => invitationActionItems[1].onClick(leaderName)} className='cursor-pointer hover:opacity-75' />
             </div>
             break;
-
+        case 3:
+            return <Dropdown title='...' size='sm'>
+                {ownerActionItems?.map((actionItem) => {
+                    return <Dropdown.Item key={actionItem.label} onClick={() => actionItem.onClick(leaderName)}>{actionItem.label}</Dropdown.Item>
+                })}
+            </Dropdown>
+            break;
         default:
             return <></>
             break;
@@ -134,9 +148,9 @@ const LeaderOptions = ({ guestName, status, onAction }) => {
 
     switch (status) {
         case 1:
-            return <div>
-                <button onClick={() => joinedRequestsActionItems[0].onClick(guestName)}> <AiFillCheckCircle /></button>
-                <button onClick={() => joinedRequestsActionItems[1].onClick(guestName)}><GiCancel /></button>
+            return <div className='flex justify-start'>
+                <MdCheckCircle color='#a3ba61' size={28} onClick={() => joinedRequestsActionItems[0].onClick(guestName)} className='cursor-pointer hover:opacity-75' />
+                <MdCancel color='#444' size={28} onClick={() => joinedRequestsActionItems[1].onClick(guestName)} className='cursor-pointer hover:opacity-75' />
             </div>
             break;
         case 2:
@@ -146,6 +160,14 @@ const LeaderOptions = ({ guestName, status, onAction }) => {
                 })}
 
             </Dropdown>
+            break;
+        case 3:
+            return <Dropdown title='...' size='sm'>
+                {guestActionItems?.map((actionItem) => {
+                    return <Dropdown.Item key={actionItem.label} onClick={() => actionItem.onClick(guestName)}>{actionItem.label}</Dropdown.Item>
+                })}
+            </Dropdown>
+
             break;
 
         default:

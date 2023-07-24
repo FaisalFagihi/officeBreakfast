@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Stack, Grid, Panel, Button, Divider, InputGroup, Row, Col, Dropdown, AutoComplete, Avatar, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal } from "rsuite";
+import { Stack, Grid, Button, Divider, InputGroup, Row, Col, Dropdown, AutoComplete, Avatar, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal } from "rsuite";
 import groupController from "../../controller/groupController";
 import { Loader } from 'rsuite';
 import UserController from "../../controller/userController";
@@ -11,9 +11,9 @@ import Username from "../../components/User/Username";
 import { MdNoFood } from 'react-icons/md';
 import GroupCreationPage from "../Group/GroupCreationPage";
 import GroupCard from "../Group/GroupCard";
-import { Panel as CustomPanel } from "../../style/Style";
+import { Panel  } from "../../style/Style";
 import Fatch from "../../Helpers/Fatcher";
-import { LeadersTable } from "../Group/UsersTable";
+import { GuestsTable } from "../Group/UsersTable";
 
 export default function MePage() {
     const [myGroups, setmyGroups] = useState([]);
@@ -114,35 +114,14 @@ export default function MePage() {
 
     return (
         <div>
+                <div className="flex justify-between mb-2">
 
-            <Panel hidden={(!myGroups?.length < 1 || myGroupLoader)}>
-                <FlexboxGrid justify="start" > <h6>
-                    Host group
-                </h6>
-                </FlexboxGrid>
-            </Panel>
-
-            <Panel header={
-                <Grid fluid>
-                    <Row>
-                        <FlexboxGrid justify="space-between" align="middle">
-                            <FlexboxGridItem>
-                                My Host
-                            </FlexboxGridItem>
-                            <FlexboxGridItem>
-                                <Row className="mt-2">
-                                    <Col xs={24}>
-                                        <Button className="bg-borderGray" block onClick={() => setNewRestaurantState(true)}> + </Button>
-                                    </Col>
-                                </Row>
-                            </FlexboxGridItem>
-                        </FlexboxGrid>
-                    </Row>
-                    <Row>
-                        {/* <Divider className="mt-2" /> */}
-                    </Row>
-                </Grid>
-            }>
+                    <div className="text-lg">
+                        My Host
+                    </div>
+                    <button className="bg-borderGray py-1 px-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> + </button>
+                </div>
+            
                 {(!removeLoad && !myGroupLoader) ?
                     (myGroups?.length != 0) ? myGroups?.map((item) => {
                         return (
@@ -157,7 +136,6 @@ export default function MePage() {
                         <Loader size="md" content="Loading" />
                     </FlexboxGrid>
                 }
-            </Panel>
 
             <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
                 <Modal.Header>
@@ -172,25 +150,26 @@ export default function MePage() {
                 </Modal.Body>
             </Modal>
 
-            <div className='flex flex-row'>
+            <div className='flex flex-row mt-10'>
                 {/* <Input value={guestPhone} onChange={(e) => setGuestPhone(e)} placeholder="Guest Phone" /> */}
                 <AutoComplete
                     className="w-full"
-                    placeholder="Search by Guest email or name.."
+                    placeholder="Add by guest email or name.."
                     value={searchWord} onChange={(e) => setSearchWord(e)}
                     data={searchUsername}
+                    
                     renderMenuItem={usrename => {
                         let user = searchData.find(x => x.username === usrename.split(':')[1]);
                         return userCard(user.name, user.username)
                     }}
                 />
-                <button onClick={() => submitGuest(searchWord?.split(':')[1])}>add</button>
+                <button onClick={() => submitGuest(searchWord?.split(':')[1])} className="bg-transparent border-borderGray  py-0 mx-2 text-base rounded-md">add</button>
             </div>
-            <CustomPanel header={'Guests'}>
+            <Panel header={'Guests'}>
                 <Fatch request={userController.getGuests} setData={setGuests} reload={guestsReload}>
-                    <LeadersTable items={guests} onAction={()=>setGuestsReload(!guestsReload)} />
+                    <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
                 </Fatch>
-            </CustomPanel>
+            </Panel>
         </div>
     );
 }

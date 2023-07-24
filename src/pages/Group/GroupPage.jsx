@@ -213,7 +213,7 @@ getTime()
     const cartUsers = Object.keys(groupBy(cartItems, 'username'));
     return (
         loader ? <>
-            <Container className='p-3'>
+            <Container className='p-0'>
                 {/* <Row>
                     <InputPicker defaultValue={orderStatus[0].value} data={orderStatus} style={{ width: 224 }} />
                 </Row> */}

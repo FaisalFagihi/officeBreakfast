@@ -6,7 +6,7 @@ import { Divider, Loader } from 'rsuite';
 import groupController from "../../controller/groupController";
 import Fatch from "../../Helpers/Fatcher";
 import userController from "../../controller/userController";
-import { GuestsTable } from "../Group/UsersTable";
+import { LeadersTable } from "../Group/UsersTable";
 import { Panel } from "../../style/Style";
 
 
@@ -31,7 +31,7 @@ export default function HomePage() {
 
             <Panel header='Leaders' className='pt-4'>
                 <Fatch request={userController.getOwners} setData={setLeaders} reload={leadersReload}>
-                    <GuestsTable items={leaders} onAction={() => setLeadersReload(!leadersReload)} />
+                    <LeadersTable items={leaders} onAction={() => setLeadersReload(!leadersReload)} />
                 </Fatch>
 
             </Panel>

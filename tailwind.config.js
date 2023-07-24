@@ -20,7 +20,7 @@ module.exports =  withMT({
       yellow: colors.yellow,
     },
     extend: {
-      input:"bg-mainGray shadow-[inset_2px_-2px_4px_1px_#e8e8e8]"
+      input:"bg-mainGray shadow-[inset_2px_-2px_4px_1px_#e8e8e8]",
     },
   },
   plugins: [],
