@@ -47,18 +47,17 @@ export default function LoginPage() {
      return  (
         auth.isAuthenticated() ?
             <Navigate to="/" /> :
-            <div className="w-screen h-screen">
-                <Panel className="m-auto w-[350px] sm:w-[470px] bg-white rounded-full !px-10 !pt-0 h-[420px] sm:h-[470px] border-0 shadow-sm mt-20 sm:mt-56">
+            <div className="flex flex-col">
+                <Panel className="m-auto w-[350px] sm:w-[470px] bg-white rounded-full !px-14 !pt-0 h-[420px] sm:h-[470px] border-0 shadow-sm sm:mt-56">
+                    <img src='/assets/logo-96.png' className='m-auto mt-4 h-[70px] sm:h-[110px] ' draggable="false" />
           
-
-                    <img src='/assets/logo-96.png' className='m-auto h-[70px] sm:h-[110px]' draggable="false" />
-                    <div hidden={active !== form.login}>
+                    <div hidden={active !== form.login}> 
 
                         {/* <Divider> or </Divider> */}
                         <LoginForm googleLogin={signIn} />
                         <p className="text-center p-2"><b style={{ cursor: "pointer" }} onClick={() => setActive(form.signUp)}>Sign up</b></p>
                     </div>
-                    <div hidden={active !== form.signUp}>
+                    <div hidden={active !== form.signUp} className='pt-6'>
 
                         <RegisterForm />
                         <p className="text-center p-2"><b style={{ cursor: "pointer" }} onClick={() => setActive(form.login)}>Login</b></p>

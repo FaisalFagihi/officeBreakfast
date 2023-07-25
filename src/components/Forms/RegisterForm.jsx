@@ -68,7 +68,7 @@ export function RegisterForm() {
             <div hidden={!message} className="p-2 text-sm text-center">
                 {message}
             </div>
-            <div hidden={message} className="m-2 text-sm text-left">
+            <div hidden={message} className="text-sm text-center">
                 Fill the fields with the required information:
             </div>
             <input className='input rounded-full mt-3' placeholder='Email' ref={username} />
