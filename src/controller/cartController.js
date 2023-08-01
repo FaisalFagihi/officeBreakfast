@@ -29,6 +29,7 @@ class Cart {
                     .build();
 
                 this.connection.on("OrdersInCart", (orders) => {
+                 console.log(orders)
                     this.setOrders(orders);
                 });
 

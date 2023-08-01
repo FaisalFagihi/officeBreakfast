@@ -32,7 +32,7 @@ export function RegisterForm() {
                     await localStorage.setItem('firstName', response.data['firstName'])
                     await localStorage.setItem('lastName', response.data['lastName'])
                     setMessage(response.data['message'])
-                    
+
                     navigate("/")
                 }
             }).catch(function (response) {
@@ -65,17 +65,17 @@ export function RegisterForm() {
 
     return (
         <div className="px-0">
-            <div hidden={!message} className="p-2 text-sm text-center">
-                {message}
+            <div className="p-2 text-sm text-center">
+                <p>
+                    {message?message: 'Fill the fields with the required information:' }
+                </p>
+
             </div>
-            <div hidden={message} className="text-sm text-center">
-                Fill the fields with the required information:
+            <div className="grid grid-cols-2 mt-3 gap-2">
+                <input className='input rounded-full' placeholder='First Name' name="firstName" ref={firstName} />
+                <input className='input rounded-full' placeholder='Last Name' name="lastName" ref={lastName} />
             </div>
             <input className='input rounded-full mt-3' placeholder='Email' ref={username} />
-            <div className="grid grid-cols-2 mt-3">
-                <input className='input rounded-full rounded-r-none' placeholder='First Name' name="firstName" ref={firstName} />
-                <input className='input rounded-full rounded-l-none' placeholder='Last Name' name="lastName" ref={lastName} />
-            </div>
             <input className='input mt-3 rounded-full' placeholder='Password' name="password" type="password" autoComplete="off" ref={password} />
             <button onClick={() => Register(username.current.value, password.current.value, firstName.current.value, lastName.current.value)} className='normal m-auto mt-5 w-10 h-10 !rounded-full'>
                 {registerLoad ? <Loader /> :

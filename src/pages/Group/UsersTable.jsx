@@ -4,28 +4,25 @@ import userController from '../../controller/userController'
 import { GuestStatus, LeaderStatus } from '../../components/User/UserStatus';
 import { MdCheckCircle } from "react-icons/md"
 import { MdCancel } from "react-icons/md"
+import Avatar from 'react-avatar';
 
 export function LeadersTable({ items, onAction }) {
     return items?.length > 0 ?
-        <div className="table w-full px-2 py-2 bg-white ">
-            <div className='table-row-group '>
-                {items?.map((item) => {
-                    return <UsersTable item={item} status={<GuestStatus value={item?.status} />} key={item.id} options={<GuestOptions leaderName={item.username} status={item.status} onAction={onAction} />} />
-                })}
-            </div>
+        <div className="grid">
+            {items?.map((item) => {
+                return <UsersTable item={item} status={<GuestStatus value={item?.status} />} key={item.id} options={<GuestOptions leaderName={item.username} status={item.status} onAction={onAction} />} />
+            })}
         </div>
-        : <div className='text-center p-3 text-gray-500 font-normal'>no leaders</div>
+        : <div className='text-center p-3 text-gray-500 font-normal'>have no volunteers</div>
 
 }
 
 export function GuestsTable({ items, onAction }) {
     return items?.length > 0 ?
-        <div className="table w-full px-2 py-2 bg-white ">
-            <div className='table-row-group '>
-                {items?.map((item) => {
-                    return <UsersTable item={item} status={<LeaderStatus value={item.status} />} key={item.id} options={<LeaderOptions guestName={item.username} status={item.status} onAction={onAction} />} />
-                })}
-            </div>
+        <div className="grid">
+            {items?.map((item) => {
+                return <UsersTable item={item} status={<LeaderStatus value={item.status} />} key={item.id} options={<LeaderOptions guestName={item.username} status={item.status} onAction={onAction} />} />
+            })}
         </div>
         : <div className='text-center p-3 text-gray-500 font-normal'>no guests</div>
 
@@ -34,12 +31,23 @@ export function GuestsTable({ items, onAction }) {
 
 function UsersTable({ item, options, status }) {
 
-    return <div className='table-row' key={item.id}>
-        <div className='table-cell text-left p-2 border-b border-gray-100 '>{item.firstName} {item.lastName} {status}
+    return <div className='grid grid-cols-6 items-center text-left p-2 bg-white mb-1 w-full rounded-lg ' key={item.id}>
+
+        <div className='grid grid-flow-col  justify-start col-span-4 gap-2'>
+            <div>
+                <Avatar name={item.firstName + ' ' + item.lastName} src={item.picture} size={24} round={true} />
+            </div>
+            <div>
+
+                {item.firstName} {item.lastName}
+            </div>
+            <div className=''>
+                {status}
+            </div>
         </div>
-        <div className='table-cell text-left p-2 border-b border-gray-100'>{item.username} </div>
-        <div className='table-cell text-left p-2 border-b border-gray-100'>{item.balance ?? '-'} </div>
-        <div className='table-cell text-right p-0 border-b border-gray-100 w-16 align-middle'>
+        {/* <div className='hidden'>{item.username} </div> */}
+        <div className=' place-self-center'>{item.balance ?? '-'} </div>
+        <div className='text-right w-16 place-self-end'>
             {options}
         </div>
     </div>

@@ -3,6 +3,8 @@ import auth from '../../modules/auth'
 import { useNavigate } from 'react-router-dom';
 import { Divider, Loader } from 'rsuite';
 import ArrowRightLineIcon from '@rsuite/icons/ArrowRightLine';
+import { GoogleLogin, useGoogleLogin } from 'react-google-login';
+import { gapi } from "gapi-script"
 
 import { BsGoogle } from 'react-icons/bs';
 
@@ -15,10 +17,8 @@ export function LoginForm({ googleLogin }) {
     const [message, setMessage] = useState("Use email and password");
     const [loginLoad, setLoginLoad] = useState(false);
     const [isResetPassword, setResetPassword] = useState(false);
+
     const navigate = useNavigate();
-
-
-
 
     const login = async () => {
         setLoginLoad(true);
@@ -44,7 +44,7 @@ export function LoginForm({ googleLogin }) {
 
     const resetPassword = () => {
         userController.resetPassword(email.current.value).then(async (response) => {
-console.log(response)
+            console.log(response)
         }).catch((response) => {
             console.log(response)
             if (response?.response?.status === 401) {
@@ -55,38 +55,73 @@ console.log(response)
         })
     }
 
-    return (<>
-        <div onClick={() => { googleLogin() }} className="flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-mainOrange"  >
-            <BsGoogle size={20} />
-            <div className="my-auto ml-2 !text-black">
-                Sign in with google
-            </div>
-        </div>
+    const clientID = "727515938547-5knpt0voai55equqiu8okhaaoh2h26du.apps.googleusercontent.com"
+    useEffect(() => {
+        const start = () => {
+            gapi.client.init({
+                clientId: clientID,
+                scope: ""
+            })
+        }
 
-        <Divider className="!my-4">or</Divider>
-        {/* <p>{statusCode}</p> */}
+        gapi.load('client:auth2', start)
+    }, []);
 
-        {!isResetPassword ?
+    const { signIn, loaded } = useGoogleLogin({
+        clientId: clientID,
+        onSuccess: credentialResponse => {
+            auth.loginByGoogleAuth(credentialResponse.tokenId).then(async (response) => {
+                if (response?.status === 200) {
+                    auth.setToken(response.data['token'])
+                    localStorage.setItem('username', response.data['username'])
+                    localStorage.setItem('firstName', response.data['firstName'])
+                    localStorage.setItem('lastName', response.data['lastName'])
+                    localStorage.setItem('picture', response.data['picture'])
+                    navigate("/")
+                }
+            }).catch((response) => {
+            }).finally(() => { setLoginLoad(false) });
+        },
+        onFailure: (e) => {
+            console.log(e)
+            setLoginLoad(false)
+        },
+    })
 
-            <div>
-                <p className="p-1 text-sm text-center" hidden={!message}> {message}</p>
-                <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
-                <div className="mt-3" >
-                    <input type={'password'} placeholder="Password" className='input !rounded-full' ref={password} />
+    return (
+        loginLoad ? <div className='flex p-20 justify-center'> <Loader size='md' content="signing" /> </div> :
 
-                    <div className="mt-1 w-full">
-                        <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3' onClick={() => setResetPassword(true)}> forgot password ?</a>
+            <>
+
+                <div onClick={loaded ? () => { setLoginLoad(true); signIn() } : () => { }} className={`flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-black ${!loaded ? 'bg-mainGray text-white hover:!text-white' : ''}`}  >
+                    <BsGoogle size={20} />
+                    <div className="my-auto ml-2">
+                        Sign in with google
                     </div>
                 </div>
-                <button onClick={() => login()} className="m-auto mt-5 normal w-10 h-10 !rounded-full" >
-                    {loginLoad ? <Loader /> :
-                        <ArrowRightLineIcon className='text-lg' />}
-                </button>
-            </div>
-            : <div>
-                <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
-                <button onClick={() => resetPassword(email)}>Reset</button>
-            </div>}
-    </>
+                <Divider className="!my-6 sm:!my-4">or</Divider>
+                {/* <p>{statusCode}</p> */}
+
+                {!isResetPassword ?
+
+                    <div>
+                        <p className="p-1 text-sm text-center" hidden={!message}> {message}</p>
+                        <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
+                        <div className="mt-3" >
+                            <input type={'password'} placeholder="Password" className='input !rounded-full' ref={password} />
+
+                            <div className="mt-1 w-full">
+                                <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3' onClick={() => setResetPassword(true)}> forgot password ?</a>
+                            </div>
+                        </div>
+                        <button onClick={() => login()} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
+                            <ArrowRightLineIcon className='text-lg' />
+                        </button>
+                    </div>
+                    : <div>
+                        <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
+                        <button onClick={() => resetPassword(email)}>Reset</button>
+                    </div>}
+            </>
     )
 }

@@ -16,7 +16,7 @@ export default function Cart({ cartItems, removeFromCart, height, isCheckout }) 
                         <FlexboxGridItem colspan={22}>
                             {name} <br /><b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
 
-                            {modifiersList.map(({ name, price }, index) => {
+                            {modifiersList?.map(({ name, price }, index) => {
                                 return <p key={index.toString()} index={index}>
                                     {name} {price} SAR
                                 </p>
@@ -37,7 +37,7 @@ export default function Cart({ cartItems, removeFromCart, height, isCheckout }) 
                         <FlexboxGridItem colspan={22}>
                             {name} <br /><b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
 
-                            {modifiersList.map(({ name, price }, index) => {
+                            {modifiersList?.map(({ name, price }, index) => {
                                 return <p key={index.toString()} index={index}>
                                     {name} {price} SAR
                                 </p>

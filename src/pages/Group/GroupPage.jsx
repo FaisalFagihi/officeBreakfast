@@ -92,8 +92,8 @@ export default function GroupPage({ id }) {
     useEffect(() => {
         if (endDate === null)
             return;
-getTime()
-        if (Date.parse(endDate +" GMT") >= Date.parse(new Date().toUTCString())) {
+        getTime()
+        if (Date.parse(endDate + " GMT") >= Date.parse(new Date().toUTCString())) {
             setTimerInterval(setInterval(() => getTime(), 1000));
         }
 
@@ -211,6 +211,8 @@ getTime()
     const [isModalOpen, setIsModalOpen] = useState();
 
     const cartUsers = Object.keys(groupBy(cartItems, 'username'));
+    const itemsTotal = cartItems?.map(x => x.total).reduce((a, v) => a + v, 0);
+
     return (
         loader ? <>
             <Container className='p-0'>
@@ -325,10 +327,10 @@ getTime()
                                             </List>
                                             <br />
                                             <div>
-                                                <div>Items total: {items} SAR</div>
+                                                <div>Items total: {itemsTotal} SAR</div>
 
-                                                <div>Delivery cost: {userDelivery} SAR</div>
-                                                {(items > 0) ? <b>Total: {items + userDelivery} SAR</b> : <>Total: 0</>}
+                                                <div>Delivery cost: {delivery} SAR</div>
+                                                {(itemsTotal > 0) ? <b>Total: {itemsTotal + delivery} SAR</b> : <>Total: 0</>}
                                             </div>
                                         </>
 
@@ -430,14 +432,14 @@ getTime()
                             {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0} removeFromCart={cartController.removeFromCart} height={305} />
                                 : <div style={{ textAlign: 'center', color: "#ccc", height: 305 }}>Empty</div>}
                             <br />
-                            
-                            <div className='bg-white fixed z-10 w-full left-0 bottom-0 border-t p-2 xl:relative xl:p-0'>
-                                <div>Items: {items} SAR</div>
 
-                                <div>Delivery: {userDelivery} SAR</div>
-                                <b>Total: {items + userDelivery} SAR</b>
-                                {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
+                            <div  hidden={!items} className='bg-white fixed z-10 w-full left-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
+                                
+                                    <div>Items: {items} SAR</div>
 
+                                    <div>Delivery: {userDelivery} SAR</div>
+                                    <b>Total: {items + userDelivery} SAR</b>
+                                    {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
                             </div>
                         </Panel>
                         <Panel className="bg-white mt-3 shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >

@@ -19,24 +19,27 @@ export default function HomePage() {
 
     return (
         <div>
+            <div className="flex mb-2">
+                <div className="text-lg">
+                    Available Groups
+                </div>
+            </div>
             <Fatch request={groupController.getAllGroups} setData={setGroups} reload={groupsReload}>
                 <Groups items={groups} />
             </Fatch>
 
-            {(groups?.length < 1) ? <div className='flex justify-start text-lg' >
-                join to a leader
-            </div> : <></>}
-            <JoinToGroup onJoin={() => { setLeadersReload(!leadersReload) }} />
+            <Divider />
 
-
-            <Panel header='Leaders' className='pt-4'>
+            <Panel header='Volunteers' className='!p-0  !bg-transparent' shaded={false}>
                 <Fatch request={userController.getOwners} setData={setLeaders} reload={leadersReload}>
                     <LeadersTable items={leaders} onAction={() => setLeadersReload(!leadersReload)} />
                 </Fatch>
 
             </Panel>
 
-            <br />
+            <div className="mx-2">
+                <JoinToGroup onJoin={() => { setLeadersReload(!leadersReload) }} />
+            </div>
 
         </div>
     );

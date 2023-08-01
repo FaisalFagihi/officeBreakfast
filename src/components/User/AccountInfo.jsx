@@ -2,11 +2,13 @@ import axiosInstance from "../../interceptors/axiosInstance"
 import { useState, useEffect } from "react"
 
 import { useNavigate } from "react-router-dom";
-import { Col, Container, Grid, Panel, Row, Divider, InputGroup, Input, FlexboxGrid } from "rsuite";
+import { Col, Container, Grid, Row, Divider, InputGroup, Input, FlexboxGrid } from "rsuite";
 import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 import { IoPersonCircle } from 'react-icons/io5';
 import Avatar from 'react-avatar';
 import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
+import auth from "../../modules/auth";
+import { Panel } from "../../style/Style";
 
 
 
@@ -51,7 +53,7 @@ export default function AccountInfo() {
   };
 
   useEffect(() => {
-    refresh();
+   // refresh();
   }, [])
 
   const [userInfo, setUserInfo] = useState({});
@@ -62,36 +64,34 @@ export default function AccountInfo() {
   let navigate = useNavigate();
 
   return (
-    <Panel header={<h5>Info</h5>} className="bg-white shadow-sm">
-      <Grid fluid>
-        <Row className="mb-2">
-          <Col xs={12}>
-            <label>Email</label>
-          </Col>
-          <Col xs={12}>
-            <Input value={userInfo.username} readOnly disabled />
-          </Col>
-        </Row>
+    <Panel header={<h5>Info</h5>} className="p-5">
+      <div className={'grid grid-cols-2 gap-2 items-center'}>
+        <label>Email</label>
+        <input value={auth.getUsername()} disabled className="rounded py-1 px-3 border-borderGray disabled:bg-mainGray" />
         {/* <Row>
           <Col xs={12}>
-            <label> Statsus</label>
+          <label> Statsus</label>
           </Col>
           <Col xs={12}>
-            <div> <button onClick={() => { if (!isConnected) navigate("/HungerStationLink") }}>{isConnected ? "Connectd" : "Connect"} </button> </div>
+          <div> <button onClick={() => { if (!isConnected) navigate("/HungerStationLink") }}>{isConnected ? "Connectd" : "Connect"} </button> </div>
           </Col>
         </Row> */}
-        <Row>
-          <Col xs={12}>
-            <label>Name</label>
-          </Col>
-          <Col xs={12}>
-            <InputGroup disabled>
-              <Input placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e)} />
-              <Input style={{ borderLeft: "1px solid #ddd" }} placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e)} />
-            </InputGroup>
-          </Col>
-        </Row>
-      </Grid>
+
+        <div>
+          <label>Name</label>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <input placeholder="First Name" value={auth.getFirstName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-mainGray" />
+          <input placeholder="Last Name" value={auth.getLastName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-mainGray" />
+        </div>
+        <div>
+          <label>Photo</label>
+        </div>
+        <div className="">
+
+        <img src={auth.getPicture()} className="rounded-full border-borderGray" />
+        </div>
+      </div>
     </Panel>
   )
 }

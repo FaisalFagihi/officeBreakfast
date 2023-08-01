@@ -28,7 +28,7 @@ export default function Fatch({ request, setData,reload, children }) {
         console.log('invoked')
     }, [reload]);
 
-    return !loader ? children : <Loader size="xs"  className='flex justify-center' />
+    return !loader ? <div className="p-2">  {children} </div>: <Loader size="xs"  className='flex justify-center' />
     
 
 }

@@ -25,6 +25,11 @@ class Auth {
 
     logout() {
         localStorage.removeItem('token')
+        localStorage.removeItem('username')
+        localStorage.removeItem('firstName')
+        localStorage.removeItem('lastName')
+        localStorage.removeItem('picture')
+
         this.authenticated = false;
     }
 
@@ -35,9 +40,19 @@ class Auth {
     getUsername() {
         return localStorage.getItem('username')
     }
+    getFirstName() {
+        return localStorage.getItem('firstName')
+    }
+    getLastName() {
+        return localStorage.getItem('lastName')
+    }
 
     getName() {
         return localStorage.getItem('firstName') +" "+localStorage.getItem('lastName')
+    }
+
+    getPicture() {
+        return localStorage.getItem('picture')
     }
 
     getToken() {

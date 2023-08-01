@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Stack, Grid, Button, Divider, InputGroup, Row, Col, Dropdown, AutoComplete, Avatar, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal } from "rsuite";
+import { Stack, Grid, Button, Divider, InputGroup, Row, Col, Dropdown, AutoComplete, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal } from "rsuite";
 import groupController from "../../controller/groupController";
 import { Loader } from 'rsuite';
 import UserController from "../../controller/userController";
@@ -11,9 +11,10 @@ import Username from "../../components/User/Username";
 import { MdNoFood } from 'react-icons/md';
 import GroupCreationPage from "../Group/GroupCreationPage";
 import GroupCard from "../Group/GroupCard";
-import { Panel  } from "../../style/Style";
+import { Panel } from "../../style/Style";
 import Fatch from "../../Helpers/Fatcher";
 import { GuestsTable } from "../Group/UsersTable";
+import Avatar from "react-avatar";
 
 export default function MePage() {
     const [myGroups, setmyGroups] = useState([]);
@@ -75,11 +76,10 @@ export default function MePage() {
     );
 
 
-    const userCard = (username, name) => {
+    const userCard = (username, name, picture) => {
         return (
             <div className='flex flex-row'>
-
-                <Avatar circle src="https://avatars.githubusercontent.com/u/12592949" alt="@superman66" />
+                <Avatar name={name} src={picture} size={36} round={true} />
                 <div className='flex flex-col px-2'>
                     {name}
                     <small>{username}</small>
@@ -114,28 +114,28 @@ export default function MePage() {
 
     return (
         <div>
-                <div className="flex justify-between mb-2">
+            <div className="flex justify-between mb-2">
 
-                    <div className="text-lg">
-                        My Host
-                    </div>
-                    <button className="bg-borderGray py-1 px-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> + </button>
+                <div className="text-lg">
+                    My Host
                 </div>
-            
-                {(!removeLoad && !myGroupLoader) ?
-                    (myGroups?.length != 0) ? myGroups?.map((item) => {
-                        return (
-                            <Row key={item.id} style={{ position: "relative" }} className="mb-3 mx-0">
-                                <GroupCard item={item} isOwner={true} />
-                                <SizeDropdown placement="topEnd" groupID={item.id} title="..." size="xs" style={{ position: "absolute", bottom: 1, right: 1, zIndex: 20 }} />
-                            </Row>
-                        )
-                    })
-                        : <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
-                    : <FlexboxGrid justify="center">
-                        <Loader size="md" content="Loading" />
-                    </FlexboxGrid>
-                }
+                <button className="bg-transparent border-borderGray py-1 px-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> + </button>
+            </div>
+
+            {(!removeLoad && !myGroupLoader) ?
+                (myGroups?.length != 0) ? myGroups?.map((item) => {
+                    return (
+                        <Row key={item.id} style={{ position: "relative" }} className="mb-3 mx-0">
+                            <GroupCard item={item} isOwner={true} />
+                            <SizeDropdown placement="topEnd" groupID={item.id} title="..." size="xs" style={{ position: "absolute", bottom: 1, right: 1, zIndex: 20 }} />
+                        </Row>
+                    )
+                })
+                    : <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+                : <FlexboxGrid justify="center">
+                    <Loader size="md" content="Loading" />
+                </FlexboxGrid>
+            }
 
             <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
                 <Modal.Header>
@@ -149,27 +149,34 @@ export default function MePage() {
                     } />
                 </Modal.Body>
             </Modal>
+            <div className="my-5" />
+            <Divider />
 
-            <div className='flex flex-row mt-10'>
-                {/* <Input value={guestPhone} onChange={(e) => setGuestPhone(e)} placeholder="Guest Phone" /> */}
-                <AutoComplete
-                    className="w-full"
-                    placeholder="Add by guest email or name.."
-                    value={searchWord} onChange={(e) => setSearchWord(e)}
-                    data={searchUsername}
-                    
-                    renderMenuItem={usrename => {
-                        let user = searchData.find(x => x.username === usrename.split(':')[1]);
-                        return userCard(user.name, user.username)
-                    }}
-                />
-                <button onClick={() => submitGuest(searchWord?.split(':')[1])} className="bg-transparent border-borderGray  py-0 mx-2 text-base rounded-md">add</button>
-            </div>
-            <Panel header={'Guests'}>
+            <Panel header={'Guests'} className='!p-0  !bg-transparent' shaded={false}>
                 <Fatch request={userController.getGuests} setData={setGuests} reload={guestsReload}>
                     <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
                 </Fatch>
             </Panel>
+            <div className="mx-2"> 
+
+                <InputGroup size="md">
+                    <AutoComplete
+                        className='!border-none !bg-none !shadow-none'
+                        placeholder="add a guest by name or email.."
+                        value={searchWord} onChange={(e) => setSearchWord(e)}
+                        data={searchUsername}
+                        size="md"
+
+                        renderMenuItem={usrename => {
+                            let user = searchData.find(x => x.username === usrename.split(':')[1]);
+                            return userCard(user.name, user.username, user.picture)
+                        }}
+                    />
+                    <InputGroup.Button disabled={searchWord.trim() === ''} onClick={() => submitGuest(searchWord?.split(':')[1])}>
+                        Add
+                    </InputGroup.Button>
+                </InputGroup>
+            </div>
         </div>
     );
 }

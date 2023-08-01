@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { InputGroup, Row, Col, AutoComplete, Avatar } from "rsuite";
+import { InputGroup, Row, Col, AutoComplete } from "rsuite";
 import UserController from "../../controller/userController";
 import Toaster from "../../components/Toaster";
+import Avatar from 'react-avatar';
 
 export default function JoinToGroup({ onJoin }) {
     const [hostUsername, setHostUsername] = useState('');
@@ -23,11 +24,10 @@ export default function JoinToGroup({ onJoin }) {
     }
 
 
-    const userCard = (username, name) => {
+    const userCard = (username, name, picture) => {
         return (
             <div className='flex flex-row'>
-
-                <Avatar circle src="https://avatars.githubusercontent.com/u/12592949" alt="@superman66" />
+                <Avatar name={name} src={picture} size={36} round={true} />
                 <div className='flex flex-col px-2'>
                     {name}
                     <small>{username}</small>
@@ -57,16 +57,16 @@ export default function JoinToGroup({ onJoin }) {
     const toaster = Toaster();
 
     return (<div>
-        <InputGroup size="lg" className='my-5'>
+        <InputGroup size="md">
             <AutoComplete onChange={(e) => setHostUsername(e)}
-                placeholder="host name or email.. "
+                placeholder="join to a volunteer by name or email.. "
                 value={hostUsername}
-                size="lg"
+                size="md"
                 data={searchUsername}
                 className='!border-none !bg-none !shadow-none'
                 renderMenuItem={usrename => {
                     let user = searchData.find(x => x.username === usrename.split(':')[1]);
-                    return userCard(user.name, user.username)
+                    return userCard(user.name, user.username, user.picture)
                 }}
             />
             <InputGroup.Button disabled={hostUsername.trim() === ''} onClick={() => joinToGroup()}>

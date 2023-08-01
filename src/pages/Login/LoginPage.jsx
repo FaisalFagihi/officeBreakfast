@@ -4,67 +4,37 @@ import { Navigate, useNavigate } from "react-router-dom";
 import auth from '../../modules/auth'
 import { useEffect, useState } from "react"
 import { Panel } from "../../style/Style"
-import { GoogleLogin, useGoogleLogin } from 'react-google-login';
-import { gapi } from "gapi-script"
 
 export default function LoginPage() {
     const form = { login: "Login", signUp: "Sign Up" }
     const [active, setActive] = useState(form.login);
-    let navigate = useNavigate();
 
-    const clientID = "727515938547-5knpt0voai55equqiu8okhaaoh2h26du.apps.googleusercontent.com"
-    useEffect(() => {
-        const start = () => {
-            gapi.client.init({
-                clientId: clientID,
-                scope: ""
-            })
-        }
-
-        gapi.load('client:auth2', start)
-    }, []);
-
-    const { signIn, loaded } = useGoogleLogin({
-        clientId: clientID,
-        onSuccess: credentialResponse => {
-            console.log(credentialResponse);
-            auth.loginByGoogleAuth(credentialResponse.tokenId).then(async (response) => {
-                if (response?.status === 200) {
-                    auth.setToken(response.data['token'])
-                     localStorage.setItem('username', response.data['username'])
-                     localStorage.setItem('firstName', response.data['firstName'])
-                     localStorage.setItem('lastName', response.data['lastName'])
-                    navigate("/")
-                }
-            }).catch((response) => {
-            }).finally(() => {  });
-        },
-        onFailure: (e) => {
-            console.log('Login Failed', e);
-        },
-    })
-
-     return  (
+    return (
         auth.isAuthenticated() ?
             <Navigate to="/" /> :
-            <div className="flex flex-col">
-                <Panel className="m-auto w-[350px] sm:w-[470px] bg-white rounded-full !px-14 !pt-0 h-[420px] sm:h-[470px] border-0 shadow-sm sm:mt-56">
-                    <img src='/assets/logo-96.png' className='m-auto mt-4 h-[70px] sm:h-[110px] ' draggable="false" />
-          
-                    <div hidden={active !== form.login}> 
+            <div className=" h-full p-10 sm:w-[470px] sm:h-[470px] bg-white sm:rounded-full sm:!px-14 sm:!pt-0  sm:border-0 sm:shadow-sm sm:m-auto sm:mt-44">
+                <div className='p-1'>
 
-                        {/* <Divider> or </Divider> */}
-                        <LoginForm googleLogin={signIn} />
-                        <p className="text-center p-2"><b style={{ cursor: "pointer" }} onClick={() => setActive(form.signUp)}>Sign up</b></p>
+                    <img src='/assets/logo_512.png' className='m-auto mt-4 h-[100px] sm:h-[110px] ' draggable="false" />
+                </div>
+
+                <div hidden={active !== form.login}>
+                    {/* <Divider> or </Divider> */}
+                    <div className='h-96 sm:h-auto'>
+
+                        <LoginForm />
                     </div>
-                    <div hidden={active !== form.signUp} className='pt-6'>
 
+                    <p className="text-center p-2">don't have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.signUp)}>Register</b></p>
+                </div>
+                <div hidden={active !== form.signUp} className='pt-1'>
+                    <div className='h-96 sm:h-auto'>
                         <RegisterForm />
-                        <p className="text-center p-2"><b style={{ cursor: "pointer" }} onClick={() => setActive(form.login)}>Login</b></p>
                     </div>
+                    <p className="text-center p-2 mt-2">already have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.login)}>Login</b></p>
+                </div>
 
 
-                </Panel>
             </div>
     )
 }

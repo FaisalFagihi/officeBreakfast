@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import groupController from '../../controller/groupController';
-
+import {Panel} from '../../style/Style'
 export const OrdersTable = ({ orders }) => {
   return (
-    <table bordered className='w-full text-left'>
+    orders?.length >0?  <table bordered className='w-full text-left'>
       <thead>
         <tr>
           <th>ID</th>
@@ -49,7 +49,7 @@ export const OrdersTable = ({ orders }) => {
           </tr>
         })}
       </tbody>
-    </table>
+    </table> : <div className='flex justify-center p-2'>have no orders</div>
 
   )
 }
@@ -66,9 +66,9 @@ export default function OrdersPage() {
 
 
   return (
-    <div className='m-5'>
+    <Panel header={'Orders'}>
       <OrdersTable orders={orders} />
-    </div>
+    </Panel>
 
   )
 }
