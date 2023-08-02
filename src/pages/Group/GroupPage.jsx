@@ -184,7 +184,7 @@ export default function GroupPage({ id }) {
         const prepareOrderingList = () => {
             let Items = []
             changeTimer(0.01)
-            cartItems?.map(x => Items = addToCart(x, Items))
+            cartItems?.filter(x=>x.isConfirmed)?.map(x => Items = addToCart(x, Items))
 
             setOrderItems(Items)
         }
@@ -478,7 +478,7 @@ export default function GroupPage({ id }) {
                                     <div>Total: {userOrderTotal + userDelivery} SAR</div>
                                 </div>
                                 <Divider className='my-2' />
-                                <Button block disabled={selectedGroupStatus != 0} onClick={() => cartController.confirmOrder()} className={`font-bold p-2 text-sm ${isUserConfirm ? 'bg-green-100' : 'bg-[#444] text-white'} `}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </Button>
+                                <button block disabled={selectedGroupStatus != 0} onClick={() => cartController.confirmOrder()} className={`font-bold p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full ${isUserConfirm ? 'bg-green-100' : 'bg-[#444] text-white'}  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
                             </div>
                         </Panel>
                         <Panel className="bg-white mt-3 shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >
