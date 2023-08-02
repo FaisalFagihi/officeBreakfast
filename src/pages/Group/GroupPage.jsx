@@ -137,7 +137,9 @@ export default function GroupPage({ id }) {
 
     const time = ((hours + minutes + seconds) > 0) ? <> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </>
         : <>Time Is Over</>
-    const items = cartItems.filter(x => x.username === auth.getUsername()).map(x => x.total).reduce((a, v) => a + v, 0);
+    const userOrders = cartItems.filter(x => x.username === auth.getUsername())
+    const userOrderTotal = userOrders.map(x => x.total).reduce((a, v) => a + v, 0);
+    const isUserConfirm = userOrders?.at(0)?.isConfirmed
     const userDelivery = cartItems?.length > 0 ? delivery / Object.keys(groupBy(cartItems, 'username')).length : delivery;
 
     const groupStatus = ['Collecting Orders..', 'Ordering..', 'Ship has sailed', 'Orders have arrived']
@@ -300,9 +302,43 @@ export default function GroupPage({ id }) {
                             <Row>
                                 <Divider className='mt-0' />
                             </Row>
-                            <Row hidden={selectedGroupStatus !== 0}>
-                                <Loader className="m-auto" hidden={true} />
-                                <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
+                            <Row hidden={selectedGroupStatus !== 0} >
+                                <div hidden={isUserConfirm}>
+                                    <Loader className="m-auto" hidden={true} />
+                                    <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
+                                </div>
+                                <div hidden={!isUserConfirm}>
+                                    Your orders have been confirmed to the group admin.
+                                    {userOrders?.length > 0 ?
+                                        <>
+                                            <List>
+                                                {userOrders?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
+                                                    <List.Item key={uid} index={index}>
+                                                        <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
+                                                            <FlexboxGridItem colspan={22}>
+                                                                <b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
+
+                                                                {modifiersList?.map(({ name, price }, index) => {
+                                                                    return <p key={index.toString()} index={index}>
+                                                                        {name} {price} SAR
+                                                                    </p>
+                                                                })}
+                                                            </FlexboxGridItem>
+                                                        </FlexboxGrid>
+                                                    </List.Item>
+                                                ))}
+                                            </List>
+                                            <br />
+                                            <div>
+                                                <div>Items: {userOrderTotal} SAR</div>
+                                                <div>Delivery: {userDelivery} SAR</div>
+                                                <div>Total: {userOrderTotal + userDelivery} SAR</div>
+                                            </div>
+                                        </>
+
+                                        : <>There are no orders</>
+                                    }
+                                </div>
                             </Row>
                             <Row hidden={selectedGroupStatus !== 1}>
                                 <Panel header="Orders Review" hidden={!isOwner}>
@@ -433,13 +469,16 @@ export default function GroupPage({ id }) {
                                 : <div style={{ textAlign: 'center', color: "#ccc", height: 305 }}>Empty</div>}
                             <br />
 
-                            <div  hidden={!items} className='bg-white fixed z-10 w-full left-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
-                                
-                                    <div>Items: {items} SAR</div>
+                            <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
+                                <div className='flex justify-between lg:flex-col p-1'>
+
+                                    <div>Items: {userOrderTotal} SAR</div>
 
                                     <div>Delivery: {userDelivery} SAR</div>
-                                    <b>Total: {items + userDelivery} SAR</b>
-                                    {/* <Button appearance='primary' disabled={cartItems.length === 0} block>Confirm</Button> */}
+                                    <div>Total: {userOrderTotal + userDelivery} SAR</div>
+                                </div>
+                                <Divider className='my-2' />
+                                <Button block disabled={selectedGroupStatus != 0} onClick={() => cartController.confirmOrder()} className={`font-bold p-2 text-sm ${isUserConfirm ? 'bg-green-100' : 'bg-[#444] text-white'} `}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </Button>
                             </div>
                         </Panel>
                         <Panel className="bg-white mt-3 shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >

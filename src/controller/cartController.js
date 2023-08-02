@@ -66,6 +66,15 @@ class Cart {
         }
     }
 
+    confirmOrder = async () => {
+        try {
+            let id = this.groupID
+            await this.connection.invoke("ConfirmOrder",id);
+        } catch (e) {
+            console.log("ConfirmOrder", e);
+        }
+    }
+
     removeFromCart = async (uid) => {
         try {
             await this.connection.invoke("RemoveFromCart", uid);

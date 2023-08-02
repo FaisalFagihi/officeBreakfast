@@ -7,7 +7,7 @@ export default function ProfilePage() {
 
     return (<div>
         <AccountInfo />
-    <button onClick={()=>{auth.logout(); navigate('/')} } className='text-base bg-transparent border-borderGray w-full my-5' >logout</button>
+    <button onClick={()=>{auth.logout();} } className='text-base bg-transparent border-borderGray w-full my-5' >logout</button>
     </div>
     );
 }

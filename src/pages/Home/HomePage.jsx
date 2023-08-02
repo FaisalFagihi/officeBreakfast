@@ -19,7 +19,7 @@ export default function HomePage() {
 
     return (
         <div>
-            <div className="flex mb-2">
+            <div className="flex">
                 <div className="text-lg">
                     Available Groups
                 </div>

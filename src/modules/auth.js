@@ -29,6 +29,7 @@ class Auth {
         localStorage.removeItem('firstName')
         localStorage.removeItem('lastName')
         localStorage.removeItem('picture')
+        window.location.reload(true)  
 
         this.authenticated = false;
     }

@@ -67,7 +67,7 @@ export default function AccountInfo() {
     <Panel header={<h5>Info</h5>} className="p-5">
       <div className={'grid grid-cols-2 gap-2 items-center'}>
         <label>Email</label>
-        <input value={auth.getUsername()} disabled className="rounded py-1 px-3 border-borderGray disabled:bg-mainGray" />
+        <input value={auth.getUsername()} disabled className="rounded py-1 px-3 border-borderGray disabled:bg-gray" />
         {/* <Row>
           <Col xs={12}>
           <label> Statsus</label>
@@ -81,8 +81,8 @@ export default function AccountInfo() {
           <label>Name</label>
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <input placeholder="First Name" value={auth.getFirstName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-mainGray" />
-          <input placeholder="Last Name" value={auth.getLastName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-mainGray" />
+          <input placeholder="First Name" value={auth.getFirstName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-gray" />
+          <input placeholder="Last Name" value={auth.getLastName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-gray" />
         </div>
         <div>
           <label>Photo</label>
