@@ -48,7 +48,7 @@ export default function MenuItemControl({ name, photo, description, options, com
 
 
     return (
-        <div className="Modifier">
+        <div>
             <Modal.Header>
                 <div className="ModifierItemName"> {name} </div>
             </Modal.Header>

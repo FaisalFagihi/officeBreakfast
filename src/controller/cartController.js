@@ -29,7 +29,7 @@ class Cart {
                     .build();
 
                 this.connection.on("OrdersInCart", (orders) => {
-                 console.log(orders)
+                    console.log(orders)
                     this.setOrders(orders);
                 });
 
@@ -42,7 +42,7 @@ class Cart {
                 });
 
                 this.connection.on("ChangedGroupTimer", (endDate) => {
-                  console.log(endDate)
+                    console.log(endDate)
                     this.setEndDate(endDate);
                 });
 
@@ -66,10 +66,10 @@ class Cart {
         }
     }
 
-    confirmOrder = async () => {
+    confirmOrder = async (isConfirm) => {
         try {
             let id = this.groupID
-            await this.connection.invoke("ConfirmOrder",id);
+            await this.connection.invoke("ConfirmOrder", id, isConfirm);
         } catch (e) {
             console.log("ConfirmOrder", e);
         }

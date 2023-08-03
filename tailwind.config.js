@@ -15,13 +15,15 @@ module.exports =  withMT({
       borderGray:'#E5E5E5',
       darkGray:'#222',
       mainOrange:'#ffcd99',
+      mainYello:'#ffd969',
+      mainDarkGray:'#333',
+      mainRed:'#bd5353',
       emerald: colors.emerald,
       indigo: colors.indigo,
       yellow: colors.yellow,
     },
     extend: {
-      input:"bg-mainGray shadow-[inset_2px_-2px_4px_1px_#e8e8e8]",
-    },
+       },
   },
   plugins: [],
 

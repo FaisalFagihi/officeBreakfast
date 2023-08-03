@@ -65,9 +65,9 @@ export function RegisterForm() {
 
     return (
         <div className="px-0">
-            <div className="p-2 text-sm text-center">
+            <div className="h-10 p-2 text-sm text-center">
                 <p>
-                    {message?message: 'Fill the fields with the required information:' }
+                    {message }
                 </p>
 
             </div>

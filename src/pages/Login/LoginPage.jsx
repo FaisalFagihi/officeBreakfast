@@ -12,7 +12,7 @@ export default function LoginPage() {
     return (
         auth.isAuthenticated() ?
             <Navigate to="/" /> :
-            <div className=" h-full p-10 sm:w-[470px] sm:h-[470px] bg-white sm:rounded-full sm:!px-14 sm:!pt-0  sm:border-0 sm:shadow-sm sm:m-auto sm:mt-44">
+            <div className=" h-screen p-10 sm:w-[470px] sm:h-[470px] bg-white sm:rounded-full sm:!px-14 sm:!pt-0  sm:border-0 sm:shadow-sm sm:m-auto sm:mt-44">
                 <div className='p-1'>
 
                     <img src='/assets/logo_512.png' className='m-auto mt-4 h-[100px] sm:h-[110px] ' draggable="false" />
@@ -33,8 +33,6 @@ export default function LoginPage() {
                     </div>
                     <p className="text-center p-2 mt-2">already have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.login)}>Login</b></p>
                 </div>
-
-
             </div>
     )
 }

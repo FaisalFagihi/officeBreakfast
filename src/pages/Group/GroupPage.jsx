@@ -184,12 +184,13 @@ export default function GroupPage({ id }) {
         const prepareOrderingList = () => {
             let Items = []
             changeTimer(0.01)
-            cartItems?.filter(x=>x.isConfirmed)?.map(x => Items = addToCart(x, Items))
+            cartItems?.filter(x => x.isConfirmed)?.map(x => Items = addToCart(x, Items))
 
             setOrderItems(Items)
         }
 
         if (selectedGroupStatus === 1) {
+            cartController.confirmOrder(true)
             prepareOrderingList()
         }
 
@@ -307,37 +308,14 @@ export default function GroupPage({ id }) {
                                     <Loader className="m-auto" hidden={true} />
                                     <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
                                 </div>
-                                <div hidden={!isUserConfirm}>
-                                    Your orders have been confirmed to the group admin.
-                                    {userOrders?.length > 0 ?
-                                        <>
-                                            <List>
-                                                {userOrders?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
-                                                    <List.Item key={uid} index={index}>
-                                                        <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
-                                                            <FlexboxGridItem colspan={22}>
-                                                                <b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
-
-                                                                {modifiersList?.map(({ name, price }, index) => {
-                                                                    return <p key={index.toString()} index={index}>
-                                                                        {name} {price} SAR
-                                                                    </p>
-                                                                })}
-                                                            </FlexboxGridItem>
-                                                        </FlexboxGrid>
-                                                    </List.Item>
-                                                ))}
-                                            </List>
-                                            <br />
-                                            <div>
-                                                <div>Items: {userOrderTotal} SAR</div>
-                                                <div>Delivery: {userDelivery} SAR</div>
-                                                <div>Total: {userOrderTotal + userDelivery} SAR</div>
-                                            </div>
-                                        </>
-
-                                        : <>There are no orders</>
-                                    }
+                                <div  hidden={!isUserConfirm}>
+                                        <div>
+                                        Your orders have been confirmed to the group admin.
+                                        </div>
+                                    <div className='m-auto mt-20'>
+                                        <Loader size='md' content={'wating for the admin to collect the orders'} />
+                                    </div>
+                                    <br />
                                 </div>
                             </Row>
                             <Row hidden={selectedGroupStatus !== 1}>
@@ -465,10 +443,8 @@ export default function GroupPage({ id }) {
                         }>
 
 
-                            {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0} removeFromCart={cartController.removeFromCart} height={305} />
-                                : <div style={{ textAlign: 'center', color: "#ccc", height: 305 }}>Empty</div>}
-                            <br />
-
+                            {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} height={280} />
+                                : <div style={{ textAlign: 'center', color: "#ccc", height: 280 }}>Empty</div>}
                             <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
                                 <div className='flex justify-between lg:flex-col p-1'>
 
@@ -478,7 +454,11 @@ export default function GroupPage({ id }) {
                                     <div>Total: {userOrderTotal + userDelivery} SAR</div>
                                 </div>
                                 <Divider className='my-2' />
-                                <button block disabled={selectedGroupStatus != 0} onClick={() => cartController.confirmOrder()} className={`font-bold p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full ${isUserConfirm ? 'bg-green-100' : 'bg-[#444] text-white'}  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
+                                <div className='grid grid-cols-4 gap-2'>
+
+                                <button  block disabled={isUserConfirm} onClick={() => cartController.confirmOrder(true)} className={`${(isUserConfirm && selectedGroupStatus==0)? 'col-span-2':'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm? 'Confirmed' : 'Confirm'} </button>
+                                <button  hidden={!isUserConfirm || selectedGroupStatus !=0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black`}>Chnage</button>
+                                </div>
                             </div>
                         </Panel>
                         <Panel className="bg-white mt-3 shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >

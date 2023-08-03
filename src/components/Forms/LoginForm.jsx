@@ -16,13 +16,14 @@ export function LoginForm({ googleLogin }) {
     const password = useRef();
     const [message, setMessage] = useState("Use email and password");
     const [loginLoad, setLoginLoad] = useState(false);
+    const [googleLoginLoad, setGoogleLoginLoad] = useState(false);
     const [isResetPassword, setResetPassword] = useState(false);
 
     const navigate = useNavigate();
 
     const login = async () => {
         setLoginLoad(true);
-        setMessage("signing..")
+        setMessage("Signing in..")
         auth.login(email.current.value, password.current.value).then(async (response) => {
             if (response?.status === 200) {
                 auth.setToken(response.data['token'])
@@ -80,48 +81,45 @@ export function LoginForm({ googleLogin }) {
                     navigate("/")
                 }
             }).catch((response) => {
-            }).finally(() => { setLoginLoad(false) });
+            }).finally(() => { setGoogleLoginLoad(false) });
         },
         onFailure: (e) => {
             console.log(e)
-            setLoginLoad(false)
+            setGoogleLoginLoad(false)
         },
     })
 
     return (
-        loginLoad ? <div className='flex p-20 justify-center'> <Loader size='md' content="signing" /> </div> :
-
-            <>
-
-                <div onClick={loaded ? () => { setLoginLoad(true); signIn() } : () => { }} className={`flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-black ${!loaded ? 'bg-mainGray text-white hover:!text-white' : ''}`}  >
-                    <BsGoogle size={20} />
-                    <div className="my-auto ml-2">
-                        Sign in with google
-                    </div>
+        <>
+            <div onClick={loaded ? () => { setGoogleLoginLoad(true); signIn() } : () => { }} className={`flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-black ${!loaded ? 'bg-mainGray text-white hover:!text-white' : ''}`}  >
+                <BsGoogle size={22} />
+                <div className="my-auto w-32 flex">
+                    {googleLoginLoad ? <Loader size='xs' content={'Signing In..'} className='m-auto' /> : <div className='m-auto'>Sign in with google </div>}
                 </div>
-                <Divider className="!my-6 sm:!my-4">or</Divider>
-                {/* <p>{statusCode}</p> */}
+            </div>
+            <Divider className="!my-6 sm:!my-4">or</Divider>
+            {/* <p>{statusCode}</p> */}
 
-                {!isResetPassword ?
+            {!isResetPassword ?
 
-                    <div>
-                        <p className="p-1 text-sm text-center" hidden={!message}> {message}</p>
-                        <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
-                        <div className="mt-3" >
-                            <input type={'password'} placeholder="Password" className='input !rounded-full' ref={password} />
+                <div>
+                    <p className="p-1 text-sm text-center" hidden={!message}> {message}</p>
+                    <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
+                    <div className="mt-3" >
+                        <input type={'password'} placeholder="Password" className='input !rounded-full' ref={password} />
 
-                            <div className="mt-1 w-full">
-                                <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3' onClick={() => setResetPassword(true)}> forgot password ?</a>
-                            </div>
+                        <div className="mt-1 w-full">
+                            <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3' onClick={() => setResetPassword(true)}> forgot password ?</a>
                         </div>
-                        <button onClick={() => login()} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
-                            <ArrowRightLineIcon className='text-lg' />
-                        </button>
                     </div>
-                    : <div>
-                        <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
-                        <button onClick={() => resetPassword(email)}>Reset</button>
-                    </div>}
-            </>
+                    <button onClick={() => login()} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
+                        {loginLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
+                    </button>
+                </div>
+                : <div>
+                    <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
+                    <button onClick={() => resetPassword(email)}>Reset</button>
+                </div>}
+        </>
     )
 }

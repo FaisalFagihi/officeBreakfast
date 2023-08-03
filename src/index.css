@@ -40,6 +40,7 @@ body {
   margin: 0;
   min-width: 320px;
   background-color:#F8F8F8;
+  
 }
 
 h1 {
@@ -66,15 +67,8 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+
+
+html, body, #app, #app>div {
+  height: 100%
 }
