@@ -1,7 +1,7 @@
-import { Button, Input, InputGroup, Loader, Modal, Panel, Stack } from "rsuite";
+import { Button, Input, InputGroup, Loader, Modal, Stack } from "rsuite";
 import { RestaurantItem } from "../../components/Restaurant/RestaurantItem";
 import SearchIcon from '@rsuite/icons/Search';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import restaurantController from "../../controller/restaurantController";
@@ -9,6 +9,7 @@ import { VendorCustom } from "../../components/Restaurant/RestaurantCustomItem";
 import shgardiPipeline from "../../modules/shgardiPipeline";
 import MenuPage from "./MenuPage";
 import Toaster from "../../components/Toaster";
+import { Panel } from "../../style/Style";
 
 export default function RestaurantsPage() {
     const [restaurantsResult, setResturantsResult] = useState([])
@@ -86,18 +87,27 @@ export default function RestaurantsPage() {
     }
 
     const navigate = useNavigate();
+
+    const search = useRef();
+
     return (
-        <>
-            <Panel shaded style={{ height: "auto" }} className="bg-white mt-3">
-                <InputGroup inside>
-                    <Input placeholder="Search.." name='restaurant' onKeyDown={handleKeyDown} />
-                    <InputGroup.Button tabIndex={-1}>
-                        <SearchIcon />
-                    </InputGroup.Button>
-                </InputGroup>
-                <Stack wrap alignItems='center' justifyContent='center' className="mt-3" style={{ height: "600px", overflow: "auto" }} >
+        <div>
+
+            <Panel header={<div className="flex gap-1">
+                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-8 rounded object-cover' draggable="false" />
+                <h4>Shgardi Menu</h4>
+            </div>}>
+                <div>
+                    <InputGroup inside >
+                        <Input placeholder="Search.." ref={search} name='restaurant' onKeyDown={handleKeyDown} />
+                        <InputGroup.Button tabIndex={-1} onClick={() => searchRestaurant(search.current.value)}>
+                            <SearchIcon />
+                        </InputGroup.Button>
+                    </InputGroup>
+                </div>
+                <div className={'h-auto p-1 max-h-96 overflow-auto '}>
                     {!loadRestaurants ?
-                        <Stack wrap spacing={10}>
+                        <div className="grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
 
                             {restaurantsResult?.map((restaurant) =>
                                 <RestaurantItem isSelected={selectedRestaurant?.id === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
@@ -106,25 +116,27 @@ export default function RestaurantsPage() {
                                     distance={restaurant.distance}
                                     delivey={restaurant.delivery_fee}
                                     previewButton={() => viewVendor(restaurant.id)}
-                                    onCardClik={() => setSelectedRestaurant(restaurant)} />
+                                    onCardClik={() => navigate("./customize/", { state: restaurant })} />
                             )}
-                        </Stack>
-                        : <Loader size="md" content="Getting restaurants" style={{ textAlign: "center", width: "100%", marginTop: "100px", height: "700px" }} />
+                        </div>
+                        : <Loader size="sm" content="Getting restaurants" className="flex justify-center mt-10" />
                     }
-                </Stack>
-                <Button disabled={selectedRestaurant == null} block onClick={() => navigate("./customize/", { state: selectedRestaurant })}>Customize</Button>
+                </div>
             </Panel>
 
-            <Panel header={<h4>Customs</h4>} shaded style={{ height: "auto" }} className="mt-3 bg-white" hidden={customs?.length === 0}>
-                <Stack wrap spacing={10}>
-                    {customs?.map((item) =>
-                        <VendorCustom key={item.vendor.id} name={item.vendor.name} logo={item.vendor?.logo}
-                            image={item.vendor.photo}
-                            editButton={() => editCustom(item.vendor.id)} removeButton={() => removeCustom(item.vendor.id)}
-                            previewButton={() => viewCustom(item.menu)} />
-                    )}
-                </Stack>
-            </Panel>
+            <div hidden={customs?.length === 0}>
+
+                <Panel header={<h4>Custom Menu</h4>}>
+                    <div className="grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
+                        {customs?.map((item) =>
+                            <VendorCustom key={item.vendor.id} name={item.vendor.name} logo={item.vendor?.logo}
+                                image={item.vendor.photo} delivery={item.vendor.delivery_fee}
+                                editButton={() => editCustom(item.vendor.id)} removeButton={() => removeCustom(item.vendor.id)}
+                                previewButton={() => viewCustom(item.menu)} />
+                        )}
+                    </div>
+                </Panel>
+            </div>
 
             <Modal overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
                 <Modal.Header>
@@ -149,7 +161,7 @@ export default function RestaurantsPage() {
                     }
                 </Modal.Body>
             </Modal>
-        </>
+        </div>
 
     );
 }

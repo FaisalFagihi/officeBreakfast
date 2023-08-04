@@ -46,7 +46,7 @@ function UsersTable({ item, options, status }) {
             </div>
         </div>
         {/* <div className='hidden'>{item.username} </div> */}
-        <div className=' place-self-center'>{item.balance ?? '-'} </div>
+        <div className={`place-self-center ${item?.balance < 0? 'text-mainRed': 'text-black'}`}> {item?.balance? item.balance  +' SAR':'-'} </div>
         <div className='text-right w-16 place-self-end'>
             {options}
         </div>

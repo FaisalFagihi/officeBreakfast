@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, Row, Col, Stack, Input, InputNumber, Panel, Divider, InputGroup, Button, Modal, Loader } from 'rsuite';
+import { Grid, Row, Col, Stack, Input, InputNumber, Divider, InputGroup, Button, Modal, Loader } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import { RestaurantItem } from '../../components/Restaurant/RestaurantItem'
 import { BsStopwatch } from 'react-icons/bs';
@@ -13,8 +13,9 @@ import shgardiPipeline from '../../modules/shgardiPipeline';
 import MenuPage from '../Restaurant/MenuPage';
 import Toaster from '../../components/Toaster';
 import { VendorCustom } from '../../components/Restaurant/RestaurantCustomItem';
+import { Panel } from '../../style/Style';
 
-export default function GroupCreationPage({afterSubmit}) {
+export default function GroupCreationPage({ afterSubmit }) {
     const [vendorsResult, setResturantsResult] = React.useState([])
     const [selectedRestaurant, setSelectedRestaurant] = React.useState(null)
     const [loadRestaurants, setLoadRestaurants] = React.useState(false)
@@ -89,6 +90,7 @@ export default function GroupCreationPage({afterSubmit}) {
     };
 
     const selectRestaurent = (restaurant, menuSource) => {
+      console.log(restaurant)
         let data = {
             id: 0,
             restaurantID: restaurant.id,
@@ -96,7 +98,7 @@ export default function GroupCreationPage({afterSubmit}) {
             photo: restaurant.photo,
             logo: restaurant.logo,
             timer: timer,
-            delivery: parseFloat(delivery),
+            delivery: restaurant.delivery_fee,
             promotionMinimumOrder: parseInt(restaurant.promotion?.minimum_order),
             promotionName: restaurant.promotion?.message,
             menuSource: menuSource
@@ -105,43 +107,26 @@ export default function GroupCreationPage({afterSubmit}) {
     }
 
     return (
-        <Grid fluid>
-            <Panel>
-                <Row>
-                    <Col xs={24} sm={8}>
-                        <Stack spacing={5}>
-                            <StackItem>
-                                <div>Restaurant</div>
-                            </StackItem>
-                            <StackItem grow={1}>
-                                <Input disabled readOnly value={selectedRestaurant?.name} />
-                            </StackItem>
-                        </Stack>
-                    </Col>
-                    <Col xs={24} sm={8}>
-                        <Stack spacing={5}>
-                            <StackItem>
-                                <div>Timer</div>
-                            </StackItem>
-                            <StackItem grow={1}>
-                                <InputNumber size="md" value={timer} min={0} postfix={<BsStopwatch />} onChange={(value) => setTimer(value)} />
-                            </StackItem>
-                        </Stack>
-                    </Col>
-                    <Col xs={24} sm={8}>
-                        <Stack spacing={5}>
-                            <StackItem>
-                                <div>Delivery</div>
-                            </StackItem>
-                            <StackItem grow={1}>
-                                <InputNumber value={delivery} postfix="SR" onChange={(value) => setDelivery(value)} />
-                            </StackItem>
-                        </Stack>
-                    </Col>
-                </Row>
-            </Panel>
+        <div className='p-2'>
 
-            <Panel bordered>
+            <div className='mb-3'>
+                <div>Restaurant</div>
+
+                <Input disabled readOnly value={selectedRestaurant?.name} />
+
+                <div>Timer</div>
+
+                <InputNumber size="md" value={timer} min={0} postfix={<BsStopwatch />} onChange={(value) => setTimer(value)} />
+
+                <div>Delivery</div>
+
+                <InputNumber value={delivery} postfix="SR" onChange={(value) => setDelivery(value)} />
+            </div>
+
+            <Panel header={<div className="flex  gap-1">
+                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-8 rounded object-cover' draggable="false" />
+                <h4>Shgardi Menu</h4>
+            </div>}>
                 <InputGroup inside>
                     <Input placeholder="Search.." name='restaurant' onKeyDown={handleKeyDown} />
                     <InputGroup.Button tabIndex={-1}>
@@ -149,38 +134,41 @@ export default function GroupCreationPage({afterSubmit}) {
                     </InputGroup.Button>
                 </InputGroup>
                 {!loadRestaurants ?
-                    <Stack  style={{ overflow: "auto", height: "300px" }}  justifyContent='flex-start' spacing={20}  >
+                    <div className='h-auto grid mt-2 grid-rows-1 grid-flow-col gap-1 overflow-auto justify-start' spacing={20}  >
                         {vendorsResult?.map((restaurant) =>
-                            <RestaurantItem
-                                isSelected={selectedRestaurant?.restaurantID === restaurant?.id}
-                                key={restaurant.id}
-                                name={restaurant.name}
-                                logo={restaurant.logo}
-                                image={restaurant.photo}
-                                promotion={restaurant?.promotion}
-                                minimumOrder={restaurant?.minimum_order}
-                                distance={restaurant.distance}
-                                delivey={restaurant.delivery_fee}
-                                onCardClik={() => selectRestaurent(restaurant, 0)} />
+                            <div className='w-72'>
+                                <RestaurantItem
+                                    isSelected={selectedRestaurant?.restaurantID === restaurant?.id}
+                                    key={restaurant.id}
+                                    name={restaurant.name}
+                                    logo={restaurant.logo}
+                                    image={restaurant.photo}
+                                    promotion={restaurant?.promotion}
+                                    minimumOrder={restaurant?.minimum_order}
+                                    distance={restaurant.distance}
+                                    delivey={restaurant.delivery_fee}
+                                    previewButton={() => selectRestaurent(restaurant, 0)} />
+                            </div>
                         )}
-                    </Stack> : <Loader size="md" content="Getting restaurants" style={{ textAlign: "center", width: "100%", marginTop: "100px" }} />
+                    </div> : <Loader size="sm" className='flex justify-center my-10' content="Getting restaurants" />
                 }
 
             </Panel>
-
-            <Panel header={<h6>Custom</h6>} bordered style={{ overflow: "auto", height: "auto" }} className="mt-3" hidden={customs?.length === 0}>
+<br/>
+            <Panel header={<h6>Custom Menu</h6>} hidden={customs?.length === 0}>
                 {!loadCustomRestaurants ?
-                    <Stack wrap alignItems='center' justifyContent='center' spacing={20} className="mt-0 py-2" style={{ overflow: "auto" }} >
+                    <div className='h-auto grid grid-rows-1 grid-flow-col gap-1 justify-start overflow-auto' spacing={20}  >
                         {customs?.map((custom) =>
-                            <RestaurantItem isSelected={selectedRestaurant?.restaurantID === custom.vendor?.id} key={custom.vendor.id} name={custom.vendor.name} logo={custom.vendor.logo}
-                                image={custom.vendor.photo}
-                                promotion={custom.vendor?.promotion} minimumOrder={custom.vendor?.minimum_order}
-                                distance={custom.vendor.distance}
-                                delivey={custom.vendor.delivery_fee}
-                                previewButton={() => viewCustom(custom.menu)}
-                                onCardClik={() => selectRestaurent(custom.vendor, 1)} />
+                            <div className='w-72'>
+                                <RestaurantItem isSelected={selectedRestaurant?.restaurantID === custom.vendor?.id} key={custom.vendor.id} name={custom.vendor.name} logo={custom.vendor.logo}
+                                    image={custom.vendor.photo}
+                                    promotion={custom.vendor?.promotion} minimumOrder={custom.vendor?.minimum_order}
+                                    distance={custom.vendor.distance}
+                                    delivey={custom.vendor.delivery_fee}
+                                    previewButton={() => selectRestaurent(custom.vendor, 1)} />
+                            </div>
                         )}
-                    </Stack> : <Loader size="md" content="Getting restaurants" style={{ textAlign: "center", width: "100%", marginTop: "100px" }} />
+                    </div> : <Loader size="md" content="Getting restaurants" style={{ textAlign: "center", width: "100%", marginTop: "100px" }} />
                 }
 
             </Panel>
@@ -211,7 +199,6 @@ export default function GroupCreationPage({afterSubmit}) {
                     }
                 </Modal.Body>
             </Modal>
-        </Grid>
-
+        </div>
     )
 }

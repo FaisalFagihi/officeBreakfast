@@ -1,40 +1,38 @@
 import EditIcon from '@rsuite/icons/Edit';
 import TrashIcon from '@rsuite/icons/Trash';
-import { Row, Col, Panel, Stack, Grid } from 'rsuite';
 import CheckRoundIcon from '@rsuite/icons/CheckRound';
+import { TbTruckDelivery } from 'react-icons/tb';
 
-export function VendorCustom({ name, logo, image, kitchens, promotion, minimumOrder, previewButton, editButton, removeButton, isSelected, onCardClik }) {
+export function VendorCustom({ name, logo, image, delivery, kitchens, promotion, minimumOrder, previewButton, editButton, removeButton, isSelected, onCardClik }) {
     return (
-        // <div className="ResturantItem" onClick={onCardClik}>
-        //     <div><img src={logo}  className="VendorLogo" alt='icon' onDragStart={(e)=>e.preventDefault()} /></div>
-        //     <div>{name}</div>
-        // </div>
-        <Panel bordered bodyFill style={{ display: 'inline-block', width: 250 }}>
-            <Grid fluid onClick={onCardClik} className="my-2">
-                <Row>
-                    <Col style={{width:90}}>
-                        <img className="VendorLogo" src={logo} alt='' draggable="false" />
-                    </Col>
-                    <Col className='m-2'>
-                        <Row>
-                            <Row>
-                                <h6>{name}</h6>
-                            </Row>
-                            <Row>
-                                <Stack>
-                                    <EditIcon onClick={editButton} className="mx-2" />
-                                    <TrashIcon onClick={removeButton} className="mx-2" />
-                                </Stack>
-                            </Row>
-                        </Row>
-                    </Col>
-                    <CheckRoundIcon hidden={!isSelected} fill='#90ee90ee' style={{ fontSize: "3em", position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)" }} />
-                </Row>
+        <div className="relative border rounded-md border-gray-200" >
+            <div className='absolute z-50 top-2 right-2 cursor-pointer' onClick={onCardClik}>
+                <TrashIcon onClick={removeButton} />
+            </div>
+            <div onClick={previewButton}>
+                <div className='relative h-32'>
+                    <img className="rounded-t-md w-full object-cover h-full" src={image} alt='' draggable="false" />
+                    <div className='absolute bottom-0'>
 
-            </Grid>
-            <button className="VendorSelect" onClick={previewButton}>view</button>
+                        <div className='bg-gray-600 text-xs px-1 text-white text-ellipsis overflow-hidden whitespace-nowrap max-w-64 opacity-90' hidden={promotion == null}>
+                            {promotion?.message}
+                        </div>
+                    </div>
+                </div>
 
+                <div className="p-1 py-2 flex justify-between items-center">
+                    <div className='flex gap-1 items-center'>
+                        <img className="border border-borderGray w-8 h-8 rounded-full" src={logo} alt='' draggable="false" />
+                        <div className='text-sm'>
+                            {name}
+                        </div>
+                    </div>
+                    <div className="flex text-xs font-semibold mt-auto gap-1" hidden={!delivery}>
+                        {delivery} SAR <TbTruckDelivery className='text-lg' />
+                    </div>
 
-        </Panel>
+                </div>
+            </div>
+        </div>
     );
 }

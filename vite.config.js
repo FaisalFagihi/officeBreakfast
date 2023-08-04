@@ -15,7 +15,7 @@ export default defineConfig({
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: 'NetworkFirst',
+              handler: 'CacheFirst',
               options: {
                 cacheName: 'google-fonts-cache',
                 expiration: {
@@ -29,7 +29,7 @@ export default defineConfig({
             },
             {
               urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-              handler: 'NetworkFirst',
+              handler: 'CacheFirst',
               options: {
                 cacheName: 'gstatic-fonts-cache',
                 expiration: {
@@ -510,7 +510,9 @@ export default defineConfig({
               "src": "assets/ios/1024.png",
               "sizes": "1024x1024"
             }
-          ], theme_color: "#ccc"
+          ], 
+          theme_color: "#ccc",
+        
         }
       }),
     mkcert(),

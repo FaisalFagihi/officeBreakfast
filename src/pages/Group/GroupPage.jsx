@@ -310,7 +310,7 @@ export default function GroupPage({ id }) {
                                 </div>
                                 <div  hidden={!isUserConfirm}>
                                         <div>
-                                        Your orders have been confirmed to the group admin.
+                                        Your order has been confirmed to the group admin.
                                         </div>
                                     <div className='m-auto mt-20'>
                                         <Loader size='md' content={'wating for the admin to collect the orders'} />

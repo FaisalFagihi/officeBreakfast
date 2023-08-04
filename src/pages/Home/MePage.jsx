@@ -137,7 +137,7 @@ export default function MePage() {
                 </FlexboxGrid>
             }
 
-            <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
+            <Modal  open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
                 <Modal.Header>
                     New Host
                 </Modal.Header>
