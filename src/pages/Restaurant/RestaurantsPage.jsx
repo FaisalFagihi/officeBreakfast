@@ -124,7 +124,7 @@ export default function RestaurantsPage() {
                 </div>
             </Panel>
 
-            <div hidden={customs?.length === 0}>
+            <div hidden={customs?.length === 0 || !customs}>
 
                 <Panel header={<h4>Custom Menu</h4>}>
                     <div className="grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">

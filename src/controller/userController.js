@@ -111,6 +111,10 @@ class UserController {
         return axiosInstance.get("CancelInvitation", { params: { username: guestUsername } });
     }
 
+    confirmEmail = (token) => {
+        return axiosInstance.get("ConfirmEmail", { params: { token: token } });
+    }
+
 
 }
 

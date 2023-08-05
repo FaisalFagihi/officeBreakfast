@@ -33,7 +33,7 @@ export function RegisterForm() {
                     await localStorage.setItem('lastName', response.data['lastName'])
                     setMessage(response.data['message'])
 
-                    navigate("/")
+                    // navigate("/")
                 }
             }).catch(function (response) {
 
@@ -67,7 +67,7 @@ export function RegisterForm() {
         <div className="px-0">
             <div className="h-10 p-2 text-sm text-center">
                 <p>
-                    {message }
+                    {message? message :'Regisetr by your email and password' }
                 </p>
 
             </div>

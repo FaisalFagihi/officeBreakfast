@@ -155,7 +155,7 @@ export default function GroupCreationPage({ afterSubmit }) {
 
             </Panel>
 <br/>
-            <Panel header={<h6>Custom Menu</h6>} hidden={customs?.length === 0}>
+            <Panel header={<h6>Custom Menu</h6>} hidden={customs?.length == 0 || !customs}>
                 {!loadCustomRestaurants ?
                     <div className='h-auto grid grid-rows-1 grid-flow-col gap-1 justify-start overflow-auto' spacing={20}  >
                         {customs?.map((custom) =>
