@@ -12,26 +12,29 @@ export default function LoginPage() {
     return (
         auth.isAuthenticated() ?
             <Navigate to="/" /> :
-            <div className=" h-screen p-10 sm:w-[470px] sm:h-[470px] bg-white sm:rounded-full sm:!px-14 sm:!pt-0  sm:border-0 sm:shadow-sm sm:m-auto sm:mt-44">
-                <div className='p-1'>
+            <div className='sm:flex justify-center '>
 
-                    <img src='/assets/logo_512.png' className='m-auto mt-4 h-[100px] sm:h-[110px] ' draggable="false" />
-                </div>
+                <div className=" h-screen p-10 sm:w-[450px] sm:h-[450px] bg-white sm:rounded-full sm:!px-14 sm:!pt-0  sm:border-0 sm:shadow-sm sm:my-12">
+                    <div className='p-1'>
 
-                <div hidden={active !== form.login}>
-                    {/* <Divider> or </Divider> */}
-                    <div className='h-96 sm:h-auto'>
-
-                        <LoginForm />
+                        <img src='/assets/logo_512.png' className='m-auto mt-4 h-[100px] sm:h-[80px] ' draggable="false" />
                     </div>
 
-                    <p className="text-center p-2">don't have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.signUp)}>Register</b></p>
-                </div>
-                <div hidden={active !== form.signUp} className='pt-1'>
-                    <div className='h-96 sm:h-auto'>
-                        <RegisterForm />
+                    <div hidden={active !== form.login}>
+                        {/* <Divider> or </Divider> */}
+                        <div className='h-96 sm:h-auto'>
+
+                            <LoginForm />
+                        </div>
+
+                        <p className="text-center p-2">don't have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.signUp)}>Register</b></p>
                     </div>
-                    <p className="text-center p-2 mt-2">already have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.login)}>Login</b></p>
+                    <div hidden={active !== form.signUp} className='pt-1'>
+                        <div className='h-96 sm:h-auto'>
+                            <RegisterForm />
+                        </div>
+                        <p className="text-center p-2 mt-2">already have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.login)}>Login</b></p>
+                    </div>
                 </div>
             </div>
     )

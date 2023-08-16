@@ -11,7 +11,6 @@ class Chat {
                 resolve(true);
             } catch (e) {
                 reject(e)
-                console.log(e);
             }
         })
     }
@@ -54,13 +53,11 @@ class Chat {
                     this.setUsers([]);
                 });
 
-                console.log(this.connection)
                 if (!this.connection._connectionStarted)
                     await this.connection.start();
 
                 await this.connection.invoke("JoinRoom", { groupId: id });
             } catch (e) {
-                console.log(e);
             }
         })
     }
@@ -70,7 +67,6 @@ class Chat {
         try {
             await this.connection.invoke("SendMessage", message);
         } catch (e) {
-            console.log(e);
         }
     }
 
@@ -78,7 +74,6 @@ class Chat {
         try {
             await this.connection.stop();
         } catch (e) {
-            console.log(e);
         }
     }
 }

@@ -16,7 +16,6 @@ class Cart {
                 resolve(true);
             } catch (e) {
                 reject(e)
-                console.log(e);
             }
         })
     }
@@ -29,7 +28,6 @@ class Cart {
                     .build();
 
                 this.connection.on("OrdersInCart", (orders) => {
-                    console.log(orders)
                     this.setOrders(orders);
                 });
 
@@ -42,7 +40,6 @@ class Cart {
                 });
 
                 this.connection.on("ChangedGroupTimer", (endDate) => {
-                    console.log(endDate)
                     this.setEndDate(endDate);
                 });
 
@@ -51,7 +48,6 @@ class Cart {
 
                 await this.connection.invoke("JoinRoom", this.groupID);
             } catch (e) {
-                console.log(e);
             }
         })
     }
@@ -62,7 +58,6 @@ class Cart {
             order.groupID = this.groupID;
             await this.connection.invoke("AddToCart", order);
         } catch (e) {
-            console.log("addToCart", e);
         }
     }
 
@@ -71,7 +66,6 @@ class Cart {
             let id = this.groupID
             await this.connection.invoke("ConfirmOrder", id, isConfirm);
         } catch (e) {
-            console.log("ConfirmOrder", e);
         }
     }
 
@@ -79,7 +73,6 @@ class Cart {
         try {
             await this.connection.invoke("RemoveFromCart", uid);
         } catch (e) {
-            console.log(e);
         }
     }
 }

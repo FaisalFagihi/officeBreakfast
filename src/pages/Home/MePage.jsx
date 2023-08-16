@@ -93,7 +93,7 @@ export default function MePage() {
     const submitGuest = (guestUsername) => {
         userController.submitGuest(guestUsername).then(({ data }) => {
             setGuestsReload(!guestsReload)
-
+            setSearchWord('')
         }).catch(({ response }) => {
             toaster.push(response?.data, "error")
         })
@@ -107,7 +107,6 @@ export default function MePage() {
             setSearchData(data)
             let usernames = data.map(x => x.name + ":" + x.username)
             setSearchUsername(usernames)
-            console.log(data)
         })
     }, [searchWord]);
 
@@ -119,7 +118,7 @@ export default function MePage() {
                 <div className="text-lg">
                     My Host
                 </div>
-                <button className="bg-transparent border-borderGray py-1 px-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> + </button>
+                <button className="bg-transparent border rounded border-borderGray py-1 px-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> + </button>
             </div>
 
             {(!removeLoad && !myGroupLoader) ?
@@ -137,7 +136,7 @@ export default function MePage() {
                 </FlexboxGrid>
             }
 
-            <Modal  open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
+            <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
                 <Modal.Header>
                     New Host
                 </Modal.Header>
@@ -157,7 +156,7 @@ export default function MePage() {
                     <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
                 </Fatch>
             </Panel>
-            <div className="mx-2"> 
+            <div className="mx-2">
 
                 <InputGroup size="md">
                     <AutoComplete

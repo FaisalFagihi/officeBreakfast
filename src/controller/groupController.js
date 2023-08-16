@@ -22,8 +22,8 @@ class GroupController {
         return axiosInstance.post("Group/Update", { id, action: 1 })
     }
 
-    changeOrderingStatus = (id, status) => {
-        return axiosInstance.post("Group/ChangeOrderingStatus/", { id, status })
+    changeOrderingStatus = (id, status, name, logo) => {
+        return axiosInstance.post("Group/ChangeOrderingStatus/", { id, status, name, logo })
     }
     
     changeDeliveryCost = (id, delivery) => {

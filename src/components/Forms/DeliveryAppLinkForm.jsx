@@ -29,39 +29,31 @@ export function DeliveryAppLinkForm() {
 
     function register() {
         var data = { "PhoneNumber": "966" + phoneNumber};
-        console.log(data);
         axiosInstance.post("DeliveryApp/register", data)
             .then(({ data }) => {
-                console.log(data['message']);
                 setRegisterStatus(true);
             }).catch((error) => {
-                console.log(error);
             });
     }
 
     function verify() {
         let code = Array.from(document.querySelectorAll('[name="verifyCode"]')).map(input => input.value)
         code = parseInt(code.join(''));
-        console.log(code)
         var data = { "PhoneNumber": "966" + phoneNumber, "verificationCode": code };
-        console.log(data);
         axiosInstance.post("DeliveryApp/verify", data)
             .then(({ token }) => {
                 auth.setToken(token);
                 setRegisterStatus(true);
             }).catch((error) => {
-                console.log(error);
             });
     }
 
     let digitValidate = function (ele) {
-        console.log(ele.value);
         ele.value = ele.value.replace(/[^0-9]/g, '');
     }
 
     let tabChange = function (val) {
         let ele = document.querySelectorAll('[name="verifyCode"]');
-        console.log(ele);
         if (ele[val - 1].value !== '') {
             ele[val].focus()
         } else if (ele[val - 1].value === '') {
@@ -92,7 +84,6 @@ export function DeliveryAppLinkForm() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
-            console.log([position.coords.latitude, position.coords.longitude])
             setPosition([position.coords.latitude, position.coords.longitude])
             // MoveMarkerToCurrentLocation()
         })

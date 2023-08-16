@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import auth from '../../modules/auth';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import userController from '../../controller/userController';
 import Fatch from '../../Helpers/Fatcher';
 
@@ -8,30 +8,49 @@ export default function EmailConfirmation() {
     const { token } = useParams();
     const [response, setResponse] = useState(null);
     const [isSucessed, setSuccessStatus] = useState();
-
+    const [requestError, setRequestError] = useState();
+    const navigate = useNavigate()
+    
     useEffect(() => {
-        if (response?.status === 200) {
-            auth.setToken(response.data['token'])
-            localStorage.setItem('username', response.data['username'])
-            localStorage.setItem('firstName', response.data['firstName'])
-            localStorage.setItem('lastName', response.data['lastName'])
+        console.log(response)
+        if (response?.status) {
+            auth.setToken(response.token)
+            localStorage.setItem('username', response.username)
+            localStorage.setItem('firstName', response.firstName)
+            localStorage.setItem('lastName', response.lastName)
+            localStorage.setItem('picture', response.picture)
             setSuccessStatus(true)
-            window.location.reload()
+            navigate('../')
             return;
         }
 
     }, [response])
 
+    useEffect(() => {
+        console.log(requestError)
 
+    }, [requestError]);
+    
+    useEffect(() => {
+        
+    
+        console.log(token)
+    }, [token]);
     return (
         <div className='flex flex-col text-center justify-center mt-32'>
-            {isSucessed?
+            {isSucessed ?
                 <>
                     <div className='font-bold'>Registeration Successed</div>
                     <div>you will be redirected to the home page..</div>
-                </>:<></>
-           }
-            <Fatch request={() => userController.confirmEmail(token)} setData={setResponse} />
-        </div>
+                </> : <div>{
+                    requestError ?
+                        requestError.message :
+                        'Confriming Email..'
+                }
+                </div>
+
+            }
+            <Fatch request={() => userController.confirmEmail(token)} setError={setRequestError} setData={setResponse} />
+        </div >
     )
 }

@@ -51,7 +51,6 @@ axiosInstance.interceptors.response.use(function (response) {
   config.retry -= 1;
   const delayRetryRequest = new Promise((resolve) => {
     setTimeout(() => {
-      console.log("retry the request", config.url);
       resolve();
     }, config.retryDelay || 1000);
   });
@@ -60,7 +59,6 @@ axiosInstance.interceptors.response.use(function (response) {
 });
 
 // axiosInstance.interceptors.response.use(resp => resp, async error => {
-//     console.log("axios instance")
 //     if (error.response.status === 401) {
 //         const response = await axiosInstance.post('refresh', {}, { withCredentials: true })
 

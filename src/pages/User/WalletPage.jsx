@@ -21,7 +21,6 @@ const GuestBalence = ({ guestUsername, guestName, balence, records, onInsertReco
       onInsertRecord();
       toaster.push("New record been added successfully", "success")
     }).catch(({ response }) => {
-      console.log(response)
       toaster.push(response?.data, "error")
     })
   }

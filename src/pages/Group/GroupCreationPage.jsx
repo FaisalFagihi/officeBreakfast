@@ -9,15 +9,16 @@ import Map from '../../components/Map'
 import { useNavigate } from 'react-router-dom';
 
 import restaurantController from '../../controller/restaurantController';
-import shgardiPipeline from '../../modules/shgardiPipeline';
+import deliveryAppFactory from '../../modules/deliveryAppFactory';
 import MenuPage from '../Restaurant/MenuPage';
 import Toaster from '../../components/Toaster';
 import { VendorCustom } from '../../components/Restaurant/RestaurantCustomItem';
 import { Panel } from '../../style/Style';
-
+import Fatch from '../../Helpers/Fatcher';
+import RestaurantsSection from '../Restaurant/RestaurantsSection'
 export default function GroupCreationPage({ afterSubmit }) {
     const [vendorsResult, setResturantsResult] = React.useState([])
-    const [selectedRestaurant, setSelectedRestaurant] = React.useState(null)
+    const [selectedRestaurant, setSelectedRestaurant] = React.useState(0)
     const [loadRestaurants, setLoadRestaurants] = React.useState(false)
     const [loadCustomRestaurants, setLoadCustomRestaurants] = React.useState(false)
     const [loadBranchMenu, setLoadBranchMenu] = React.useState(false)
@@ -31,40 +32,28 @@ export default function GroupCreationPage({ afterSubmit }) {
     const navigate = useNavigate();
     const toaster = Toaster()
 
-    const searchRestaurant = (searchQuery) => {
-        setLoadRestaurants(true)
-        navigator.geolocation.getCurrentPosition((location) => {
-            restaurantController.searchRestaurant(searchQuery, location).then(({ data }) => {
-                setResturantsResult(data?.response?.items.map(x => shgardiPipeline.getResturant(x)))
-                setLoadRestaurants(false)
-            }).catch(({ response }) => {
-                toaster.push(response?.data, "error")
-            })
-        });
-    }
 
-    useEffect(() => {
-        setLoadCustomRestaurants(true)
-        searchRestaurant("");
-        restaurantController.getAllCustoms().then(({ data }) => {
-            console.log(data);
-            setCustoms(data)
-        }).catch(({ response }) => {
-            toaster.push(response?.data, "error")
-        }).finally(() => {
-            setLoadCustomRestaurants(false)
-        })
-    }, [])
+
 
     useEffect(() => {
         if (selectedRestaurant == null)
             return;
-        setDelivery(selectedRestaurant.delivery)
+        setDelivery(selectedRestaurant?.restaurant?.deliveryCost)
     }, [selectedRestaurant])
 
 
     const create = () => {
-        GroupController.submitGroup(selectedRestaurant).then(function ({ data }) {
+        GroupController.submitGroup(
+            {
+                id: selectedRestaurant.restaurant.id,
+                name: selectedRestaurant.restaurant.name,
+                image: selectedRestaurant.restaurant.image,
+                logo: selectedRestaurant.restaurant.logo,
+                deliveryCost: delivery == null? 0:delivery,
+                timer: timer,
+                menuSource: selectedRestaurant.menuSource
+            }
+        ).then(function ({ data }) {
             toaster.push("Group has been created successfully", 'success')
             afterSubmit()
         }).catch(function (error) {
@@ -90,7 +79,6 @@ export default function GroupCreationPage({ afterSubmit }) {
     };
 
     const selectRestaurent = (restaurant, menuSource) => {
-      console.log(restaurant)
         let data = {
             id: 0,
             restaurantID: restaurant.id,
@@ -98,7 +86,7 @@ export default function GroupCreationPage({ afterSubmit }) {
             photo: restaurant.photo,
             logo: restaurant.logo,
             timer: timer,
-            delivery: restaurant.delivery_fee,
+            delivery: restaurant.deliveryCost,
             promotionMinimumOrder: parseInt(restaurant.promotion?.minimum_order),
             promotionName: restaurant.promotion?.message,
             menuSource: menuSource
@@ -112,50 +100,21 @@ export default function GroupCreationPage({ afterSubmit }) {
             <div className='mb-3'>
                 <div>Restaurant</div>
 
-                <Input disabled readOnly value={selectedRestaurant?.name} />
+                <Input disabled readOnly value={selectedRestaurant?.restaurant?.name} />
 
                 <div>Timer</div>
 
-                <InputNumber size="md" value={timer} min={0} postfix={<BsStopwatch />} onChange={(value) => setTimer(value)} />
+                <InputNumber size="md" value={timer} min={1} postfix={<BsStopwatch />} onChange={(value) => setTimer(value)} />
 
                 <div>Delivery</div>
 
                 <InputNumber value={delivery} postfix="SR" onChange={(value) => setDelivery(value)} />
             </div>
 
-            <Panel header={<div className="flex  gap-1">
-                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-8 rounded object-cover' draggable="false" />
-                <h4>Shgardi Menu</h4>
-            </div>}>
-                <InputGroup inside>
-                    <Input placeholder="Search.." name='restaurant' onKeyDown={handleKeyDown} />
-                    <InputGroup.Button tabIndex={-1}>
-                        <SearchIcon />
-                    </InputGroup.Button>
-                </InputGroup>
-                {!loadRestaurants ?
-                    <div className='h-auto grid mt-2 grid-rows-1 grid-flow-col gap-1 overflow-auto justify-start' spacing={20}  >
-                        {vendorsResult?.map((restaurant) =>
-                            <div className='w-72'>
-                                <RestaurantItem
-                                    isSelected={selectedRestaurant?.restaurantID === restaurant?.id}
-                                    key={restaurant.id}
-                                    name={restaurant.name}
-                                    logo={restaurant.logo}
-                                    image={restaurant.photo}
-                                    promotion={restaurant?.promotion}
-                                    minimumOrder={restaurant?.minimum_order}
-                                    distance={restaurant.distance}
-                                    delivey={restaurant.delivery_fee}
-                                    previewButton={() => selectRestaurent(restaurant, 0)} />
-                            </div>
-                        )}
-                    </div> : <Loader size="sm" className='flex justify-center my-10' content="Getting restaurants" />
-                }
+            <RestaurantsSection setSelectedRestaurant={setSelectedRestaurant} isHorizontal={true} />
 
-            </Panel>
-<br/>
-            <Panel header={<h6>Custom Menu</h6>} hidden={customs?.length == 0 || !customs}>
+            <br />
+            {/* <Panel header={<h6>Custom Menu</h6>} hidden={customs?.length == 0 || !customs}>
                 {!loadCustomRestaurants ?
                     <div className='h-auto grid grid-rows-1 grid-flow-col gap-1 justify-start overflow-auto' spacing={20}  >
                         {customs?.map((custom) =>
@@ -171,7 +130,7 @@ export default function GroupCreationPage({ afterSubmit }) {
                     </div> : <Loader size="md" content="Getting restaurants" style={{ textAlign: "center", width: "100%", marginTop: "100px" }} />
                 }
 
-            </Panel>
+            </Panel> */}
             <Row className='mt-3 px-2'>
                 <Button className='secondary' block onClick={() => create()}>Submit</Button>
             </Row>

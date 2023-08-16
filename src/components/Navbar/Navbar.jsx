@@ -33,10 +33,10 @@ export default function Navbar() {
     const iconSize = 'h-6 w-6'
     const navigationItems = [
         { name: 'Groups', iconFill: <UserGroupIconSolid className={iconSize} />, iconLine: <UserGroupIcon className={iconSize} />, href: '/', current: location.pathname == '/' },
-        { name: 'Me', iconFill: <UserIconSolid  className={iconSize} />, iconLine: <UserIcon className={iconSize} />, href: '/me', current: location.pathname == '/me' },
-        { name: 'Menus', iconFill: <IoRestaurantSharp  className={iconSize} />, iconLine: <IoRestaurantOutline  className={iconSize} />, href: '/restaurants', current: location.pathname == '/restaurants' },
-        { name: 'Notifications', iconFill: <BellIconSolid className={iconSize} />, iconLine: <BellIcon  className={iconSize +'m-auto'} />, href: '/notifications', current: location.pathname == '/notifications' },
-        { name: 'Orders', iconFill: <BiSolidReceipt  className={iconSize} />, iconLine: <BiReceipt  className={iconSize} />, href: '/orders', current: location.pathname == '/orders' },
+        { name: 'Me', iconFill: <UserIconSolid className={iconSize} />, iconLine: <UserIcon className={iconSize} />, href: '/me', current: location.pathname == '/me' },
+        { name: 'Menus', iconFill: <IoRestaurantSharp className={iconSize} />, iconLine: <IoRestaurantOutline className={iconSize} />, href: '/restaurants', current: location.pathname == '/restaurants' },
+        { name: 'Notifications', iconFill: <BellIconSolid className={iconSize} />, iconLine: <BellIcon className={iconSize + 'm-auto'} />, href: '/notifications', current: location.pathname == '/notifications' },
+        { name: 'Orders', iconFill: <BiSolidReceipt className={iconSize} />, iconLine: <BiReceipt className={iconSize} />, href: '/orders', current: location.pathname == '/orders' },
         { name: 'Wallet', iconFill: <WalletIconSolid className={iconSize} />, iconLine: <WalletIcon className={iconSize} />, href: '/wallet', current: location.pathname == '/wallet' },
     ]
 
@@ -58,18 +58,13 @@ export default function Navbar() {
         if ('Notification' in window) {
 
             const perimission = await Notification.requestPermission()
-            console.log('perimission ', perimission)
             if (perimission === 'granted') {
                 const token = await getToken(messaging, { vapidKey: 'BAusTrWhr_PENeKaWEJnjxpZJJ1BeuEgANFHrM3e0gOM41y4JatuCsO-2TNgMKy_xSmu9RKT81OZM5moNDdtBXg' })
-
-                console.log('TOKEN '.token)
 
                 if (!token)
                     return
                 userController.registerFcmToken(token).then((data) => {
-                    console.log('regisetered token')
                 }).catch((err) => {
-                    console.log('regiseter token error:', err)
                 })
             }
         }
@@ -145,59 +140,68 @@ export default function Navbar() {
                     </div>
                 </div>
                 <Drawer open={open} onClose={() => setOpen(false)} size={'xs'} placement={'left'} className='md:hidden'>
-                    <Drawer.Body>
-                        <div className='grid gap-4 mt-10'>
+                    <Drawer.Header>
+                        <div className='flex items-center gap-2'>
 
                             <div className='flex justify-start'>
                                 <div>
                                     <Avatar onClick={() => { navigate("./profile"); setOpen(false) }} name={auth.getName()} src={auth.getPicture()} size={30} round={true} className='cursor-pointer' />
-
                                 </div>
                                 <div className='mx-2 my-auto text-lg font-medium'>
                                     {auth.getName()}
                                 </div>
                             </div>
-                            {drawerItems.map((item, id) => (
-                                <div
-                                    key={item.name}
-                                    onClick={() => { navigate(item.href); getLogsCount(); setOpen(false); }}
-                                    className={`${id == 0 ? 'flex sm:hidden' : 'flex'}  md:hidden flex flex-col  my-auto xl:my-2 text-center text-base font-medium ${"text-black"} `}
-                                    aria-current={item.current ? 'page' : undefined}
-                                >
-                                    <div className={`flex cursor-pointer`}>
-                                        {item.current ? item.iconFill : item.iconLine}
-                                        <div className='mx-1 text-lg font-medium'>
-                                            {item.name}
+                            <Divider vertical className='h-full' />
+                            <img src='/assets/logo_512.png' className='h-[80px] cursor-pointer' draggable="false" onClick={() => { navigate('../'); setOpen(false) }} />
+                        </div>
+                    </Drawer.Header>
+                    <Drawer.Body>
+                        <div className='h-full flex flex-col justify-between'>
+
+                            <div className='grid gap-4'>
+                                {drawerItems.map((item, id) => (
+                                    <div
+                                        key={item.name}
+                                        onClick={() => { navigate(item.href); getLogsCount(); setOpen(false); }}
+                                        className={`${id == 0 ? 'flex sm:hidden' : 'flex'}  md:hidden flex flex-col  my-auto xl:my-2 text-center text-base font-medium ${"text-black"} `}
+                                        aria-current={item.current ? 'page' : undefined}
+                                    >
+                                        <div className={`flex cursor-pointer`}>
+                                            {item.current ? item.iconFill : item.iconLine}
+                                            <div className='mx-1 text-lg font-medium'>
+                                                {item.name}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                            {/* <div
+                                ))}
+                                {/* <div
                                 key={walletItem.name}
                                 onClick={() => { navigate(walletItem.href); getLogsCount(); setOpen(false); }}
                                 className={`my-auto xl:my-2 sm:flex-none text-center text-base font-medium text-black`}
                                 aria-current={walletItem.current ? 'page' : undefined}
-                            >
+                                >
                                 <div className={`flex sm:hidden cursor-pointer`}>
-                                    {walletItem.current ? walletItem.iconFill : walletItem.iconLine}
-                                    <div className='mx-1 text-lg font-medium'>
-                                        {walletItem.name}
-                                    </div>
+                                {walletItem.current ? walletItem.iconFill : walletItem.iconLine}
+                                <div className='mx-1 text-lg font-medium'>
+                                {walletItem.name}
                                 </div>
-                            </div>
-                            <div
+                                </div>
+                                </div>
+                                <div
                                 key={ordersItem.name}
                                 onClick={() => { navigate(ordersItem.href); getLogsCount(); setOpen(false); }}
                                 className={`my-auto xl:my-2 sm:flex-none text-center text-base font-medium text-black`}
                                 aria-current={ordersItem.current ? 'page' : undefined}
-                            >
+                                >
                                 <div className={`flex sm:hidden cursor-pointer`}>
-                                    {ordersItem.current ? ordersItem.iconFill : ordersItem.iconLine}
-                                    <div className='mx-1 text-lg font-medium'>
-                                        {ordersItem.name}
-                                    </div>
+                                {ordersItem.current ? ordersItem.iconFill : ordersItem.iconLine}
+                                <div className='mx-1 text-lg font-medium'>
+                                {ordersItem.name}
+                                </div>
                                 </div>
                             </div> */}
+                            </div>
+                            <button onClick={() => { auth.logout(); }} className='text-base bg-transparent border-borderGray w-full mb-10' >logout</button>
                         </div>
                     </Drawer.Body>
                 </Drawer>

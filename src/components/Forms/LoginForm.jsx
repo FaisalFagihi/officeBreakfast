@@ -17,7 +17,6 @@ export function LoginForm({ googleLogin }) {
     const [message, setMessage] = useState("Use email and password");
     const [loginLoad, setLoginLoad] = useState(false);
     const [googleLoginLoad, setGoogleLoginLoad] = useState(false);
-    const [isResetPassword, setResetPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -30,11 +29,12 @@ export function LoginForm({ googleLogin }) {
                 await localStorage.setItem('username', response.data['username'])
                 await localStorage.setItem('firstName', response.data['firstName'])
                 await localStorage.setItem('lastName', response.data['lastName'])
+                await localStorage.setItem('picture', response.data['picture'])
+
                 setMessage(response.data['message'])
                 navigate("/")
             }
         }).catch((response) => {
-            console.log(response)
             if (response?.response?.status === 401) {
                 setMessage(response.response.data)
                 return
@@ -43,18 +43,7 @@ export function LoginForm({ googleLogin }) {
         }).finally(() => setLoginLoad(false));
     }
 
-    const resetPassword = () => {
-        userController.resetPassword(email.current.value).then(async (response) => {
-            console.log(response)
-        }).catch((response) => {
-            console.log(response)
-            if (response?.response?.status === 401) {
-                setMessage(response.response.data)
-                return
-            }
-            response?.response?.data ? setMessage(response.response.data) : setMessage(response.message)
-        })
-    }
+
 
     const clientID = "727515938547-5knpt0voai55equqiu8okhaaoh2h26du.apps.googleusercontent.com"
     useEffect(() => {
@@ -84,7 +73,6 @@ export function LoginForm({ googleLogin }) {
             }).finally(() => { setGoogleLoginLoad(false) });
         },
         onFailure: (e) => {
-            console.log(e)
             setGoogleLoginLoad(false)
         },
     })
@@ -100,26 +88,25 @@ export function LoginForm({ googleLogin }) {
             <Divider className="!my-6 sm:!my-4">or</Divider>
             {/* <p>{statusCode}</p> */}
 
-            {!isResetPassword ?
-
-                <div>
-                    <p className="p-1 text-sm text-center" hidden={!message}> {message}</p>
-                    <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
-                    <div className="mt-3" >
-                        <input type={'password'} placeholder="Password" className='input !rounded-full' ref={password} />
-
-                        <div className="mt-1 w-full">
-                            <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3' onClick={() => setResetPassword(true)}> forgot password ?</a>
-                        </div>
-                    </div>
-                    <button onClick={() => login()} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
-                        {loginLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
-                    </button>
+            <div>
+                <div className="flex justify-center p-1 text-sm text-center h-10">
+                    <p className='my-auto'>
+                        {message}
+                    </p>
                 </div>
-                : <div>
-                    <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
-                    <button onClick={() => resetPassword(email)}>Reset</button>
-                </div>}
+                <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
+                <div className="mt-3" >
+                    <input type={'password'} placeholder="Password" className='input !rounded-full' ref={password} />
+
+                    <div className="mt-1 w-full">
+                        <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3' onClick={() => navigate('../forgotPassword')}> forgot password ?</a>
+                    </div>
+                </div>
+                <button onClick={() => login()} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
+                    {loginLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
+                </button>
+            </div>
+
         </>
     )
 }

@@ -27,11 +27,13 @@ export function RegisterForm() {
         axiosInstance.post("register", data)
             .then(async (response) => {
                 if (response?.status === 200) {
-                    auth.setToken(response.data['token'])
-                    await localStorage.setItem('username', response.data['username'])
-                    await localStorage.setItem('firstName', response.data['firstName'])
-                    await localStorage.setItem('lastName', response.data['lastName'])
-                    setMessage(response.data['message'])
+                    // auth.setToken(response.data['token'])
+                    // await localStorage.setItem('username', response.data['username'])
+                    // await localStorage.setItem('firstName', response.data['firstName'])
+                    // await localStorage.setItem('lastName', response.data['lastName'])
+                    console.log(response)
+                    console.log(response.data)
+                    setMessage(response.data)
 
                     // navigate("/")
                 }
@@ -53,7 +55,6 @@ export function RegisterForm() {
     const passwordRule = Schema.Types.StringType().isRequired();
     const verifyPasswordRule = Schema.Types.StringType()
         .addRule((value, data) => {
-            console.log(data);
 
             if (value !== data.password) {
                 return false;
@@ -64,20 +65,24 @@ export function RegisterForm() {
         .isRequired('This field is required.')
 
     return (
-        <div className="px-0">
-            <div className="h-10 p-2 text-sm text-center">
+        <div className="px-0  text-center ">
+            <label className='text-lg' >
+                Register New Account
+            </label>
+            <div className="h-14 p-2 text-sm">
                 <p>
-                    {message? message :'Regisetr by your email and password' }
+                    {message ? message : 'Regisetr by your email and password'}
                 </p>
-
             </div>
-            <div className="grid grid-cols-2 mt-3 gap-2">
-                <input className='input rounded-full' placeholder='First Name' name="firstName" ref={firstName} />
-                <input className='input rounded-full' placeholder='Last Name' name="lastName" ref={lastName} />
+            <div className='flex flex-col gap-2'>
+                <div className="grid grid-cols-2 gap-2">
+                    <input className='input rounded-full' placeholder='First Name' name="firstName" ref={firstName} />
+                    <input className='input rounded-full' placeholder='Last Name' name="lastName" ref={lastName} />
+                </div>
+                <input className='input rounded-full' placeholder='Email' ref={username} />
+                <input className='input rounded-full' placeholder='Password' name="password" type="password" autoComplete="off" ref={password} />
             </div>
-            <input className='input rounded-full mt-3' placeholder='Email' ref={username} />
-            <input className='input mt-3 rounded-full' placeholder='Password' name="password" type="password" autoComplete="off" ref={password} />
-            <button onClick={() => Register(username.current.value, password.current.value, firstName.current.value, lastName.current.value)} className='normal m-auto mt-5 w-10 h-10 !rounded-full'>
+            <button onClick={() => Register(username.current.value, password.current.value, firstName.current.value, lastName.current.value)} className='normal m-auto mt-4 w-10 h-10 !rounded-full'>
                 {registerLoad ? <Loader /> :
                     <ArrowRightLineIcon className='text-lg' />}
             </button>

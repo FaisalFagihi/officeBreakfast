@@ -6,17 +6,17 @@ importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js')
 // https://firebase.google.com/docs/web/setup#config-object
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCxX9DZbrzNCrm6erQS3oumCWwEwbTIUig",
-    authDomain: "office-breakfast.firebaseapp.com",
-    projectId: "office-breakfast",
-    storageBucket: "office-breakfast.appspot.com",
-    messagingSenderId: "400832963899",
-    appId: "1:400832963899:web:ccf4ee10ead891dacd431e",
-    measurementId: "G-LVE0Z9PM03",
+  apiKey: "AIzaSyCxX9DZbrzNCrm6erQS3oumCWwEwbTIUig",
+  authDomain: "office-breakfast.firebaseapp.com",
+  projectId: "office-breakfast",
+  storageBucket: "office-breakfast.appspot.com",
+  messagingSenderId: "400832963899",
+  appId: "1:400832963899:web:ccf4ee10ead891dacd431e",
+  measurementId: "G-LVE0Z9PM03",
 }
 
- firebase.initializeApp(firebaseConfig)
- const messaging = firebase.messaging();
+firebase.initializeApp(firebaseConfig)
+const messaging = firebase.messaging();
 
 //  messaging.onMessage((payload) => {
 //     return
@@ -34,7 +34,6 @@ const firebaseConfig = {
 // });
 
 // self.addEventListener("notificationclick", (event) => {
-//   console.log("On notification click: ", event.notification.tag);
 //   event.notification.close();
 
 //   // This looks to see if the current is already open and
@@ -54,15 +53,47 @@ const firebaseConfig = {
 // });
 
 
- messaging.onBackgroundMessage((payload) => {
-    // Customize notification here
-    const notificationTitle = payload?.data?.title;
-    const notificationOptions = {
-      body: payload?.data?.body,
-      icon:"/assets/logo-96.png",
-    };
+messaging.onBackgroundMessage((payload) => {
+  // Customize notification here
+  console.log(payload)
+  const notificationTitle = payload?.data?.title;
+  var actions = []
+  if (payload?.data?.tag?.startsWith("officeBreakfastGroup")) {
+    actions = [{ action: "open_url", title: "join" }, { action: "close", title: "ignore" }]
+  }else {
+    actions = [{ action: "open_url", title: "view" }]
+  }
 
-    console.log(payload)
-  
-    self.registration.showNotification(notificationTitle, notificationOptions);
-  })
+  const notificationOptions = {
+    body: payload?.data?.body,
+    icon: "/assets/logo-96.png",
+    badge: '/assets/logo-48.png',
+    vibrate: [
+      500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170,
+      40, 500,
+    ],
+    data: { url: payload?.data?.url },
+    sound: '/assets/bird-3.mp3',
+    image: payload?.data?.imageUrl,
+    tag: payload?.data?.tag,
+    requireInteraction: true,
+    actions: actions
+
+
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+})
+
+
+self.addEventListener('notificationclick', function (event) {
+
+  const baseURL = 'https://localhost:3000';
+  console.log(baseURL)
+  switch (event.action) {
+    case 'open_url':
+      clients.openWindow(baseURL + event.notification.data?.url); //which we got from above
+      break;
+  }
+}
+  , false);

@@ -5,50 +5,25 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {https: true, port:3000 },
+  server: { https: true, port: 3000 },
   plugins: [
     react(),
     VitePWA(
       {
         registerType: 'autoUpdate',
         workbox: {
-          runtimeCaching: [
-            {
-              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'google-fonts-cache',
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-                },
-                cacheableResponse: {
-                  statuses: [0, 200]
-                }
-              }
-            },
-            {
-              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'gstatic-fonts-cache',
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-                },
-                cacheableResponse: {
-                  statuses: [0, 200]
-                },
-              }
-            }
-          ]
+          globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+          cleanupOutdatedCaches: true,
         },
-        injectRegister: 'script',
+        injectRegister: 'auto',
         devOptions: {
           enabled: true
-          /* other options */
         },
         manifest: {
+          name: 'Office-Breakfast',
+          short_name: 'OfficeBreakfsat',
+          description: 'A platfrom for collecting break fast orders and devide the delivery cost for group of people working in an office',
+          theme_color: "#ccc",
           icons: [
             // {
             //   src: "https://lh3.googleusercontent.com/u/0/drive-viewer/AFGJ81oBe4w5efa7Omi3PdQR74_Q2LfSf8po9SrGE5FMstI4wIcbeBupKtYw3TMlQiMxF42p1ULGK3hxh5g6Yo7YLccrJ6wlRw=w1278-h1279",
@@ -510,9 +485,7 @@ export default defineConfig({
               "src": "assets/ios/1024.png",
               "sizes": "1024x1024"
             }
-          ], 
-          theme_color: "#ccc",
-        
+          ],
         }
       }),
     mkcert(),

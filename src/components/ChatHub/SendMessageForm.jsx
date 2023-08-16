@@ -7,7 +7,6 @@ export default function SendMessageForm ({ sendMessage }) {
     return <Form
         onSubmit={e => {
             sendMessage(message);
-            console.log(e)
             setMessage('');
         }}>
         <InputGroup>

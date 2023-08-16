@@ -10,8 +10,6 @@ export default function MenuItemComponents({ components, selectComponents }) {
                 }
             })
         selectComponents(temp)
-        console.log(temp)
-
     }
     return (
 

@@ -4,7 +4,6 @@ class UserController {
     getCurrentUser = (callback) => {
         axiosInstance.get("me")
             .then(({ data }) => {
-                console.log(data)
                 callback(data)
             }).catch((error) => {
 
@@ -32,7 +31,6 @@ class UserController {
     }
 
     submitWalletRecord = (guestUserName, amount, remark) => {
-        console.log({ guestName: guestUserName, amount: amount, remark: remark })
         return axiosInstance.post("AddWalletRecord", { guestName: guestUserName, amount: amount, remark: remark });
     }
 
@@ -71,7 +69,6 @@ class UserController {
     }
 
     updatePassword = (newPassword, token) => {
-        console.log(newPassword, token)
         return axiosInstance.post("UpdatePassword", { newPassword: newPassword, token: token })
     }
 
@@ -112,7 +109,7 @@ class UserController {
     }
 
     confirmEmail = (token) => {
-        return axiosInstance.get("ConfirmEmail", { params: { token: token } });
+        return axiosInstance.get("ConfirmEmail", { params: { token: token.toString() } });
     }
 
 

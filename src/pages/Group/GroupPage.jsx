@@ -51,7 +51,6 @@ export default function GroupPage({ id }) {
     useEffect(() => {
         groupController.getGroup(groupID == null ? id : groupID).then(({ data }) => {
             setGroup(data)
-            console.log("setGroup")
         }).finally(() => {
             setLoader(true)
         })
@@ -63,8 +62,6 @@ export default function GroupPage({ id }) {
             return
 
         setIsOwner(auth.getUsername() === group.ownerName)
-        console.log(group.ownerName)
-        console.log(auth.getUsername())
         setSelectedGroupStatus(group.status)
         setEndDate(group.endDate)
         setDeliveryCost(group.delivery)
@@ -146,7 +143,7 @@ export default function GroupPage({ id }) {
     const [selectedGroupStatus, setSelectedGroupStatus] = useState(0);
 
     const changeOrderStatus = (groupStatusID) => {
-        groupController.changeOrderingStatus(parseInt(groupID), groupStatusID).catch(({ response }) => {
+        groupController.changeOrderingStatus(parseInt(groupID), groupStatusID, group?.name, group?.logo).catch(({ response }) => {
             toaster.push(response?.data, "error")
         })
 
@@ -308,10 +305,10 @@ export default function GroupPage({ id }) {
                                     <Loader className="m-auto" hidden={true} />
                                     <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
                                 </div>
-                                <div  hidden={!isUserConfirm}>
-                                        <div>
+                                <div hidden={!isUserConfirm}>
+                                    <div>
                                         Your order has been confirmed to the group admin.
-                                        </div>
+                                    </div>
                                     <div className='m-auto mt-20'>
                                         <Loader size='md' content={'wating for the admin to collect the orders'} />
                                     </div>
@@ -416,7 +413,7 @@ export default function GroupPage({ id }) {
                             <Row hidden={selectedGroupStatus !== 4}>
                                 <Panel>
                                     <h5>Group is closed</h5>
-                                    <Button className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(0)} >Open</Button>
+                                    <Button className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(5)} >Open</Button>
                                     <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
 
                                 </Panel>
@@ -456,8 +453,8 @@ export default function GroupPage({ id }) {
                                 <Divider className='my-2' />
                                 <div className='grid grid-cols-4 gap-2'>
 
-                                <button  block disabled={isUserConfirm} onClick={() => cartController.confirmOrder(true)} className={`${(isUserConfirm && selectedGroupStatus==0)? 'col-span-2':'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm? 'Confirmed' : 'Confirm'} </button>
-                                <button  hidden={!isUserConfirm || selectedGroupStatus !=0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black`}>Chnage</button>
+                                    <button disabled={isUserConfirm} onClick={() => cartController.confirmOrder(true)} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
+                                    <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded`}>Chnage</button>
                                 </div>
                             </div>
                         </Panel>

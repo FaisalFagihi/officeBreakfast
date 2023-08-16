@@ -18,7 +18,6 @@ export default function JoinToGroup({ onJoin }) {
             onJoin()
 
         }).catch(({ response }) => {
-            console.log(response)
             toaster.push(response?.data, "error")
         })
     }
@@ -44,7 +43,6 @@ export default function JoinToGroup({ onJoin }) {
         UserController.searchGuest(hostUsername).then(({ data }) => {
             setSearchData(data)
             // setSearchUsername(data.map(x => x.username))
-            console.log(data)
             let usernames = data.map(x => x.name + ":" + x.username)
             setSearchUsername(usernames)
 

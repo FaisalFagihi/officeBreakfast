@@ -4,9 +4,9 @@ import { Modal } from 'rsuite';
 import React from 'react';
 import uuid from 'react-uuid';
 import auth from '../../modules/auth';
-import MenuItemOptions from './MenuItemOptions';
+import MenuItemOptionsComponent from './MenuItemOptionsShagardi';
 import restaurantController from '../../controller/restaurantController';
-import shgardiPipeline from '../../modules/shgardiPipeline';
+import deliveryAppFactory from '../../modules/deliveryAppFactory';
 import MenuItemModifiers from './MenuItemModifiers';
 import MenuItemComponents from './MenuItemComponents';
 
@@ -31,8 +31,7 @@ export default function MenuItemControl({ name, photo, description, options, com
             return
 
         restaurantController.getMenuItemModifiersByID(selectedMenuItemOption.id).then(({ data }) => {
-            selectModifierGroups(data?.response?.map(x => shgardiPipeline.getModifierGroups(x)))
-            console.log(data?.response)
+            selectModifierGroups(data?.response?.map(x => deliveryAppFactory.getModifierGroups(x)))
         });
 
     }, [selectedMenuItemOption]);
@@ -57,7 +56,7 @@ export default function MenuItemControl({ name, photo, description, options, com
                     <img className="ModifierImage" src={photo} alt="" draggable="false" />
                 </div>
                 <div className="ModifierGroupDescription"> {description} </div>
-                <MenuItemOptions options={options} selectOption={selectMenuItemOption} />
+                <MenuItemOptionsComponent options={options} selectOption={selectMenuItemOption} />
                 <MenuItemComponents components={components} selectComponents={setSelectedComponents} />
                 <MenuItemModifiers modifierGroups={selectedModifierGroups} selectModifers={setSelectdModifiers} />
             </Modal.Body>

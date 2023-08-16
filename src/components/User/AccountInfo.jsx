@@ -22,7 +22,6 @@ export default function AccountInfo() {
         setFirstName(data.firstName)
         setLastName(data.lastName)
       }).catch((error) => {
-        console.log(error);
       });
   };
 
@@ -31,14 +30,12 @@ export default function AccountInfo() {
       .then(({ data }) => {
         setAddresses(data);
       }).catch((error) => {
-        console.log(error);
       });
   };
 
   function checkConnectivity() {
     axiosInstance.get("DeliveryApp/me")
       .then((data) => {
-        console.log(data)
         setHungerStationConnectivity(true);
       }).catch((error) => {
         this.isConnected = false;
@@ -53,7 +50,7 @@ export default function AccountInfo() {
   };
 
   useEffect(() => {
-   // refresh();
+    // refresh();
   }, [])
 
   const [userInfo, setUserInfo] = useState({});
@@ -64,7 +61,6 @@ export default function AccountInfo() {
   let navigate = useNavigate();
 
   return (
-    <Panel header={<h5>Info</h5>} className="p-5">
       <div className={'grid grid-cols-2 gap-2 items-center'}>
         <label>Email</label>
         <input value={auth.getUsername()} disabled className="rounded py-1 px-3 border-borderGray disabled:bg-gray" />
@@ -87,12 +83,10 @@ export default function AccountInfo() {
         <div>
           <label>Photo</label>
         </div>
-        <div className="">
-
-        <img src={auth.getPicture()} className="rounded-full border-borderGray" />
+        <div>
+          <Avatar name={auth.getName()} src={auth.getPicture()} size={100} round={true} />
         </div>
       </div>
-    </Panel>
   )
 }
 

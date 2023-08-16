@@ -14,16 +14,17 @@ class RestaurantController {
         return axiosInstance.get("Restaurant/RemoveCustom", { params: { id } })
     }
 
-    searchRestaurant = (searchQuery, location) => {
+    searchRestaurant = ({ searchQuery, location }) => {
         return axiosInstance.get("Restaurant/Search", { params: { searchQuery, latitude: location.coords.latitude, longitude: location.coords.longitude } })
     }
 
     getRestaurantByID = (id, menuSource) => {
+        console.log('menuSource', menuSource)
         return axiosInstance.get("Restaurant/Get", { params: { id, menuSource } })
     }
 
-    getMeniItemOptionsByID = (id) => {
-        return axiosInstance.get("Restaurant/GetMenuItemOptions", { params: { id } })
+    getMeniItemOptionsByID = ({ id, menuSource }) => {
+        return axiosInstance.get("Restaurant/GetMenuItemOptions", { params: { id: id, menuSource: menuSource } })
     }
 
     getMenuItemModifiersByID = (id) => {
@@ -32,7 +33,7 @@ class RestaurantController {
     getItemComponentsByID = (id) => {
         return axiosInstance.get("Restaurant/GetItemComponents", { params: { id } })
     }
-    
+
 }
 
 export default new RestaurantController();

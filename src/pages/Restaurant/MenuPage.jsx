@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom';
 import { Container, Modal, Stack } from 'rsuite';
 import { MenuItem } from '../../components/Menu/MenuItem';
 import MenuItemControl from '../../components/Menu/MenuItemControl';
+import MenuItemOptions from '../../components/Menu/MenuItemOptions';
 import Toaster from '../../components/Toaster';
 import restaurantController from '../../controller/restaurantController';
 import axiosInstance from "../../interceptors/axiosInstance"
-import shgardiPipeline from '../../modules/shgardiPipeline';
+import deliveryAppFactory from '../../modules/deliveryAppFactory';
+import Fatch from '../../Helpers/Fatcher';
 
 // var branchData = require("../data/alShalalMenu.json");
 
@@ -17,7 +19,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
 
     const [menuGroups, setMenuGroups] = useState(null);
     const [menuItems, setMenuItems] = useState(null);
-    const [selectedMenuItem, selectMenuItem] = useState();
+    const [selectedMenuItemID, selectMenuItemID] = useState(null);
     const [menuItemOptions, setMenuItemOptions] = useState(null);
     const [menuItemComponents, setMenuItemComponents] = useState(null);
     const [modalValue, setModalValue] = useState({ isOpen: false, menuItemID: 0 });
@@ -26,12 +28,8 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
 
     const getData = () => restaurantController.getRestaurantByID(restaurantID == null ? restaurant_id : restaurantID, menuSource == null ? menu_source : menuSource)
         .then(function ({ data }) {
-            if (menuSource === 0) {
-                setMenuData(data?.response.map(x => shgardiPipeline.getMenu(x)))
-            } else {
-                setMenuData(data)
-            }
-
+            setMenuData(data?.menuGroups)
+            console.log(data)
         }).catch(({ response }) => {
             toaster.push(response?.data, "error")
         })
@@ -39,13 +37,12 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
     useEffect(() => {
 
         if (menu !== null && menu !== undefined) {
-            console.log(menu)
             setMenuData(menu)
             return;
         }
+
         getData();
     }, []);
-
 
     useEffect(() => {
         if (menuData === null || menuData === undefined) {
@@ -56,50 +53,34 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
     }, [menuData]);
 
     const getMenuItemOption = async (item) => {
-        if (menuSource === 0) {
-            return restaurantController.getMeniItemOptionsByID(item.id).then(({ data }) => {
-                setMenuItemOptions(data?.response?.map(x => shgardiPipeline.getMenuItemOptions(x)))
-                console.log(1.0)
-            }).catch(({ response }) => {
-                toaster.push(response?.data, "error")
-            })
-        } else {
-            let options = [{
-                id: item.id,
-                name: item.name,
-                photo: item.photo,
-                description: item.description,
-                price: item.price,
-                calorie: null,
-                size: null,
-                minQty: 1,
-                maxQty: 10,
-            }]
-            setMenuItemOptions(options)
-        }
-    }
-    const getMenuItemComponents = async (id) => {
-        return restaurantController.getItemComponentsByID(id).then(({ data }) => {
-            setMenuItemComponents(data?.response?.additions?.map(x => shgardiPipeline.getMenuItemComponents(id, x)))
-            console.log(2.0)
+        return restaurantController.getMeniItemOptionsByID(`${item.id}&${restaurantID}`).then(({ data }) => {
+            setMenuItemOptions(data)
         }).catch(({ response }) => {
             toaster.push(response?.data, "error")
         })
     }
-    const openMenuItem = async (item) => {
-        selectMenuItem(item)
-        await getMenuItemOption(item)
-        await getMenuItemComponents(item.id)
+
+    const getMenuItemComponents = async (id) => {
+        return restaurantController.getItemComponentsByID(id).then(({ data }) => {
+            setMenuItemComponents(data?.response?.additions?.map(x => deliveryAppFactory.getMenuItemComponents(id, x)))
+        }).catch(({ response }) => {
+            toaster.push(response?.data, "error")
+        })
+    }
+
+    const openMenuItem = (item) => {
+        selectMenuItemID(item.id)
+        // await getMenuItemOption(item)
         setModalValue({ isOpen: true })
     }
 
     return menuGroups && (
         <>
             {menuGroups?.map((item, index) =>
-                <div key={item.menuGroupID} className="MenuGroups">
-                    <input id={item.menuGroupID} name='{item.menuGroupID}' type="radio" className="MenugroupItem" defaultChecked={index === 0} />
-                    <label htmlFor={item.menuGroupID} className="MenugroupItem" onClick={() => setMenuItems(item?.menuItems)}>
-                        {item.menuGroupName}
+                <div key={item.id} className="MenuGroups">
+                    <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem" defaultChecked={index === 0} />
+                    <label htmlFor={item.id} className="MenugroupItem" onClick={() => setMenuItems(item?.menuItems)}>
+                        {item.name}
                     </label>
                 </div>
             )}
@@ -111,27 +92,28 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
                         <MenuItem key={item.id} name={item.name}
                             price={item.price}
                             calories={item.calories}
-                            photo={item.photo}
+                            photo={item.image}
                             onClick={() => openMenuItem(item)} />
                     )}
                 </Stack>
             </Container>
 
-            <Modal open={modalValue.isOpen && !isPreview} onClose={() => setModalValue({ isOpen: false })}>
-                <MenuItemControl
-                    key={selectedMenuItem?.id}
-                    id={selectedMenuItem?.id}
-                    name={selectedMenuItem?.name}
-                    description={selectedMenuItem?.description}
-                    price={selectedMenuItem?.price}
-                    calorie={selectedMenuItem?.calorie}
-                    photo={selectedMenuItem?.photo}
-                    options={menuItemOptions} addToCart={addToCart}
-                    components={menuItemComponents}
-                    onAddToCart={() => setModalValue({ isOpen: false })} />
+            <Modal  open={modalValue.isOpen && !isPreview} onClose={() => setModalValue({ isOpen: false })}>
+                <Fatch request={restaurantController.getMeniItemOptionsByID} params={{id: `${selectedMenuItemID}&${restaurantID}`, menuSource:menuSource}} setData={setMenuItemOptions} >
+                    <MenuItemOptions
+                        key={menuItemOptions?.id}
+                        id={menuItemOptions?.id}
+                        name={menuItemOptions?.name}
+                        description={menuItemOptions?.description}
+                        price={menuItemOptions?.price}
+                        calorie={menuItemOptions?.calorie}
+                        photo={menuItemOptions?.image}
+                        options={menuItemOptions?.modifierGroups}
+                        types={menuItemOptions?.types}
+                        addToCart={addToCart}
+                        onAddToCart={() => setModalValue({ isOpen: false })} />
+                </Fatch>
             </Modal>
         </>
-    );
-
-
+    )
 }
