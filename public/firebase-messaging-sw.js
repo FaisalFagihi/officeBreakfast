@@ -88,7 +88,7 @@ messaging.onBackgroundMessage((payload) => {
 
 self.addEventListener('notificationclick', function (event) {
 
-  const baseURL = 'https://localhost:3000';
+  const baseURL = 'https://office-breakfast.com';
   console.log(baseURL)
   switch (event.action) {
     case 'open_url':
