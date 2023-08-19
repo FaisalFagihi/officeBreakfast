@@ -43,12 +43,11 @@ export default function GroupCard({ item, isOwner, setRemoveLoad }) {
             <img src={item.photo} className={`object-cover h-32 w-full sm:col-span-1 ${(item.status === 4) ? "grayscale" : "grayscale-0"}`} alt='' draggable="false" />
             <div className="flex flex-col justify-between p-3 sm:col-span-4">
                 <div>
-                    <div className="flex flex-row justify-between">
+                    <div className="flex flex-col sm:flex-row justify-between gap-2">
                         <h5>{item.name}</h5>
-                        <div className="flex flex-row items-center justify-end">
+                        <div className="flex flex-row items-center">
                             <GroupStatus status={item.status} />
                             <div className="ml-1 w-14" hidden={!item.status == 0}>
-
                                 {time}
                             </div>
                         </div>
@@ -64,31 +63,35 @@ export default function GroupCard({ item, isOwner, setRemoveLoad }) {
 
 
 
-const GroupStatus = ({ status }) => {
-    const groupStatus = ['Collecting in: ', 'Ordering', 'Ship has sailed', 'Orders arrived', 'Closed']
-    let indicatorColor = 'bg-gray-300'
+export const GroupStatus = ({ status, className}) => {
+    const groupStatus = ['Collecting: ', 'Ordering', 'Ship has sailed', 'Orders arrived', 'Closed']
+    let indicatorColor = 'bg-gray'
 
     switch (status) {
         case 0:
-            indicatorColor = 'bg-green-300'
+            indicatorColor = 'bg-green'
             break;
         case 1:
-            indicatorColor = 'bg-yellow-300'
+            indicatorColor = 'bg-yellow'
             break;
         case 2:
-            indicatorColor = 'bg-red-300'
+            indicatorColor = 'bg-red'
             break;
         case 3:
-            indicatorColor = 'bg-blue-300'
+            indicatorColor = 'bg-blue'
             break;
         case 4:
-            indicatorColor = 'bg-gray-300'
+            indicatorColor = 'bg-gray'
             break;
     }
-    return (
-        <div className="flex flex-row items-center">
-            <span className={`flex w-3 h-3 ${indicatorColor}  rounded-full mx-1`} />
-            <p>{groupStatus[status]}</p>
+    return (<div className={`flex flex-row items-center`}>
+            {/* <span className={`flex w-3 h-3 ${indicatorColor}  rounded-full mx-1`} /> */}
+            <span className="relative flex h-2 w-2 mr-1">
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${indicatorColor}-300 opacity-75`}></span>
+                <span className={`relative inline-flex rounded-full h-2 w-2 ${indicatorColor}-500`}></span>
+            </span>
+            <div className={`${className}`}>{groupStatus[status]}</div>
         </div>
     )
 }
+

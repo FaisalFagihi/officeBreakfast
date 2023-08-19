@@ -4,6 +4,7 @@ import userController from '../../controller/userController'
 import { GuestStatus, LeaderStatus } from '../../components/User/UserStatus';
 import { MdCheckCircle } from "react-icons/md"
 import { MdCancel } from "react-icons/md"
+import { GiMoneyStack } from "react-icons/gi"
 import Avatar from 'react-avatar';
 
 export function LeadersTable({ items, onAction }) {
@@ -13,7 +14,7 @@ export function LeadersTable({ items, onAction }) {
                 return <UsersTable item={item} status={<GuestStatus value={item?.status} />} key={item.id} options={<GuestOptions leaderName={item.username} status={item.status} onAction={onAction} />} />
             })}
         </div>
-        : <div className='text-center p-3 text-gray-500 font-normal'>have no volunteers</div>
+        : <div className='text-center p-3 text-gray-500 font-normal'>no volunteers</div>
 
 }
 
@@ -46,7 +47,15 @@ function UsersTable({ item, options, status }) {
             </div>
         </div>
         {/* <div className='hidden'>{item.username} </div> */}
-        <div className={`place-self-center ${item?.balance < 0? 'text-mainRed': 'text-black'}`}> {item?.balance? item.balance  +' SAR':'-'} </div>
+        <div className={`flex items-center gap-2 place-self-center `}>
+            <div className={`${item?.balance < 0 ? 'text-mainRed' : 'text-black'}`}>
+                {item?.balance ? item.balance?.toFixed(2) + ' SAR' : '--'}
+            </div>
+            <div hidden={!item?.balance}>
+                <GiMoneyStack size={24} />
+            </div>
+        </div>
+
         <div className='text-right w-16 place-self-end'>
             {options}
         </div>

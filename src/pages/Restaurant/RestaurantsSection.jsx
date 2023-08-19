@@ -77,8 +77,9 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
     return (
         <div>
             <Panel header={<div className="flex gap-2">
-                <img src='https://play-lh.googleusercontent.com/vo3LYx5f9xGcGD_23tnXYLtbShsTveRpKslOiB14QOu95I9A2OkB2wTB_ORd2-RB1E4' alt='logo' className='h-8 rounded object-cover ' draggable="false" />
-                <h4>Jahez Menu</h4>
+            {/* https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg */}
+                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-8 rounded object-cover ' draggable="false" />
+                <h4>Shgardi Menu</h4>
             </div>}>
                 <div>
                     <InputGroup inside >

@@ -36,7 +36,8 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
 
         if (types) {
             setSelectedType(types[0])
-            setSelectedSize(types[0]?.sizes[0])
+            if (types[0]?.sizes)
+                setSelectedSize(types[0]?.sizes[0])
         }
 
 
@@ -53,17 +54,19 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
 
     useEffect(() => {
 
-
+        if (selectedType) {
+            setBasePrice(selectedType.price)
+        }
     }, [selectedType]);
 
     useEffect(() => {
         if (selectedPackage) {
-            setBasePrice(selectedPackage?.price)
+            setBasePrice(selectedPackage.price)
         }
     }, [selectedPackage]);
 
     useEffect(() => {
-        if (price){
+        if (price) {
             setBasePrice(price)
         }
     }, [price]);
@@ -84,7 +87,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
                 </div>
                 <div className="ModifierGroupDescription"> {description} </div>
 
-                <div className='my-2' hidden={!types?.length>0}>
+                <div className='my-2' hidden={!types?.length > 0}>
                     <label>Type</label>
                     {types?.map((type) => {
                         return <div key={type.id} className={`border my-1 p-1 ${selectedType?.id === type?.id ? 'bg-gray-300' : ''}`} onClick={() => setSelectedType(type)}>
@@ -93,7 +96,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
                     })}
                 </div>
 
-                <div className={'my-2'} hidden={!selectedType?.sizes?.length>0}>
+                <div className={'my-2'} hidden={!selectedType?.sizes?.length > 0}>
                     <label>Size</label>
                     {selectedType?.sizes?.map((size) => {
                         return <div key={size.id} className={`border my-1 p-1 ${selectedSize?.id === size?.id ? 'bg-gray-300' : ''} `} onClick={() => setSelectedSize(size)}>

@@ -1,11 +1,13 @@
 import React from 'react'
-import { Avatar, Tooltip, Whisper } from "rsuite";
+import Avatar from 'react-avatar';
+import { Tooltip, Whisper } from "rsuite";
 
 const getInitials = (firstName, lastName) => {
     return firstName.charAt(0) + lastName.charAt(0)
 }
 
 export default function Username({ username, firstName, lastName, avatar = null, avatarOnly = false, nameOnly = false }) {
+   console.log('avatar',avatar)
     return (
         <>
             <Whisper
@@ -15,7 +17,9 @@ export default function Username({ username, firstName, lastName, avatar = null,
                 trigger="hover"
                 speaker={<Tooltip>{firstName + " " + lastName}</Tooltip>}
             >
-                <Avatar hidden={nameOnly} size='sm' src={avatar} circle alt={getInitials(firstName, lastName)}>{getInitials(firstName, lastName)}</Avatar>
+                {/* <Avatar hidden={nameOnly} size='sm' src={avatar} circle alt={getInitials(firstName, lastName)}>{getInitials(firstName, lastName)}</Avatar> */}
+                <Avatar name={firstName + ' ' + lastName} src={avatar} size={24} round={true} />
+
             </Whisper>
             <Whisper
 

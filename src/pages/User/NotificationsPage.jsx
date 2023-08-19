@@ -42,9 +42,9 @@ export default function NotificationsPage() {
                     </div>
                 ))}
 
-                <IoNotificationsOffOutline hidden={logs?.length > 0} style={{ fontSize: "8em", width: "100%" }} className="m-auto" />
+                <IoNotificationsOffOutline hidden={logs?.length > 0} style={{ fontSize: "4em", width: "100%" }}  className="m-auto mt-5" />
             </div>
-            <Button block onClick={() => clearLogs()}>Clear all</Button>
+            <button className='text-base bg-transparent p-2 rounded border border-borderGray w-full my-5' hidden={!(logs?.length>0)} onClick={() => clearLogs()}>Clear all</button>
         </div>
     )
 }

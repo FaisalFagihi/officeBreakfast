@@ -11,5 +11,5 @@ export default function Groups({ items }) {
         return <div key={group.id} className='mb-3'>
             <GroupCard item={group} />
         </div>
-    }): <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+    }): <MdNoFood style={{ fontSize: "3em", width: "100%" }}  />
 }

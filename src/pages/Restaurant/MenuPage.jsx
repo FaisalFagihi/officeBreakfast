@@ -87,7 +87,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
 
             <br />
             <Container style={{ overflow: "auto", height: height }}>
-                <Stack wrap spacing={10}>
+                <div className='grid md:grid-cols-2 gap-2 p-2'>
                     {menuItems?.map((item) =>
                         <MenuItem key={item.id} name={item.name}
                             price={item.price}
@@ -95,7 +95,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
                             photo={item.image}
                             onClick={() => openMenuItem(item)} />
                     )}
-                </Stack>
+                </div>
             </Container>
 
             <Modal  open={modalValue.isOpen && !isPreview} onClose={() => setModalValue({ isOpen: false })}>

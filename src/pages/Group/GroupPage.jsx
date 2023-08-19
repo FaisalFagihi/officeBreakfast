@@ -22,7 +22,8 @@ import { Modal } from 'rsuite';
 import RemindIcon from '@rsuite/icons/legacy/Remind';
 import Toaster from '../../components/Toaster';
 import { Popover, Whisper } from 'rsuite';
-
+import { GroupStatus } from './GroupCard';
+import { FcCheckmark } from 'react-icons/fc'
 export default function GroupPage({ id }) {
     const [loader, setLoader] = useState(false)
 
@@ -138,8 +139,6 @@ export default function GroupPage({ id }) {
     const userOrderTotal = userOrders.map(x => x.total).reduce((a, v) => a + v, 0);
     const isUserConfirm = userOrders?.at(0)?.isConfirmed
     const userDelivery = cartItems?.length > 0 ? delivery / Object.keys(groupBy(cartItems, 'username')).length : delivery;
-
-    const groupStatus = ['Collecting Orders..', 'Ordering..', 'Ship has sailed', 'Orders have arrived']
     const [selectedGroupStatus, setSelectedGroupStatus] = useState(0);
 
     const changeOrderStatus = (groupStatusID) => {
@@ -165,26 +164,27 @@ export default function GroupPage({ id }) {
 
     }
 
+    const addToCart = (item, Items) => {
+
+        var oItem = Items.find(x => x.id === item.id && isEqual(x.modifiersList, item.modifiersList))
+        //var oItem = Items.find(x => x.id === item.id)
+        if (oItem !== undefined) {
+            oItem.itemQty += item.itemQty;
+            return Items;
+        } else {
+            return [...Items, JSON.parse(JSON.stringify(item))]
+        }
+    }
+
+    const prepareOrderingList = () => {
+        let Items = []
+        changeTimer(0.00)
+        cartItems?.filter(x => x.isConfirmed)?.map(x => Items = addToCart(x, Items))
+
+        setOrderItems(Items)
+    }
     useEffect(() => {
-        const addToCart = (item, Items) => {
 
-            var oItem = Items.find(x => x.id === item.id && isEqual(x.modifiersList, item.modifiersList))
-            //var oItem = Items.find(x => x.id === item.id)
-            if (oItem !== undefined) {
-                oItem.itemQty += item.itemQty;
-                return Items;
-            } else {
-                return [...Items, JSON.parse(JSON.stringify(item))]
-            }
-        }
-
-        const prepareOrderingList = () => {
-            let Items = []
-            changeTimer(0.01)
-            cartItems?.filter(x => x.isConfirmed)?.map(x => Items = addToCart(x, Items))
-
-            setOrderItems(Items)
-        }
 
         if (selectedGroupStatus === 1) {
             cartController.confirmOrder(true)
@@ -195,7 +195,8 @@ export default function GroupPage({ id }) {
             prepareOrderingList()
         }
 
-    }, [cartItems, selectedGroupStatus]);
+        console.log("sadasda")
+    }, [selectedGroupStatus]);
 
     const navigate = useNavigate();
     const checkOut = () => {
@@ -215,7 +216,7 @@ export default function GroupPage({ id }) {
 
     return (
         loader ? <>
-            <Container className='p-0'>
+            <Container className='p-0 mb-24 lg:mb-0'>
                 {/* <Row>
                     <InputPicker defaultValue={orderStatus[0].value} data={orderStatus} style={{ width: 224 }} />
                 </Row> */}
@@ -275,28 +276,18 @@ export default function GroupPage({ id }) {
                     </Col>
                     <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
                         <Panel className="bg-white shadow-sm" bordered={borderd} header={<div className='text-lg'>{group?.name}</div>} style={{ position: "relative", minHeight: 843 }} >
-                            <Row>
-                                <Col xs={6}>
-                                    <Stack spacing={5}>
-                                        <StackItem>
-                                            <div className="text-base float-left font-bold">Delivery {delivery} SAR </div>
-                                        </StackItem>
-                                        <StackItem>
-                                            {group?.promotionName != null ? <div className='Promotion'> ({group.promotionName}) </div> : <></>}
-                                        </StackItem>
-                                    </Stack>
-                                </Col>
-                                <Col xs={12} style={{ textAlign: "center" }}>
-                                    <div className="text-base">
-                                        {groupStatus[selectedGroupStatus]}
-                                    </div>
-                                </Col>
-                                <Col xs={6}>
+                            <div className='flex flex-row justify-between'>
+                                <div>
+                                    <div className="text-base  font-bold">Delivery {delivery} SAR </div>
+                                </div>
 
-                                    <div className="text-base float-right font-bold" > {time} </div>
-                                </Col>
-                                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-14' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" />
-                            </Row>
+                                <div className='flex flex-row gap-1'>
+                                    <GroupStatus status={selectedGroupStatus} className={'text-base !font-bold'} />
+
+                                    <div hidden={selectedGroupStatus != 0} className="text-base font-bold" > {time} </div>
+                                </div>
+                                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-12' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" />
+                            </div>
                             <Row>
                                 <Divider className='mt-0' />
                             </Row>
@@ -306,11 +297,13 @@ export default function GroupPage({ id }) {
                                     <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
                                 </div>
                                 <div hidden={!isUserConfirm}>
-                                    <div>
-                                        Your order has been confirmed to the group admin.
-                                    </div>
-                                    <div className='m-auto mt-20'>
-                                        <Loader size='md' content={'wating for the admin to collect the orders'} />
+                                    <div className='flex flex-col gap-5 mt-10 items-center align-middle'>
+                                        <div className='flex flex-row gap-2 items-center'>
+                                            <FcCheckmark size={24} color='' />
+                                            Confirmed your order successfully
+                                        </div>
+                    
+                                        {/* <Loader speed='slow' size='sm' content={''} /> */}
                                     </div>
                                     <br />
                                 </div>

@@ -130,7 +130,7 @@ export default function MePage() {
                         </Row>
                     )
                 })
-                    : <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+                    : <MdNoFood style={{ fontSize: "3em", width: "100%" }} color="#aaa" />
                 : <FlexboxGrid justify="center">
                     <Loader size="md" content="Loading" />
                 </FlexboxGrid>
