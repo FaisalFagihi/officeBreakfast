@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Button, Container, FlexboxGrid, Input, InputGroup, List } from 'rsuite';
+import React, { useEffect, useRef } from 'react'
+import { Badge, Button, Container, FlexboxGrid, Input, InputGroup, List } from 'rsuite';
 import { Row, Col, Stack } from 'rsuite';
 import { Panel, Divider } from 'rsuite';
 import { Loader } from 'rsuite';
@@ -24,6 +24,7 @@ import Toaster from '../../components/Toaster';
 import { Popover, Whisper } from 'rsuite';
 import { GroupStatus } from './GroupCard';
 import { FcCheckmark } from 'react-icons/fc'
+import { BsCart2 } from 'react-icons/bs';
 export default function GroupPage({ id }) {
     const [loader, setLoader] = useState(false)
 
@@ -135,8 +136,8 @@ export default function GroupPage({ id }) {
 
     const time = ((hours + minutes + seconds) > 0) ? <> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </>
         : <>Time Is Over</>
-    const userOrders = cartItems.filter(x => x.username === auth.getUsername())
-    const userOrderTotal = userOrders.map(x => x.total).reduce((a, v) => a + v, 0);
+    const userOrders = cartItems?.filter(x => x.username === auth.getUsername())
+    const userOrderTotal = userOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
     const isUserConfirm = userOrders?.at(0)?.isConfirmed
     const userDelivery = cartItems?.length > 0 ? delivery / Object.keys(groupBy(cartItems, 'username')).length : delivery;
     const [selectedGroupStatus, setSelectedGroupStatus] = useState(0);
@@ -213,6 +214,29 @@ export default function GroupPage({ id }) {
 
     const cartUsers = Object.keys(groupBy(cartItems, 'username'));
     const itemsTotal = cartItems?.map(x => x.total).reduce((a, v) => a + v, 0);
+
+
+    useEffect(() => {
+
+        prepareOrderingList()
+    }, [cartItems]);
+
+
+    const cartRef = useRef(null);
+
+    const scrollToCart = () => {
+        const lastChildElement = cartRef.current?.lastElementChild;
+        console.log('lastChildElement', lastChildElement)
+
+        lastChildElement?.scrollIntoView();
+    };
+
+
+    const handleOrderPriceChange = (username, id, price) => {
+        cartController.updateOrderPrice(username, id, price).then(() => {
+
+        })
+    }
 
     return (
         loader ? <>
@@ -302,7 +326,7 @@ export default function GroupPage({ id }) {
                                             <FcCheckmark size={24} color='' />
                                             Confirmed your order successfully
                                         </div>
-                    
+
                                         {/* <Loader speed='slow' size='sm' content={''} /> */}
                                     </div>
                                     <br />
@@ -343,8 +367,8 @@ export default function GroupPage({ id }) {
                                 </Panel>
                                 <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
                             </Row>
+                            <Row hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
 
-                            <Row hidden={selectedGroupStatus !== 2}>
                                 <Panel header="Receipt Check" hidden={!isOwner}>
                                     <p>Compare the actual receipt with the following one, they should be matched.</p>
                                     <p>If not guests shall be refunded/charged manually.</p>
@@ -362,10 +386,10 @@ export default function GroupPage({ id }) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }) => {
+                                            {cartItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList, username }) => {
                                                 return <tr key={uid} className='border-t'>
                                                     <td>{itemName}</td>
-                                                    <td>{itemPrice.toFixed(2)}</td>
+                                                    <td> <input className='bg-white text-center' onChange={(e) => handleOrderPriceChange(username, uid, e.currentTarget.value)} type='number' value={itemPrice} /></td>
                                                     <td className='p-0'>
                                                         <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
                                                             <tbody>
@@ -389,7 +413,9 @@ export default function GroupPage({ id }) {
                                         </tbody>
                                     </table>
                                 </Panel>
-                                <img src='https://j.gifs.com/J6NyEv.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+                            </Row>
+                            <Row hidden={selectedGroupStatus !== 2}>
+                                <img src='https://c.tenor.com/RjNXHT-Ejy0AAAAd/flyby-sailby.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
 
                             </Row>
 
@@ -417,7 +443,7 @@ export default function GroupPage({ id }) {
                         {/* <Divider className='mt-1 mb-3'>Cart</Divider> */}
 
                         <Panel className="bg-white shadow-sm" bordered={borderd} header={
-                            <>
+                            <div ref={cartRef}>
                                 <h6>Cart ({cartItems?.length})</h6>
                                 <Whisper
                                     placement="top"
@@ -429,25 +455,31 @@ export default function GroupPage({ id }) {
                                 >
                                     <small>{cartUsers?.length} people share the cart.</small>
                                 </Whisper>
-                            </>
+                            </div>
                         }>
 
 
                             {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} height={280} />
                                 : <div style={{ textAlign: 'center', color: "#ccc", height: 280 }}>Empty</div>}
-                            <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
-                                <div className='flex justify-between lg:flex-col p-1'>
-
-                                    <div>Items: {userOrderTotal} SAR</div>
-
-                                    <div>Delivery: {userDelivery} SAR</div>
-                                    <div>Total: {userOrderTotal + userDelivery} SAR</div>
+                            <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
+                                <div className='flex justify-between flex-cols'>
+                                    <div className='flex justify-between lg:flex-col p-1 px-4 lg:px-1 w-full transition duration-0 hover:duration-150'>
+                                        <div>Items: {userOrderTotal} SAR</div>
+                                        <div>Delivery: {userDelivery} SAR</div>
+                                        <div>Total: {userOrderTotal + userDelivery} SAR</div>
+                                    </div>
+                                    <div className='flex items-center mx-3  cursor-pointer '>
+                                        <Divider vertical className='h-full' />
+                                        <Badge color='green' content={userOrders?.length}>
+                                            <BsCart2 size={22} onClick={() => scrollToCart()} />
+                                        </Badge>
+                                    </div>
                                 </div>
                                 <Divider className='my-2' />
-                                <div className='grid grid-cols-4 gap-2'>
 
-                                    <button disabled={isUserConfirm} onClick={() => cartController.confirmOrder(true)} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
-                                    <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded`}>Chnage</button>
+                                <div className='grid grid-cols-4 gap-2 w-full'>
+                                    <button disabled={isUserConfirm} onClick={() => { cartController.confirmOrder(true); }} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
+                                    <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
                                 </div>
                             </div>
                         </Panel>

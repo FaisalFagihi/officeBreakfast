@@ -75,5 +75,12 @@ class Cart {
         } catch (e) {
         }
     }
+
+        updateOrderPrice = async (username,uid, price) => {
+        try {
+            await this.connection.invoke("UpdateOrderPrice", username,uid, parseFloat(price));
+        } catch (e) {
+        }
+    }
 }
 export default new Cart();

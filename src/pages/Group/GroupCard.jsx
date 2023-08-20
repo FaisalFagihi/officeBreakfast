@@ -65,30 +65,36 @@ export default function GroupCard({ item, isOwner, setRemoveLoad }) {
 
 export const GroupStatus = ({ status, className}) => {
     const groupStatus = ['Collecting: ', 'Ordering', 'Ship has sailed', 'Orders arrived', 'Closed']
-    let indicatorColor = 'bg-gray'
+    let indicatorColorLight = 'bg-gray-300'
+    let indicatorColor = 'bg-gray-500'
 
     switch (status) {
         case 0:
-            indicatorColor = 'bg-green'
+            indicatorColorLight = 'bg-green-400'
+            indicatorColor = 'bg-green-500'
             break;
         case 1:
-            indicatorColor = 'bg-yellow'
+            indicatorColorLight = 'bg-yellow-400'
+            indicatorColor = 'bg-yellow-500'
             break;
         case 2:
-            indicatorColor = 'bg-red'
+            indicatorColorLight = 'bg-red-400'
+            indicatorColor = 'bg-red-500'
             break;
         case 3:
-            indicatorColor = 'bg-blue'
+            indicatorColorLight = 'bg-blue-400'
+            indicatorColor = 'bg-blue-500'
             break;
         case 4:
-            indicatorColor = 'bg-gray'
+            indicatorColorLight = 'bg-gray-400'
+            indicatorColor = 'bg-gray-500'
             break;
     }
     return (<div className={`flex flex-row items-center`}>
             {/* <span className={`flex w-3 h-3 ${indicatorColor}  rounded-full mx-1`} /> */}
             <span className="relative flex h-2 w-2 mr-1">
-                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${indicatorColor}-300 opacity-75`}></span>
-                <span className={`relative inline-flex rounded-full h-2 w-2 ${indicatorColor}-500`}></span>
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${indicatorColorLight} opacity-75`}></span>
+                <span className={`relative inline-flex rounded-full h-2 w-2 ${indicatorColor}`}></span>
             </span>
             <div className={`${className}`}>{groupStatus[status]}</div>
         </div>

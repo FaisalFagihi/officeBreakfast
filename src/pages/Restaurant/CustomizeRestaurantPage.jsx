@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import restaurantController from "../../controller/restaurantController";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import deliveryAppFactory from "../../modules/deliveryAppFactory";
+import { MenuItem } from "../../components/Menu/MenuItem";
 
 const sources = ['Phone number', 'Jahez', 'Careem', 'Marsool'].map(item => ({ label: item, value: item }));
 
@@ -57,7 +58,7 @@ export default function CustomizeRestaurantPage() {
     const location = useLocation();
     // const { id } = useParams();
 
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [restaurant, setRestaurant] = useState(null);
     const [menuData, setMenuData] = useState(null);
@@ -138,7 +139,7 @@ const navigate = useNavigate()
             // branch: { menugroups: menuData, menuitems: menuItems.map(({ status, ...menuItems }) => menuItems), modifier_groups: modifierGroups, modifiers: modifiers },
         }
         console.log(data)
-        restaurantController.submitCustom(data).then(()=>{
+        restaurantController.submitCustom(data).then(() => {
             navigate("../restaurants")
         })
 
@@ -194,7 +195,29 @@ const navigate = useNavigate()
                             </div>
                             <div className="my-2 border border-borderGray " >
                                 <Button block onClick={() => handleNewMenuItemState(item)}>+</Button>
-                                <Table
+                                <div className="grid lg:grid-cols-2 p-3 gap-2">
+                                    {item?.menuItems?.map((menuItem) => <div className="flex flex-row justify-between w-full border border-[#f1f1f1] rounded-md h-30" >
+
+                                        <img draggable="false" className="MenuItemImage !rounded-l-md" src={menuItem.image} alt="" onDragStart={(e) => e.preventDefault()} />
+                                        <div className="flex flex-col justify-between p-2 ">
+                                            <div className="flex flex-col">
+                                                <div>
+                                                    Name En: <input className="bg-white px-2 border border-borderGray" onChange={(e)=>handleMenuItemsEdit(menuItem.id, 'name', e.currentTarget.value, item.id)} value={menuItem.name} />
+                                                </div>
+                                                <div>
+                                                    Name Ar: <input className="bg-white px-2 border border-borderGray" onChange={(e)=>handleMenuItemsEdit(menuItem.id, 'nameAr', e.currentTarget.value, item.id)} value={menuItem.nameAr} />
+                                                </div>
+                                            </div>
+                                            <div className="text-right font-bold">
+                                                <input className="bg-white px-2 border border-borderGray" onChange={(e)=>handleMenuItemsEdit(menuItem.id, 'price', e.currentTarget.value, item.id)} type="number" value={menuItem.price}/> SR
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    )}
+                                </div>
+
+                                {/* <Table
                                     bordered
                                     cellBordered
                                     height={400}
@@ -205,7 +228,6 @@ const navigate = useNavigate()
                                     affixHorizontalScrollbar>
                                     <Column width={200}>
                                         <HeaderCell>Name AR</HeaderCell>
-                                        {/* <Cell dataKey="name" /> */}
                                         <EditableCell menuGroupID={item.id} dataKey="nameAr" onChange={handleMenuItemsEdit} />
 
                                     </Column>
@@ -235,7 +257,7 @@ const navigate = useNavigate()
                                         <HeaderCell>...</HeaderCell>
                                         <ActionCell dataKey="id" onRemove={(rowData) => handleRemoveMenuItemState(rowData, item.id)} onEdit={(rowData) => handleMenuItemsEditState(rowData, item.id)} />
                                     </Column>
-                                </Table>
+                                </Table> */}
                             </div>
                         </Panel>
                     ))}
