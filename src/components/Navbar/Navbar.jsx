@@ -97,19 +97,19 @@ export default function Navbar() {
         <>
             {/* <div className='fixed px-4 bg-[#333] shadow-sm w-full p-2 sm:pr-4 top-0 left-0 z-50 text-base flex h-12 sm:collapse'  /> */}
             {/* <div className='fixed px-4  bottom-0 sm:bottom-auto bg-[#333] shadow-sm w-full py-3 sm:pr-4 sm:top-0 sm:left-0 sm:rounded-none z-50 text-base flex'> */}
-            <div className='w-full p-2 text-base flex justify-between sm:justify-start xl:w-auto xl:flex-col shadow-md xl:shadow-none fixed z-50 bg-white top-0 lg:relative lg:bg-transparent' >
-                <div className='hidden xl:flex mt-3'>
+            <div className='w-full p-2 text-base flex justify-between sm:justify-start 2xl:w-auto 2xl:flex-col shadow-md 2xl:shadow-none fixed z-50 bg-white top-0 lg:relative lg:bg-transparent' >
+                <div className='hidden 2xl:flex mt-3'>
                     {userAvatar}
                     <div className='mx-2 my-auto text-lg font-medium'>
                         {auth.getName()}
                     </div>
                 </div>
-                <Divider className='hidden my-2 mr-2 xl:block' />
+                <Divider className='hidden my-2 mr-2 2xl:block' />
                 {navigationItems.map((item, id) => (
                     <div
                         key={item.name}
                         onClick={() => { navigate(item.href); getLogsCount() }}
-                        className={` ${id > 3 ? (id > 4 ? 'hidden md:flex' : 'hidden sm:flex') : 'flex'}  my-auto xl:my-2 sm:flex-none text-center px-2  text-base font-medium ${"text-black"} `}
+                        className={` ${id > 3 ? (id > 4 ? 'hidden md:flex' : 'hidden sm:flex') : 'flex'}  my-auto 2xl:my-2 sm:flex-none text-center px-2  text-base font-medium ${"text-black"} `}
                         aria-current={item.current ? 'page' : undefined}
                     >
                         <div className={`flex cursor-pointer mr-auto mt-0.5`}>
@@ -131,7 +131,7 @@ export default function Navbar() {
                             </div>
                         </div>
                     </Dropdown> */}
-                <div className='sm:ml-auto my-auto xl:hidden'>
+                <div className='sm:ml-auto my-auto 2xl:hidden'>
                     <div className={`hidden md:flex`}>
                         {userAvatar}
                     </div>
@@ -163,7 +163,7 @@ export default function Navbar() {
                                     <div
                                         key={item.name}
                                         onClick={() => { navigate(item.href); getLogsCount(); setOpen(false); }}
-                                        className={`${id == 0 ? 'flex sm:hidden' : 'flex'}  md:hidden flex flex-col  my-auto xl:my-2 text-center text-base font-medium ${"text-black"} `}
+                                        className={`${id == 0 ? 'flex sm:hidden' : 'flex'}  md:hidden flex flex-col  my-auto 2xl:my-2 text-center text-base font-medium ${"text-black"} `}
                                         aria-current={item.current ? 'page' : undefined}
                                     >
                                         <div className={`flex cursor-pointer`}>
@@ -177,7 +177,7 @@ export default function Navbar() {
                                 {/* <div
                                 key={walletItem.name}
                                 onClick={() => { navigate(walletItem.href); getLogsCount(); setOpen(false); }}
-                                className={`my-auto xl:my-2 sm:flex-none text-center text-base font-medium text-black`}
+                                className={`my-auto 2xl:my-2 sm:flex-none text-center text-base font-medium text-black`}
                                 aria-current={walletItem.current ? 'page' : undefined}
                                 >
                                 <div className={`flex sm:hidden cursor-pointer`}>
@@ -190,7 +190,7 @@ export default function Navbar() {
                                 <div
                                 key={ordersItem.name}
                                 onClick={() => { navigate(ordersItem.href); getLogsCount(); setOpen(false); }}
-                                className={`my-auto xl:my-2 sm:flex-none text-center text-base font-medium text-black`}
+                                className={`my-auto 2xl:my-2 sm:flex-none text-center text-base font-medium text-black`}
                                 aria-current={ordersItem.current ? 'page' : undefined}
                                 >
                                 <div className={`flex sm:hidden cursor-pointer`}>

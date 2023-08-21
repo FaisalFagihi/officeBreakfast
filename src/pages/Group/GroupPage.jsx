@@ -82,10 +82,10 @@ export default function GroupPage({ id }) {
         setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
         setMinutes(Math.floor((time / 1000 / 60) % 60));
         setSeconds(Math.floor((time / 1000) % 60));
-        if (time < 0) {
-            clearInterval(interval);
-            setTimerInterval(undefined)
-        }
+        // if (time < 0) {
+        //     clearInterval(interval);
+        //     setTimerInterval(undefined)
+        // }
     }
 
     useEffect(() => {
@@ -93,8 +93,8 @@ export default function GroupPage({ id }) {
             return;
         getTime()
         if (Date.parse(endDate + " GMT") >= Date.parse(new Date().toUTCString())) {
-            setTimerInterval(setInterval(() => getTime(), 1000));
         }
+        setTimerInterval(setInterval(() => getTime(), 1000));
 
     }, [endDate])
 
@@ -134,12 +134,11 @@ export default function GroupPage({ id }) {
         }, {}); // empty object is the initial value for result object
     }
 
-    const time = ((hours + minutes + seconds) > 0) ? <> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </>
-        : <>Time Is Over</>
+    const time = <div className={`${((hours + minutes + seconds) > 0) ? 'text-black' : 'text-mainRed'}`}> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </div>
     const userOrders = cartItems?.filter(x => x.username === auth.getUsername())
     const userOrderTotal = userOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
     const isUserConfirm = userOrders?.at(0)?.isConfirmed
-    const userDelivery = cartItems?.length > 0 ? delivery / Object.keys(groupBy(cartItems, 'username')).length : delivery;
+    const userDelivery = cartItems?.filter(x => x.isConfirmed)?.length > 0 ? delivery / Object.keys(groupBy(cartItems?.filter(x => x.isConfirmed), 'username')).length : delivery;
     const [selectedGroupStatus, setSelectedGroupStatus] = useState(0);
 
     const changeOrderStatus = (groupStatusID) => {
@@ -179,7 +178,6 @@ export default function GroupPage({ id }) {
 
     const prepareOrderingList = () => {
         let Items = []
-        changeTimer(0.00)
         cartItems?.filter(x => x.isConfirmed)?.map(x => Items = addToCart(x, Items))
 
         setOrderItems(Items)
@@ -187,10 +185,10 @@ export default function GroupPage({ id }) {
     useEffect(() => {
 
 
-        if (selectedGroupStatus === 1) {
-            cartController.confirmOrder(true)
-            prepareOrderingList()
-        }
+        // if (selectedGroupStatus === 1) {
+        //     cartController.confirmOrder(true)
+        //     prepareOrderingList()
+        // }
 
         if (selectedGroupStatus === 2 && (orderItems.length === 0)) {
             prepareOrderingList()
@@ -212,7 +210,7 @@ export default function GroupPage({ id }) {
 
     const [isModalOpen, setIsModalOpen] = useState();
 
-    const cartUsers = Object.keys(groupBy(cartItems, 'username'));
+    const cartUsers = Object.keys(groupBy(cartItems?.filter(x => x.isConfirmed), 'username'));
     const itemsTotal = cartItems?.map(x => x.total).reduce((a, v) => a + v, 0);
 
 
@@ -237,6 +235,46 @@ export default function GroupPage({ id }) {
 
         })
     }
+
+
+    const userCart = <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
+        <div className='flex justify-between flex-cols'>
+            <div className='flex justify-between flex-col p-1 px-4 lg:px-1 w-full transition duration-0 hover:duration-150'>
+                {/* <div>items: {userOrderTotal?.toFixed(1)} SAR</div> */}
+                {/* <div>Calculated Delivery: <b>{userDelivery?.toFixed(1)} SAR</b></div> */}
+                <div>Your total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SAR </b></div>
+            </div>
+            <div className='flex items-center mx-3  cursor-pointer '>
+                <Divider vertical className='h-full mx-2' />
+                <Badge color='green' content={userOrders?.length}>
+                    <BsCart2 size={20} onClick={() => scrollToCart()} />
+                </Badge>
+            </div>
+        </div>
+        <Divider className='my-2' />
+
+        <div className='grid grid-cols-4 gap-2 w-full'>
+            <button disabled={isUserConfirm || selectedGroupStatus != 0} onClick={() => { cartController.confirmOrder(true); }} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
+            <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
+        </div>
+    </div>
+
+    const confiremUsers = <ConnectedUsers users={cartUsers?.map((user) => {
+        return cartItems?.find(x => x.username === user)
+    })} />
+
+    const cartSection = <di>
+
+        <div className='flex flex-col  gap-2 mb-2'>
+
+            {/* <div >{cartUsers?.length} people share the cart.</div> */}
+        </div>
+
+        {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} height={280} />
+            : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>}
+
+    </di>
+
 
     return (
         loader ? <>
@@ -299,18 +337,20 @@ export default function GroupPage({ id }) {
 
                     </Col>
                     <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
-                        <Panel className="bg-white shadow-sm" bordered={borderd} header={<div className='text-lg'>{group?.name}</div>} style={{ position: "relative", minHeight: 843 }} >
-                            <div className='flex flex-row justify-between'>
-                                <div>
-                                    <div className="text-base  font-bold">Delivery {delivery} SAR </div>
-                                </div>
+                        <Panel className="bg-white shadow-sm" bordered={borderd} style={{ position: "relative", minHeight: 843 }} header={
+                            <div className='text-base font-semibold'>{group?.name}
+                                <div className='font-light '>*delivery and items prices might be changed based on the actual receipt.</div>
+                            </div>}>
 
-                                <div className='flex flex-row gap-1'>
-                                    <GroupStatus status={selectedGroupStatus} className={'text-base !font-bold'} />
+                            <div className='flex flex-row justify-between items-center text-md mb-2'>
+                                {/* <div>Delivery {delivery} SAR </div> */}
 
-                                    <div hidden={selectedGroupStatus != 0} className="text-base font-bold" > {time} </div>
+                                <div>Estimated Delivery: <b>{userDelivery?.toFixed(2)} SAR</b></div>
+                                <div className='flex flex-row gap-1 items-center'>
+                                    <GroupStatus status={selectedGroupStatus} />
+                                    <div hidden={selectedGroupStatus != 0} > <div className='font-bold'>{time}</div></div>
                                 </div>
-                                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-12' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" />
+                                {/* <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-12' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" /> */}
                             </div>
                             <Row>
                                 <Divider className='mt-0' />
@@ -322,8 +362,8 @@ export default function GroupPage({ id }) {
                                 </div>
                                 <div hidden={!isUserConfirm}>
                                     <div className='flex flex-col gap-5 mt-10 items-center align-middle'>
-                                        <div className='flex flex-row gap-2 items-center'>
-                                            <FcCheckmark size={24} color='' />
+                                        <div className='flex flex-row gap-1 items-center text-xl'>
+                                            <FcCheckmark size={28} className='mb-2' />
                                             Confirmed your order successfully
                                         </div>
 
@@ -341,7 +381,9 @@ export default function GroupPage({ id }) {
                                                     <List.Item key={uid} index={index}>
                                                         <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
                                                             <FlexboxGridItem colspan={22}>
-                                                                <b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
+                                                                <b> {itemQty}x {itemName}
+                                                                    {/* ({itemPrice} SAR) */}
+                                                                </b>
 
                                                                 {modifiersList?.map(({ name, price }, index) => {
                                                                     return <p key={index.toString()} index={index}>
@@ -354,18 +396,61 @@ export default function GroupPage({ id }) {
                                                 ))}
                                             </List>
                                             <br />
-                                            <div>
-                                                <div>Items total: {itemsTotal} SAR</div>
+                                            {/* <div>
+                                                <div>Items total: {itemsTotal?.toFixed(1)} SAR</div>
 
-                                                <div>Delivery cost: {delivery} SAR</div>
-                                                {(itemsTotal > 0) ? <b>Total: {itemsTotal + delivery} SAR</b> : <>Total: 0</>}
-                                            </div>
+                                                <div>Delivery cost: {delivery?.toFixed(1)} SAR</div>
+                                                {(itemsTotal > 0) ? <b>Total: {(itemsTotal + delivery)?.toFixed(1)} SAR</b> : <>Total: 0</>}
+                                            </div> */}
                                         </>
 
                                         : <>There are no orders</>
                                     }
                                 </Panel>
-                                <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+                                <div hidden={isOwner}>
+
+                                    <Panel header="Your Order">
+                                        {userOrders?.length > 0 ?
+                                            <>
+                                                <List>
+                                                    {userOrders?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
+                                                        <List.Item key={uid} index={index}>
+                                                            <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
+                                                                <FlexboxGridItem colspan={22}>
+                                                                    <b> {itemQty}x {itemName} ({itemPrice} SAR)
+                                                                    </b>
+
+                                                                    {modifiersList?.map(({ name, price }, index) => {
+                                                                        return <p key={index.toString()} index={index}>
+                                                                            {name} {price} SAR
+                                                                        </p>
+                                                                    })}
+                                                                </FlexboxGridItem>
+                                                            </FlexboxGrid>
+                                                        </List.Item>
+                                                    ))}
+                                                </List>
+                                                <br />
+                                                <div>
+                                                    <div>Items: <b>{userOrderTotal?.toFixed(1)} SAR</b></div>
+
+                                                    {/* <div>Delivery cost: {userDelivery?.toFixed(1)} SAR</div> */}
+                                                    Total: {(userOrderTotal > 0) ? <b> {(userOrderTotal + userDelivery)?.toFixed(1)} SAR</b> : <>0</>}
+                                                </div>
+
+
+                                            </>
+
+                                            : <>You have no orders :(</>
+                                        }
+                                    </Panel>
+                                    <Panel header="Cart View">
+                                        {cartSection}
+                                    </Panel>
+                                </div>
+                                <div>
+                                    <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+                                </div>
                             </Row>
                             <Row hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
 
@@ -440,50 +525,22 @@ export default function GroupPage({ id }) {
                         </Panel>
                     </Col>
                     <Col xs={24} lg={6} >
-                        {/* <Divider className='mt-1 mb-3'>Cart</Divider> */}
-
-                        <Panel className="bg-white shadow-sm" bordered={borderd} header={
-                            <div ref={cartRef}>
-                                <h6>Cart ({cartItems?.length})</h6>
-                                <Whisper
-                                    placement="top"
-                                    controlId="control-id-context-menu"
-                                    trigger="click"
-                                    speaker={<Popover><ConnectedUsers users={cartUsers?.map((user) => {
-                                        return cartItems?.find(x => x.username === user)
-                                    })} /></Popover>}
-                                >
+                        <div ref={cartRef} hidden={selectedGroupStatus != 0} className='mb-4'>
+                            <Panel className="bg-white shadow-sm" bordered={borderd} header={
+                                <div>
+                                    <div className='flex gap-2' >
+                                        <h6>Cart ({cartItems?.length})</h6>
+                                        {confiremUsers}
+                                    </div>
                                     <small>{cartUsers?.length} people share the cart.</small>
-                                </Whisper>
-                            </div>
-                        }>
-
-
-                            {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} height={280} />
-                                : <div style={{ textAlign: 'center', color: "#ccc", height: 280 }}>Empty</div>}
-                            <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
-                                <div className='flex justify-between flex-cols'>
-                                    <div className='flex justify-between lg:flex-col p-1 px-4 lg:px-1 w-full transition duration-0 hover:duration-150'>
-                                        <div>Items: {userOrderTotal} SAR</div>
-                                        <div>Delivery: {userDelivery} SAR</div>
-                                        <div>Total: {userOrderTotal + userDelivery} SAR</div>
-                                    </div>
-                                    <div className='flex items-center mx-3  cursor-pointer '>
-                                        <Divider vertical className='h-full' />
-                                        <Badge color='green' content={userOrders?.length}>
-                                            <BsCart2 size={22} onClick={() => scrollToCart()} />
-                                        </Badge>
-                                    </div>
                                 </div>
-                                <Divider className='my-2' />
+                            }>
 
-                                <div className='grid grid-cols-4 gap-2 w-full'>
-                                    <button disabled={isUserConfirm} onClick={() => { cartController.confirmOrder(true); }} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
-                                    <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
-                                </div>
-                            </div>
-                        </Panel>
-                        <Panel className="bg-white mt-3 shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >
+                                {cartSection}
+                                {userCart}
+                            </Panel>
+                        </div>
+                        <Panel className="bg-white shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >
                             {chatController.connection ? <>
                                 <MessageContainer messages={messages} />
                                 <br />
