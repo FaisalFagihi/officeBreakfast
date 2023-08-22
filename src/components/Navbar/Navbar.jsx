@@ -35,9 +35,9 @@ export default function Navbar() {
         { name: 'Groups', iconFill: <UserGroupIconSolid className={iconSize} />, iconLine: <UserGroupIcon className={iconSize} />, href: '/', current: location.pathname == '/' },
         { name: 'Me', iconFill: <UserIconSolid className={iconSize} />, iconLine: <UserIcon className={iconSize} />, href: '/me', current: location.pathname == '/me' },
         { name: 'Menus', iconFill: <IoRestaurantSharp className={iconSize} />, iconLine: <IoRestaurantOutline className={iconSize} />, href: '/restaurants', current: location.pathname == '/restaurants' },
-        { name: 'Notifications', iconFill: <BellIconSolid className={iconSize} />, iconLine: <BellIcon className={iconSize + 'm-auto'} />, href: '/notifications', current: location.pathname == '/notifications' },
         { name: 'Orders', iconFill: <BiSolidReceipt className={iconSize} />, iconLine: <BiReceipt className={iconSize} />, href: '/orders', current: location.pathname == '/orders' },
         { name: 'Wallet', iconFill: <WalletIconSolid className={iconSize} />, iconLine: <WalletIcon className={iconSize} />, href: '/wallet', current: location.pathname == '/wallet' },
+        { name: 'Notifications', iconFill: <BellIconSolid className={iconSize} />, iconLine: <BellIcon className={iconSize + 'm-auto'} />, href: '/notifications', current: location.pathname == '/notifications' },
     ]
 
     const getLogsCount = () => {

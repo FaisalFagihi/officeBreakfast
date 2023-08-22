@@ -471,7 +471,7 @@ export default function GroupPage({ id }) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {cartItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList, username }) => {
+                                            {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList, username }) => {
                                                 return <tr key={uid} className='border-t'>
                                                     <td>{itemName}</td>
                                                     <td> <input className='bg-white text-center' onChange={(e) => handleOrderPriceChange(username, uid, e.currentTarget.value)} type='number' value={itemPrice} /></td>

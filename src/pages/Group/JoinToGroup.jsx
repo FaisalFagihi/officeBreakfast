@@ -40,7 +40,7 @@ export default function JoinToGroup({ onJoin }) {
         if (hostUsername === "")
             return
 
-        UserController.searchGuest(hostUsername).then(({ data }) => {
+        UserController.searchVolunteer(hostUsername).then(({ data }) => {
             setSearchData(data)
             // setSearchUsername(data.map(x => x.username))
             let usernames = data.map(x => x.name + ":" + x.username)

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Stack, Grid, Button, Divider, InputGroup, Row, Col, Dropdown, AutoComplete, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal } from "rsuite";
+import { Stack, Grid, Button, Divider, InputGroup, Row, Col, Dropdown, AutoComplete, PanelGroup, FlexboxGrid, Whisper, Tooltip, Modal, Toggle } from "rsuite";
 import groupController from "../../controller/groupController";
 import { Loader } from 'rsuite';
 import UserController from "../../controller/userController";
@@ -111,16 +111,29 @@ export default function MePage() {
     }, [searchWord]);
 
 
+    const [userMode, setUserMode] = useState(false);
+
+    useEffect(() => {
+
+        userController.getUserMode().then(({ data }) => {
+            setUserMode(data)
+        })
+    }, []);
+
+    const updateUserMode = (value) => {
+        userController.updateUserMode(value).then(() => {
+            setUserMode(value)
+        })
+    }
+
     return (
         <div>
-            <div className="flex justify-between mb-2">
-
-                <div className="text-lg">
-                    My Host
+            <div className="flex justify-between">
+                <div className='font-light text-base'> Become a volunteer and share the delivery cost with your colleagues.</div>
+                <div className="flex text-lg mb-2 gap-2">
+                    Volunteer Mode <Toggle onClick={() => updateUserMode(!userMode)} checked={userMode} size="md" checkedChildren="ON" unCheckedChildren="OFF" />
                 </div>
-                <button className="bg-transparent border rounded border-borderGray py-1 px-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> + </button>
             </div>
-
             {(!removeLoad && !myGroupLoader) ?
                 (myGroups?.length != 0) ? myGroups?.map((item) => {
                     return (
@@ -130,11 +143,12 @@ export default function MePage() {
                         </Row>
                     )
                 })
-                    : <MdNoFood style={{ fontSize: "3em", width: "100%" }}  />
+                    : <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
                 : <FlexboxGrid justify="center">
                     <Loader size="md" content="Loading" />
                 </FlexboxGrid>
             }
+            <button disabled={!userMode} className="w-full mt-4 bg-transparent border rounded  p-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> Create New Group + </button>
 
             <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
                 <Modal.Header>

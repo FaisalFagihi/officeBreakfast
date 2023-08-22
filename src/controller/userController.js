@@ -64,6 +64,10 @@ class UserController {
         return axiosInstance.get("Search", { params: { word } });
     }
 
+    searchVolunteer = (word) => {
+        return axiosInstance.get("VolunteerSearch", { params: { word } });
+    }
+
     resetPassword = (email) => {
         return axiosInstance.get("ForgotPassword", { params: { email } });
     }
@@ -110,6 +114,14 @@ class UserController {
 
     confirmEmail = (token) => {
         return axiosInstance.get("ConfirmEmail", { params: { token: token.toString() } });
+    }
+
+    getUserMode = () => {
+        return axiosInstance.get("IVolunteer");
+    }
+
+    updateUserMode = (isVolunteer) => {
+        return axiosInstance.get("UpdateUserMode", { params: { isVolunteer: isVolunteer } });
     }
 
 
