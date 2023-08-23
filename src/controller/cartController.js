@@ -3,17 +3,20 @@ import auth from '../modules/auth';
 
 class Cart {
 
-    sign = async (setOrders, setGroupStatus, setDeliveryCost, setEndDate, id) => {
+    sign = async (setOrders, setGroupStatus, setDeliveryCost, setEndDate, id, setConnectionStatus) => {
         this.setOrders = setOrders;
         this.setGroupStatus = setGroupStatus;
         this.setDeliveryCost = setDeliveryCost;
         this.setEndDate = setEndDate;
         this.groupID = id;
+        this.setConnectionStatus = setConnectionStatus;
 
         this.closeConn = () => new Promise(async (resolve, reject) => {
             try {
                 await this.connection?.stop();
                 resolve(true);
+                this.setConnectionStatus(false)
+
             } catch (e) {
                 reject(e)
             }
@@ -47,7 +50,14 @@ class Cart {
                     await this.connection.start();
 
                 await this.connection.invoke("JoinRoom", this.groupID);
+                this.setConnectionStatus(true)
+
+                this.connection.onclose((error) => this.setConnectionStatus(false))
+
+
+
             } catch (e) {
+                this.setConnectionStatus(false)
             }
         })
     }
@@ -76,9 +86,9 @@ class Cart {
         }
     }
 
-        updateOrderPrice = async (username,uid, price) => {
+    updateOrderPrice = async (username, uid, price) => {
         try {
-            await this.connection.invoke("UpdateOrderPrice", username,uid, parseFloat(price));
+            await this.connection.invoke("UpdateOrderPrice", username, uid, parseFloat(price));
         } catch (e) {
         }
     }

@@ -49,7 +49,7 @@ export default function GroupCreationPage({ afterSubmit }) {
                 name: selectedRestaurant.restaurant.name,
                 image: selectedRestaurant.restaurant.image,
                 logo: selectedRestaurant.restaurant.logo,
-                deliveryCost: delivery == null? 0:delivery,
+                deliveryCost: delivery == null ? 0 : delivery,
                 timer: timer,
                 menuSource: selectedRestaurant.menuSource
             }
@@ -97,6 +97,7 @@ export default function GroupCreationPage({ afterSubmit }) {
     return (
         <div className='p-2'>
 
+
             <div className='mb-3'>
                 <div>Restaurant</div>
 
@@ -110,10 +111,11 @@ export default function GroupCreationPage({ afterSubmit }) {
 
                 <InputNumber value={delivery} postfix="SR" onChange={(value) => setDelivery(value)} />
             </div>
+            <div className='h-96 overflow-auto'>
 
-            <RestaurantsSection setSelectedRestaurant={setSelectedRestaurant} isHorizontal={true} />
+                <RestaurantsSection setSelectedRestaurant={setSelectedRestaurant} isHorizontal={true} />
 
-            <br />
+            </div>
             {/* <Panel header={<h6>Custom Menu</h6>} hidden={customs?.length == 0 || !customs}>
                 {!loadCustomRestaurants ?
                     <div className='h-auto grid grid-rows-1 grid-flow-col gap-1 justify-start overflow-auto' spacing={20}  >
@@ -131,11 +133,9 @@ export default function GroupCreationPage({ afterSubmit }) {
                 }
 
             </Panel> */}
-            <Row className='mt-3 px-2'>
-                <Button className='secondary' block onClick={() => create()}>Submit</Button>
-            </Row>
+            <button className='secondary w-full' block onClick={() => create()}>Submit</button>
 
-            <Modal overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
+            {/* <Modal overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
                 <Modal.Header>
                     <h3>Preview</h3>
                 </Modal.Header>
@@ -157,7 +157,7 @@ export default function GroupCreationPage({ afterSubmit }) {
                         : <Loader size="md" content="Getting Menu" />
                     }
                 </Modal.Body>
-            </Modal>
+            </Modal> */}
         </div>
     )
 }

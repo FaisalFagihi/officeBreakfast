@@ -127,69 +127,82 @@ export default function MePage() {
     }
 
     return (
-        <div>
-            <div className="flex justify-between">
-                <div className='font-light text-base'> Become a volunteer and share the delivery cost with your colleagues.</div>
-                <div className="flex text-lg mb-2 gap-2">
+        userMode ?
+            <div>
+                <div className="gap-2 w-full items-center mt-5">
+                    <div className="text-lg">
+                        Volunteer Mode <Toggle onClick={() => updateUserMode(!userMode)} checked={userMode} size="md" checkedChildren="ON" unCheckedChildren="OFF" />
+                    </div>
+                    <button hidden={!myGroups?.length > 0} disabled={!userMode} className=" mt-5 border text-mainDarkGray rounded-md  px-2 align-middle text-center text-lg" onClick={() => setNewRestaurantState(true)}> New Group Order + </button>
+                </div>
+                <Panel>
+
+                    {(!removeLoad && !myGroupLoader) ?
+                        (myGroups?.length != 0) ? myGroups?.map((item) => {
+                            return (
+                                <Row key={item.id} style={{ position: "relative" }} className="mb-3 mx-0">
+                                    <GroupCard item={item} isOwner={true} />
+                                    <SizeDropdown placement="topEnd" groupID={item.id} title="..." size="xs" style={{ position: "absolute", bottom: 1, right: 1, zIndex: 20 }} />
+                                </Row>
+                            )
+                        })
+                            : <div className="flex flex-col items-center gap-2">
+                                <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+                                <div>You don't have any group order</div>
+                                <button disabled={!userMode} className="  border text-mainDarkGray rounded-md  px-2 align-middle text-center text-lg" onClick={() => setNewRestaurantState(true)}> Create new group order + </button>
+                            </div>
+                        : <FlexboxGrid justify="center">
+                            <Loader size="md" content="Loading" />
+                        </FlexboxGrid>
+                    }
+
+                </Panel>
+                <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
+                    <Modal.Header>
+                        Create New Group Order
+                    </Modal.Header>
+                    <Modal.Body>
+                        <GroupCreationPage afterSubmit={() => {
+                            setNewRestaurantState(false)
+                            fetchMyGroups()
+                        }
+                        } />
+                    </Modal.Body>
+                </Modal>
+                <div className="my-5" />
+                <Divider />
+
+                <Panel header={'Guests'} className='!p-0  !bg-transparent' shaded={false}>
+                    <Fatch request={userController.getGuests} setData={setGuests} reload={guestsReload}>
+                        <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
+                    </Fatch>
+                </Panel>
+                <div className="mx-2">
+
+                    <InputGroup size="md">
+                        <AutoComplete
+                            className='!border-none !bg-none !shadow-none'
+                            placeholder="add a guest by name or email.."
+                            value={searchWord} onChange={(e) => setSearchWord(e)}
+                            data={searchUsername}
+                            size="md"
+
+                            renderMenuItem={usrename => {
+                                let user = searchData.find(x => x.username === usrename.split(':')[1]);
+                                return userCard(user.name, user.username, user.picture)
+                            }}
+                        />
+                        <InputGroup.Button disabled={searchWord.trim() === ''} onClick={() => submitGuest(searchWord?.split(':')[1])}>
+                            Add
+                        </InputGroup.Button>
+                    </InputGroup>
+                </div>
+            </div> :
+            <div className="gap-2 w-full items-center  mt-5">
+                <div className="text-lg">
                     Volunteer Mode <Toggle onClick={() => updateUserMode(!userMode)} checked={userMode} size="md" checkedChildren="ON" unCheckedChildren="OFF" />
                 </div>
+                <div className='font-light text-base'> Become a volunteer and share the delivery cost with your colleagues.</div>
             </div>
-            {(!removeLoad && !myGroupLoader) ?
-                (myGroups?.length != 0) ? myGroups?.map((item) => {
-                    return (
-                        <Row key={item.id} style={{ position: "relative" }} className="mb-3 mx-0">
-                            <GroupCard item={item} isOwner={true} />
-                            <SizeDropdown placement="topEnd" groupID={item.id} title="..." size="xs" style={{ position: "absolute", bottom: 1, right: 1, zIndex: 20 }} />
-                        </Row>
-                    )
-                })
-                    : <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
-                : <FlexboxGrid justify="center">
-                    <Loader size="md" content="Loading" />
-                </FlexboxGrid>
-            }
-            <button disabled={!userMode} className="w-full mt-4 bg-transparent border rounded  p-2 align-middle text-center font-sans" onClick={() => setNewRestaurantState(true)}> Create New Group + </button>
-
-            <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
-                <Modal.Header>
-                    New Host
-                </Modal.Header>
-                <Modal.Body>
-                    <GroupCreationPage afterSubmit={() => {
-                        setNewRestaurantState(false)
-                        fetchMyGroups()
-                    }
-                    } />
-                </Modal.Body>
-            </Modal>
-            <div className="my-5" />
-            <Divider />
-
-            <Panel header={'Guests'} className='!p-0  !bg-transparent' shaded={false}>
-                <Fatch request={userController.getGuests} setData={setGuests} reload={guestsReload}>
-                    <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
-                </Fatch>
-            </Panel>
-            <div className="mx-2">
-
-                <InputGroup size="md">
-                    <AutoComplete
-                        className='!border-none !bg-none !shadow-none'
-                        placeholder="add a guest by name or email.."
-                        value={searchWord} onChange={(e) => setSearchWord(e)}
-                        data={searchUsername}
-                        size="md"
-
-                        renderMenuItem={usrename => {
-                            let user = searchData.find(x => x.username === usrename.split(':')[1]);
-                            return userCard(user.name, user.username, user.picture)
-                        }}
-                    />
-                    <InputGroup.Button disabled={searchWord.trim() === ''} onClick={() => submitGuest(searchWord?.split(':')[1])}>
-                        Add
-                    </InputGroup.Button>
-                </InputGroup>
-            </div>
-        </div>
     );
 }

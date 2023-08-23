@@ -25,6 +25,7 @@ import { Popover, Whisper } from 'rsuite';
 import { GroupStatus } from './GroupCard';
 import { FcCheckmark } from 'react-icons/fc'
 import { BsCart2 } from 'react-icons/bs';
+import Fatch from '../../Helpers/Fatcher';
 export default function GroupPage({ id }) {
     const [loader, setLoader] = useState(false)
 
@@ -50,14 +51,8 @@ export default function GroupPage({ id }) {
     const [orderItems, setOrderItems] = useState([]);
     const toaster = Toaster();
 
-    useEffect(() => {
-        groupController.getGroup(groupID == null ? id : groupID).then(({ data }) => {
-            setGroup(data)
-        }).finally(() => {
-            setLoader(true)
-        })
+    const [connectionStatus, setConnectionStatus] = useState(false);
 
-    }, []);
 
     useEffect(() => {
         if (group == null)
@@ -72,7 +67,7 @@ export default function GroupPage({ id }) {
         chatController.sign(setMessages, setUsers);
         chatController.joinRoom(parseInt(groupID));
 
-        cartController.sign(setCartItems, setSelectedGroupStatus, setDelivery, setEndDate, parseInt(groupID))
+        cartController.sign(setCartItems, setSelectedGroupStatus, setDelivery, setEndDate, parseInt(groupID), setConnectionStatus)
         cartController.joinRoom()
     }, [group]);
 
@@ -277,147 +272,119 @@ export default function GroupPage({ id }) {
 
 
     return (
-        loader ? <>
-            <Container className='p-0 mb-24 lg:mb-0'>
-                {/* <Row>
+        // groupController.getGroup(groupID == null ? id : groupID).then(({ data }) => {
+        //     setGroup(data)
+        // }).finally(() => {
+        //     setLoader(true)
+        // })
+
+        <Fatch request={groupController.getGroup} params={groupID == null ? id : groupID} setData={setGroup}>
+            {connectionStatus ?
+                <Container className='p-0 mb-24 lg:mb-0'>
+                    {/* <Row>
                     <InputPicker defaultValue={orderStatus[0].value} data={orderStatus} style={{ width: 224 }} />
                 </Row> */}
-                <Row>
-                    <Col className='mb-3' xs={24} lg={4} hidden={!isOwner}>
-                        {/* <Row>
+                    <Row>
+                        <Col className='mb-3' xs={24} lg={4} hidden={!isOwner}>
+                            {/* <Row>
                             <Panel shaded bordered={borderd} header={<h6>Connected ({users.length})</h6>}>
                                 <ConnectedUsers users={users} />
                             </Panel>
                         </Row> */}
-                        <Panel bordered={borderd} header={<h6>Control</h6>} className="bg-white shadow-sm">
-                            <label className='mb-1' htmlFor="timerInput">Timer</label>
-                            <InputGroup disabled={selectedGroupStatus !== 0}
-                            >
-                                <Input type='Number' id="timerInput" onChange={(e) => setTimer(e)} value={timer} min={0} />
-                                <InputGroup.Button onClick={() => changeTimer(timer)}>
-                                    <ReloadIcon>Reset</ReloadIcon>
-                                </InputGroup.Button>
-                            </InputGroup>
-                            <label className='mt-2 mb-1' htmlFor="deliverInput">Delivery</label>
-                            <InputGroup disabled={selectedGroupStatus >= 3} >
-                                <Input id='deliverInput' type='Number' onChange={(e) => setDeliveryCost(e)} value={deliveryCost} min={0} />
-                                <InputGroup.Button onClick={() => changeDeliveryCost(deliveryCost)}>
-                                    <ReloadIcon>Reset</ReloadIcon>
-                                </InputGroup.Button>
-                            </InputGroup>
-                            <Divider className="my-3" />
-                            <Stack alignItems='stretch' justifyContent='center' divider={<Divider vertical />} direction="column" disabled={selectedGroupStatus >= 4}>
-                                <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(0)} className='secondary'>Collecting</Button>
-                                <Button block disabled={selectedGroupStatus === 1 || cartItems?.length === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(1)} className='secondary'>Ordering</Button>
-                                <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(2)} className='secondary'>Ordered</Button>
-                                <Button block disabled={selectedGroupStatus !== 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(3)} className='secondary'>Arrived</Button>
-                            </Stack>
-                            <Divider className="my-3" />
-                            <Button hidden={selectedGroupStatus >= 4} block style={{ background: "#bd5353", color: "white" }} onClick={() => setIsModalOpen(true)}>Cancel ?</Button>
+                            <Panel bordered={borderd} header={<h6>Control</h6>} className="bg-white shadow-sm">
+                                <label className='mb-1' htmlFor="timerInput">Timer</label>
+                                <InputGroup disabled={selectedGroupStatus !== 0}
+                                >
+                                    <Input type='Number' id="timerInput" onChange={(e) => setTimer(e)} value={timer} min={0} />
+                                    <InputGroup.Button onClick={() => changeTimer(timer)}>
+                                        <ReloadIcon>Reset</ReloadIcon>
+                                    </InputGroup.Button>
+                                </InputGroup>
+                                <label className='mt-2 mb-1' htmlFor="deliverInput">Delivery</label>
+                                <InputGroup disabled={selectedGroupStatus >= 3} >
+                                    <Input id='deliverInput' type='Number' onChange={(e) => setDeliveryCost(e)} value={deliveryCost} min={0} />
+                                    <InputGroup.Button onClick={() => changeDeliveryCost(deliveryCost)}>
+                                        <ReloadIcon>Reset</ReloadIcon>
+                                    </InputGroup.Button>
+                                </InputGroup>
+                                <Divider className="my-3" />
+                                <Stack alignItems='stretch' justifyContent='center' divider={<Divider vertical />} direction="column" disabled={selectedGroupStatus >= 4}>
+                                    <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(0)} className='secondary'>Collecting</Button>
+                                    <Button block disabled={selectedGroupStatus === 1 || cartItems?.length === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(1)} className='secondary'>Ordering</Button>
+                                    <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(2)} className='secondary'>Ordered</Button>
+                                    <Button block disabled={selectedGroupStatus !== 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(3)} className='secondary'>Arrived</Button>
+                                </Stack>
+                                <Divider className="my-3" />
+                                <Button hidden={selectedGroupStatus >= 4} block style={{ background: "#bd5353", color: "white" }} onClick={() => setIsModalOpen(true)}>Cancel ?</Button>
 
-                            <Modal backdrop="static" role="alertdialog" keyboard={false} open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                                <Modal.Header>
-                                    <Modal.Title>Group Cancellation</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <RemindIcon style={{ color: '#ffb300', fontSize: 24 }} />
-                                    Canelling the group will clear the cart and close the group.
-                                    Are you sure that you want to cancel this group?!
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button onClick={() => { changeOrderStatus(4); setIsModalOpen(false) }} appearance="default">
-                                        Yes
-                                    </Button>
-                                    <Button onClick={() => setIsModalOpen(false)} appearance="subtle">
-                                        No
-                                    </Button>
-                                </Modal.Footer>
-                            </Modal>
-                        </Panel>
+                                <Modal backdrop="static" role="alertdialog" keyboard={false} open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                                    <Modal.Header>
+                                        <Modal.Title>Group Cancellation</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <RemindIcon style={{ color: '#ffb300', fontSize: 24 }} />
+                                        Canelling the group will clear the cart and close the group.
+                                        Are you sure that you want to cancel this group?!
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button onClick={() => { changeOrderStatus(4); setIsModalOpen(false) }} appearance="default">
+                                            Yes
+                                        </Button>
+                                        <Button onClick={() => setIsModalOpen(false)} appearance="subtle">
+                                            No
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </Panel>
 
-                    </Col>
-                    <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
-                        <Panel className="bg-white shadow-sm" bordered={borderd} style={{ position: "relative", minHeight: 843 }} header={
-                            <div className='text-base font-semibold'>{group?.name}
-                                <div className='font-light '>*delivery and items prices might be changed based on the actual receipt.</div>
-                            </div>}>
+                        </Col>
+                        <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
+                            <Panel className="bg-white shadow-sm" bordered={borderd} style={{ position: "relative", minHeight: 843 }} header={
+                                <div className='text-base font-semibold'>{group?.name}
+                                    <div className='font-light '>*delivery and items prices might be changed based on the actual receipt.</div>
+                                </div>}>
 
-                            <div className='flex flex-row justify-between items-center text-md mb-2'>
-                                {/* <div>Delivery {delivery} SAR </div> */}
+                                <div className='flex flex-row justify-between items-center text-md mb-2'>
+                                    {/* <div>Delivery {delivery} SAR </div> */}
 
-                                <div>Estimated Delivery: <b>{userDelivery?.toFixed(2)} SAR</b></div>
-                                <div className='flex flex-row gap-1 items-center'>
-                                    <GroupStatus status={selectedGroupStatus} />
-                                    <div hidden={selectedGroupStatus != 0} > <div className='font-bold'>{time}</div></div>
-                                </div>
-                                {/* <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-12' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" /> */}
-                            </div>
-                            <Row>
-                                <Divider className='mt-0' />
-                            </Row>
-                            <Row hidden={selectedGroupStatus !== 0} >
-                                <div hidden={isUserConfirm}>
-                                    <Loader className="m-auto" hidden={true} />
-                                    <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
-                                </div>
-                                <div hidden={!isUserConfirm}>
-                                    <div className='flex flex-col gap-5 mt-10 items-center align-middle'>
-                                        <div className='flex flex-row gap-1 items-center text-xl'>
-                                            <FcCheckmark size={28} className='mb-2' />
-                                            Confirmed your order successfully
-                                        </div>
-
-                                        {/* <Loader speed='slow' size='sm' content={''} /> */}
+                                    <div>Estimated Delivery: <b>{userDelivery?.toFixed(2)} SAR</b></div>
+                                    <div className='flex flex-row gap-1 items-center'>
+                                        <GroupStatus status={selectedGroupStatus} />
+                                        <div hidden={selectedGroupStatus != 0} > <div className='font-bold'>{time}</div></div>
                                     </div>
-                                    <br />
+                                    {/* <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-12' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" /> */}
                                 </div>
-                            </Row>
-                            <Row hidden={selectedGroupStatus !== 1}>
-                                <Panel header="Orders Review" hidden={!isOwner}>
-                                    {orderItems?.length > 0 ?
-                                        <>
-                                            <List>
-                                                {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
-                                                    <List.Item key={uid} index={index}>
-                                                        <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
-                                                            <FlexboxGridItem colspan={22}>
-                                                                <b> {itemQty}x {itemName}
-                                                                    {/* ({itemPrice} SAR) */}
-                                                                </b>
+                                <Row>
+                                    <Divider className='mt-0' />
+                                </Row>
+                                <Row hidden={selectedGroupStatus !== 0} >
+                                    <div hidden={isUserConfirm}>
+                                        <Loader className="m-auto" hidden={true} />
+                                        <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
+                                    </div>
+                                    <div hidden={!isUserConfirm}>
+                                        <div className='flex flex-col gap-5 mt-10 items-center align-middle'>
+                                            <div className='flex flex-row gap-1 items-center text-xl'>
+                                                <FcCheckmark size={28} className='mb-2' />
+                                                Confirmed your order successfully
+                                            </div>
 
-                                                                {modifiersList?.map(({ name, price }, index) => {
-                                                                    return <p key={index.toString()} index={index}>
-                                                                        {name} {price} SAR
-                                                                    </p>
-                                                                })}
-                                                            </FlexboxGridItem>
-                                                        </FlexboxGrid>
-                                                    </List.Item>
-                                                ))}
-                                            </List>
-                                            <br />
-                                            {/* <div>
-                                                <div>Items total: {itemsTotal?.toFixed(1)} SAR</div>
-
-                                                <div>Delivery cost: {delivery?.toFixed(1)} SAR</div>
-                                                {(itemsTotal > 0) ? <b>Total: {(itemsTotal + delivery)?.toFixed(1)} SAR</b> : <>Total: 0</>}
-                                            </div> */}
-                                        </>
-
-                                        : <>There are no orders</>
-                                    }
-                                </Panel>
-                                <div hidden={isOwner}>
-
-                                    <Panel header="Your Order">
-                                        {userOrders?.length > 0 ?
+                                            {/* <Loader speed='slow' size='sm' content={''} /> */}
+                                        </div>
+                                        <br />
+                                    </div>
+                                </Row>
+                                <Row hidden={selectedGroupStatus !== 1}>
+                                    <Panel header="Orders Review" hidden={!isOwner}>
+                                        {orderItems?.length > 0 ?
                                             <>
                                                 <List>
-                                                    {userOrders?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
+                                                    {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
                                                         <List.Item key={uid} index={index}>
                                                             <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
                                                                 <FlexboxGridItem colspan={22}>
-                                                                    <b> {itemQty}x {itemName} ({itemPrice} SAR)
+                                                                    <b> {itemQty}x {itemName}
+                                                                        {/* ({itemPrice} SAR) */}
                                                                     </b>
 
                                                                     {modifiersList?.map(({ name, price }, index) => {
@@ -431,126 +398,168 @@ export default function GroupPage({ id }) {
                                                     ))}
                                                 </List>
                                                 <br />
-                                                <div>
-                                                    <div>Items: <b>{userOrderTotal?.toFixed(1)} SAR</b></div>
+                                                {/* <div>
+                                                <div>Items total: {itemsTotal?.toFixed(1)} SAR</div>
 
-                                                    {/* <div>Delivery cost: {userDelivery?.toFixed(1)} SAR</div> */}
-                                                    Total: {(userOrderTotal > 0) ? <b> {(userOrderTotal + userDelivery)?.toFixed(1)} SAR</b> : <>0</>}
-                                                </div>
-
-
+                                                <div>Delivery cost: {delivery?.toFixed(1)} SAR</div>
+                                                {(itemsTotal > 0) ? <b>Total: {(itemsTotal + delivery)?.toFixed(1)} SAR</b> : <>Total: 0</>}
+                                            </div> */}
                                             </>
 
-                                            : <>You have no orders :(</>
+                                            : <>There are no orders</>
                                         }
                                     </Panel>
-                                    <Panel header="Cart View">
-                                        {cartSection}
-                                    </Panel>
-                                </div>
-                                <div>
-                                    <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
-                                </div>
-                            </Row>
-                            <Row hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
+                                    <div hidden={isOwner}>
 
-                                <Panel header="Receipt Check" hidden={!isOwner}>
-                                    <p>Compare the actual receipt with the following one, they should be matched.</p>
-                                    <p>If not guests shall be refunded/charged manually.</p>
-                                    <br />
-                                    <table className='w-full text-left'>
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Price</th>
-                                                <th>
-                                                    Modifiers
-                                                </th>
-                                                <th>QTY</th>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList, username }) => {
-                                                return <tr key={uid} className='border-t'>
-                                                    <td>{itemName}</td>
-                                                    <td> <input className='bg-white text-center' onChange={(e) => handleOrderPriceChange(username, uid, e.currentTarget.value)} type='number' value={itemPrice} /></td>
-                                                    <td className='p-0'>
-                                                        <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
-                                                            <tbody>
-                                                                {modifiersList?.length > 0 ?
-                                                                    modifiersList.map((item) => {
-                                                                        return <tr key={item.id}>
-                                                                            <td>{item.name}</td>
-                                                                            <td>{item.price.toFixed(2)}</td>
-                                                                        </tr>
-                                                                    })
+                                        <Panel header="Your Order">
+                                            {userOrders?.length > 0 ?
+                                                <>
+                                                    <List>
+                                                        {userOrders?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
+                                                            <List.Item key={uid} index={index}>
+                                                                <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
+                                                                    <FlexboxGridItem colspan={22}>
+                                                                        <b> {itemQty}x {itemName} ({itemPrice} SAR)
+                                                                        </b>
 
-                                                                    : <tr><td>N/A</td></tr>}
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td>{itemQty}</td>
-                                                    <td>{((itemPrice * itemQty)
-                                                        + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
-                                                </tr>
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </Panel>
-                            </Row>
-                            <Row hidden={selectedGroupStatus !== 2}>
-                                <img src='https://c.tenor.com/RjNXHT-Ejy0AAAAd/flyby-sailby.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+                                                                        {modifiersList?.map(({ name, price }, index) => {
+                                                                            return <p key={index.toString()} index={index}>
+                                                                                {name} {price} SAR
+                                                                            </p>
+                                                                        })}
+                                                                    </FlexboxGridItem>
+                                                                </FlexboxGrid>
+                                                            </List.Item>
+                                                        ))}
+                                                    </List>
+                                                    <br />
+                                                    <div>
+                                                        <div>Items: <b>{userOrderTotal?.toFixed(1)} SAR</b></div>
 
-                            </Row>
+                                                        {/* <div>Delivery cost: {userDelivery?.toFixed(1)} SAR</div> */}
+                                                        Total: {(userOrderTotal > 0) ? <b> {(userOrderTotal + userDelivery)?.toFixed(1)} SAR</b> : <>0</>}
+                                                    </div>
 
-                            <Row hidden={selectedGroupStatus !== 3}>
-                                <Panel hidden={!isOwner}>
-                                    <p>By checking out all the guests will be charged and cart will be cleared.</p>
-                                    <br />
-                                    <Button className='secondary' block disabled={selectedGroupStatus !== 2 && selectedGroupStatus !== 3} onClick={() => checkOut()}>Checkout</Button>
 
-                                </Panel>
-                                <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+                                                </>
 
-                            </Row>
-                            <Row hidden={selectedGroupStatus !== 4}>
-                                <Panel>
-                                    <h5>Group is closed</h5>
-                                    <Button className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(5)} >Open</Button>
-                                    <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
-
-                                </Panel>
-                            </Row>
-                        </Panel>
-                    </Col>
-                    <Col xs={24} lg={6} >
-                        <div ref={cartRef} hidden={selectedGroupStatus != 0} className='mb-4'>
-                            <Panel className="bg-white shadow-sm" bordered={borderd} header={
-                                <div>
-                                    <div className='flex gap-2' >
-                                        <h6>Cart ({cartItems?.length})</h6>
-                                        {confiremUsers}
+                                                : <>You have no orders :(</>
+                                            }
+                                        </Panel>
+                                        <Panel header="Cart View">
+                                            {cartSection}
+                                        </Panel>
                                     </div>
-                                    <small>{cartUsers?.length} people share the cart.</small>
-                                </div>
-                            }>
+                                    <div>
+                                        <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+                                    </div>
+                                </Row>
+                                <Row hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
 
-                                {cartSection}
-                                {userCart}
+                                    <Panel header="Receipt Check" hidden={!isOwner}>
+                                        <p>Compare the actual receipt with the following one, they should be matched.</p>
+                                        <p>If not guests shall be refunded/charged manually.</p>
+                                        <br />
+                                        <table className='w-full text-left'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>
+                                                        Modifiers
+                                                    </th>
+                                                    <th>QTY</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList, username }) => {
+                                                    return <tr key={uid} className='border-t'>
+                                                        <td>{itemName}</td>
+                                                        <td> <input className='bg-white text-center' onChange={(e) => handleOrderPriceChange(username, uid, e.currentTarget.value)} type='number' value={itemPrice} /></td>
+                                                        <td className='p-0'>
+                                                            <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
+                                                                <tbody>
+                                                                    {modifiersList?.length > 0 ?
+                                                                        modifiersList.map((item) => {
+                                                                            return <tr key={item.id}>
+                                                                                <td>{item.name}</td>
+                                                                                <td>{item.price.toFixed(2)}</td>
+                                                                            </tr>
+                                                                        })
+
+                                                                        : <tr><td>N/A</td></tr>}
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td>{itemQty}</td>
+                                                        <td>{((itemPrice * itemQty)
+                                                            + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
+                                                    </tr>
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </Panel>
+                                </Row>
+                                <Row hidden={selectedGroupStatus !== 2}>
+                                    <img src='https://c.tenor.com/RjNXHT-Ejy0AAAAd/flyby-sailby.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+
+                                </Row>
+
+                                <Row hidden={selectedGroupStatus !== 3}>
+                                    <Panel hidden={!isOwner}>
+                                        <p>By checking out all the guests will be charged and cart will be cleared.</p>
+                                        <br />
+                                        <Button className='secondary' block disabled={selectedGroupStatus !== 2 && selectedGroupStatus !== 3} onClick={() => checkOut()}>Checkout</Button>
+
+                                    </Panel>
+                                    <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+
+                                </Row>
+                                <Row hidden={selectedGroupStatus !== 4}>
+                                    <Panel>
+                                        <h5>Group is closed</h5>
+                                        <Button className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(5)} >Open</Button>
+                                        <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+
+                                    </Panel>
+                                </Row>
                             </Panel>
-                        </div>
-                        <Panel className="bg-white shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >
-                            {chatController.connection ? <>
-                                <MessageContainer messages={messages} />
-                                <br />
-                                <SendMessageForm sendMessage={chatController.sendMessage} /> </> :
-                                <></>}
-                        </Panel>
-                    </Col>
-                </Row>
-            </Container>
-        </> : <></>
+                        </Col>
+                        <Col xs={24} lg={6} >
+                            <div ref={cartRef} hidden={selectedGroupStatus != 0} className='mb-4'>
+                                <Panel className="bg-white shadow-sm" bordered={borderd} header={
+                                    <div>
+                                        <div className='flex gap-2' >
+                                            <h6>Cart ({cartItems?.length})</h6>
+                                            {confiremUsers}
+                                        </div>
+                                        <small>{cartUsers?.length} people share the cart.</small>
+                                    </div>
+                                }>
+
+                                    {cartSection}
+                                    {userCart}
+                                </Panel>
+                            </div>
+                            <Panel className="bg-white shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >
+                                {chatController.connection ? <>
+                                    <MessageContainer messages={messages} />
+                                    <br />
+                                    <SendMessageForm sendMessage={chatController.sendMessage} /> </> :
+                                    <></>}
+                            </Panel>
+                        </Col>
+                    </Row>
+                </Container>
+                : <div className='text-lg flex flex-col items-center gap-2'> 
+                    <div>
+                        Group Disconnected
+                    </div>
+                    <button className='px-5 p-1  border border-borderGray' onClick={() => location.reload()}>Refresh</button>
+
+                </div>}
+        </Fatch>
 
     )
 }

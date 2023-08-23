@@ -32,9 +32,9 @@ export function GuestsTable({ items, onAction }) {
 
 function UsersTable({ item, options, status }) {
 
-    return <div className='grid grid-cols-6 items-center text-left p-2 bg-white mb-1 w-full rounded-lg ' key={item.id}>
+    return <div className='shadow-sm grid grid-cols-6 items-center text-left p-2 bg-white mb-1 w-full rounded-lg ' key={item.id}>
 
-        <div className='grid grid-flow-col  justify-start col-span-4 gap-2'>
+        <div className='grid grid-flow-col  justify-start col-span-2 gap-2'>
             <div>
                 <Avatar name={item.firstName + ' ' + item.lastName} src={item.picture} size={24} round={true} />
             </div>
@@ -47,7 +47,7 @@ function UsersTable({ item, options, status }) {
             </div>
         </div>
         {/* <div className='hidden'>{item.username} </div> */}
-        <div className={`flex items-center gap-2 place-self-center `}>
+        <div className={`flex items-center gap-2 place-self-center justify-start col-span-3 `}>
             <div className={`${item?.balance < 0 ? 'text-mainRed' : 'text-black'}`}>
                 {item?.balance ? item.balance?.toFixed(2) + ' SAR' : '--'}
             </div>

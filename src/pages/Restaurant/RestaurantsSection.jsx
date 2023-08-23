@@ -10,6 +10,8 @@ import Toaster from "../../components/Toaster";
 import { Panel } from "../../style/Style";
 import Fatch from '../../Helpers/Fatcher';
 import DeliveryAppLinkPage from "../User/DeliveryAppLinkPage";
+import { BsSearch } from "react-icons/bs";
+import { MdNoFood } from "react-icons/md";
 
 export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal }) {
     const [restaurantsResult, setResturantsResult] = useState([])
@@ -76,33 +78,63 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
 
     return (
         <div>
-            <Panel header={<div className="flex gap-2">
-            {/* https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg */}
-                <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-8 rounded object-cover ' draggable="false" />
-                <h4>Shgardi Menu</h4>
-            </div>}>
+
+            <Panel header={"My Menus"} >
+                <Fatch setData={setCustoms} request={restaurantController.getAllCustoms} reload={customReload}>
+                    <div className={`${isHorizontal ? 'w-auto h-52' : ''} overflow-auto`}>
+                        <div className={`justify-start  gap-5 ${isHorizontal ? 'grid grid-rows-1 grid-flow-col' : 'flex flex-wrap'}`}>
+                            {
+                                customs?.length > 0 ?
+                                    customs?.map((customRestaurant) =>
+                                        <RestaurantItem className={`${isHorizontal ? 'w-72' : ''}`} isSelected={selectedRestaurentID === customRestaurant?.id} key={customRestaurant.id} name={customRestaurant.name} logo={customRestaurant.logo}
+                                            image={customRestaurant.image}
+                                            distance={customRestaurant.distance}
+                                            rating={customRestaurant.rating}
+                                            delivey={customRestaurant.deliveyCost}
+                                            previewButton={() => handleCustomPreviewButton(customRestaurant)}
+                                            onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: customRestaurant, menuSource: 1 } }) : null}
+                                            onRemoveClik={!isHorizontal? () => removeCustom(customRestaurant?.id):null}
+                                        />
+                                    ) :
+                                    <div className="flex flex-col gap-2 m-auto p-5">
+                                        <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+                                        <div> You dont have any custom restaurant</div>
+                                    </div>}
+                        </div>
+                    </div>
+                </Fatch>
+            </Panel>
+
+            <Panel header={
+                "Menus"
+            }>
                 <div>
-                    <InputGroup inside >
-                        <Input placeholder="Search.." ref={search} name='restaurant' onKeyDown={handleEnterKeyDownEvent} />
-                        <InputGroup.Button tabIndex={-1} onClick={() => { setSearchQuery(search.current.value); setReload(!reload) }}>
-                            <SearchIcon />
-                        </InputGroup.Button>
-                    </InputGroup>
+                    <div className="relative">
+                        <input type="text" className="w-full p-2 shadow-sm rounded-lg bg-white" placeholder="Search.." ref={search} name='restaurant' onKeyDown={handleEnterKeyDownEvent} />
+                        <BsSearch className="cursor-pointer absolute top-3 right-3" onClick={() => { setSearchQuery(search.current.value); setReload(!reload) }} />
+                    </div>
                 </div>
                 {
                     location ?
                         <Fatch setData={setResturantsResult} request={restaurantController.searchRestaurant} params={{ searchQuery, location }} reload={reload}>
-                            <div className={`${isHorizontal ? 'w-auto h-52' : 'h-auto p-1 max-h-96'} overflow-auto`}>
-                                <div className={`justify-start grid gap-1 ${isHorizontal ? 'grid-rows-1 grid-flow-col' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4'}`}>
+                            <div className={`${isHorizontal ? 'w-auto h-52' : ''} overflow-auto`}>
+                                <div className={`justify-start  gap-5 ${isHorizontal ? 'grid grid-flow-col' : 'flex flex-wrap'}`}>
 
-                                    {restaurantsResult?.map((restaurant) =>
-                                        <RestaurantItem className={`${isHorizontal ? 'w-72' : ''}`} isSelected={selectedRestaurentID === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
-                                            image={restaurant.image}
-                                            distance={restaurant.distance}
-                                            delivey={restaurant.deliveyCost}
-                                            previewButton={() => handlePreviewButton(restaurant)}
-                                            onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: restaurant, menuSource: 0 } }) : null} />
-                                    )}
+                                    {restaurantsResult?.length > 0 ?
+                                        restaurantsResult?.map((restaurant) =>
+                                            <RestaurantItem className={`${isHorizontal ? 'w-72' : ''}`} isSelected={selectedRestaurentID === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
+                                                image={restaurant.image}
+                                                distance={restaurant.distance}
+                                                rating={restaurant.rating}
+                                                delivey={restaurant.deliveyCost}
+                                                previewButton={() => handlePreviewButton(restaurant)}
+                                                onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: restaurant, menuSource: 0 } }) : null} />
+                                        ) :
+                                        <div className="flex flex-col gap-2 m-auto p-5">
+                                            <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+                                            <div> Can't find restaurants</div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </Fatch> : <>Identifying your location..</>
@@ -110,35 +142,7 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
 
             </Panel>
 
-            <div hidden={!customs?.length > 0 }>
-
-                <Panel header={<h4>Custom Menu</h4>}>
-                    <Fatch setData={setCustoms} request={restaurantController.getAllCustoms} reload={customReload}>
-                        <div className={`${isHorizontal ? 'w-auto h-52' : 'h-auto p-1 max-h-96'} overflow-auto`}>
-
-                            <div className={`justify-start grid gap-1 ${isHorizontal ? 'grid-rows-1 grid-flow-col' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 '}`}>
-                                {customs?.map((customRestaurant) =>
-                                    <RestaurantItem className={`${isHorizontal ? 'w-72' : ''}`} isSelected={selectedRestaurentID === customRestaurant?.id} key={customRestaurant.id} name={customRestaurant.name} logo={customRestaurant.logo}
-                                        image={customRestaurant.image}
-                                        distance={customRestaurant.distance}
-                                        delivey={customRestaurant.deliveyCost}
-                                        previewButton={() => handleCustomPreviewButton(customRestaurant)}
-                                        onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: customRestaurant, menuSource: 1 } }) : null}
-                                        onRemoveClik={() => removeCustom(customRestaurant?.id)}
-                                    />
-
-                                    // <VendorCustom key={item.vendor.id} name={item.vendor.name} logo={item.vendor?.logo}
-                                    //     image={item.vendor.photo} delivery={item.vendor.delivery_fee}
-                                    //     editButton={() => editCustom(item.vendor.id)} removeButton={() => removeCustom(item.vendor.id)}
-                                    //     previewButton={() => viewCustom(item.menu)} />
-                                )}
-                            </div>
-                        </div>
-                    </Fatch>
-                </Panel>
-            </div>
-
-            <Modal overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
+            <Modal  overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
                 <Modal.Header>
                     <h3>Preview</h3>
                 </Modal.Header>
