@@ -97,7 +97,7 @@ export default function Navbar() {
         <>
             {/* <div className='fixed px-4 bg-[#333] shadow-sm w-full p-2 sm:pr-4 top-0 left-0 z-50 text-base flex h-12 sm:collapse'  /> */}
             {/* <div className='fixed px-4  bottom-0 sm:bottom-auto bg-[#333] shadow-sm w-full py-3 sm:pr-4 sm:top-0 sm:left-0 sm:rounded-none z-50 text-base flex'> */}
-            <div className='w-full p-2 text-base flex justify-between sm:justify-start 2xl:w-auto 2xl:flex-col shadow-md 2xl:shadow-none fixed z-50 bg-white top-0 lg:relative lg:bg-transparent' >
+            <div className='w-full p-2 text-base flex justify-between sm:justify-start 2xl:w-auto 2xl:flex-col shadow-md 2xl:shadow-none fixed z-50 bg-white top-0 lg:relative 2xl:bg-transparent' >
                 <div className='hidden 2xl:flex mt-3'>
                     {userAvatar}
                     <div className='mx-2 my-auto text-lg font-medium'>
@@ -157,7 +157,6 @@ export default function Navbar() {
                     </Drawer.Header>
                     <Drawer.Body>
                         <div className='h-full flex flex-col justify-between'>
-
                             <div className='grid gap-4'>
                                 {drawerItems.map((item, id) => (
                                     <div

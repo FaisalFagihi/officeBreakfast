@@ -51,7 +51,7 @@ export default function GroupPage({ id }) {
     const [orderItems, setOrderItems] = useState([]);
     const toaster = Toaster();
 
-    const [connectionStatus, setConnectionStatus] = useState(false);
+    const [connectionStatus, setConnectionStatus] = useState(true);
 
 
     useEffect(() => {
@@ -234,17 +234,17 @@ export default function GroupPage({ id }) {
 
     const userCart = <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
         <div className='flex justify-between flex-cols'>
-            <div className='flex justify-between flex-col p-1 px-4 lg:px-1 w-full transition duration-0 hover:duration-150'>
+            <div className='flex justify-between flex-col p-1 px-4 lg:px-1 w-full'>
                 {/* <div>items: {userOrderTotal?.toFixed(1)} SAR</div> */}
                 {/* <div>Calculated Delivery: <b>{userDelivery?.toFixed(1)} SAR</b></div> */}
-                <div>Your total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SAR </b></div>
+                <div>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SAR </b></div>
             </div>
-            <div className='flex items-center mx-3  cursor-pointer '>
+            {/* <div className='flex items-center mx-3  cursor-pointer '>
                 <Divider vertical className='h-full mx-2' />
                 <Badge color='green' content={userOrders?.length}>
                     <BsCart2 size={20} onClick={() => scrollToCart()} />
                 </Badge>
-            </div>
+            </div> */}
         </div>
         <Divider className='my-2' />
 

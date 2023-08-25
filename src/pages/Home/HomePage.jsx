@@ -18,19 +18,16 @@ export default function HomePage() {
 
 
     return (
-        <div>
-            <div className="flex">
-                <div className="text-lg">
-                    Available Groups
-                </div>
-            </div>
-            <Fatch request={groupController.getAllGroups} setData={setGroups} reload={groupsReload}>
-                <Groups items={groups} />
-            </Fatch>
+        <div className="flex flex-col gap-2">
+            <Panel header='Groups' className='!p-0  !bg-transparent' shaded={false}>
 
-            <Divider />
+                <Fatch request={groupController.getAllGroups} setData={setGroups} reload={groupsReload}>
+                    <Groups items={groups} />
+                </Fatch>
+            </Panel>
+            {/* <Divider /> */}
 
-            <Panel header='Volunteers' className='!p-0  !bg-transparent' shaded={false}>
+            <Panel header='Volunteers' className='!p-0  !bg-transparent' shaded={false} hidden={leaders?.length === 0}>
                 <Fatch request={userController.getOwners} setData={setLeaders} reload={leadersReload}>
                     <LeadersTable items={leaders} onAction={() => setLeadersReload(!leadersReload)} />
                 </Fatch>

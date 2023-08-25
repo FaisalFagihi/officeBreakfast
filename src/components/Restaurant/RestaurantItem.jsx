@@ -34,17 +34,19 @@ export function RestaurantItem({ name, logo, rating, rateCount, image, delivery,
                             </div>
                         </div>
                     </div>
-                    <div className='text-sm'>
+                    <div className='align-middle'>
+                    <p className='text-sm truncate'>
                         {name}
-                    </div>
+                    </p>
+                        </div>
                 </div>
-                <div hidden={onEditClik && onRemoveClik}>
+                <div hidden={onEditClik && onRemoveClik} className='w-full' >
 
-                <Divider className='m-0 my-1 w-full' />
-                <div className='flex gap-2 ' >
-                    <LuEdit className='cursor-pointer' hidden={!onEditClik} onClick={onEditClik} size={20} />
-                    <BiTrash className='cursor-pointer' hidden={!onRemoveClik} onClick={onRemoveClik} size={20} />
-                </div>
+                    <Divider className='m-0 my-1' />
+                    <div className='w-full flex flex-row justify-center gap-2 align-middle' >
+                        <LuEdit className='cursor-pointer' hidden={!onEditClik} onClick={onEditClik} size={18} />
+                        <BiTrash className='cursor-pointer' hidden={!onRemoveClik} onClick={onRemoveClik} size={18} />
+                    </div>
                 </div>
                 {/* <div className="p-1 py-2 flex justify-between items-center">
                     <div className='flex gap-1 items-center'>

@@ -3,6 +3,7 @@ import { InputGroup, Row, Col, AutoComplete } from "rsuite";
 import UserController from "../../controller/userController";
 import Toaster from "../../components/Toaster";
 import Avatar from 'react-avatar';
+import { AutoComplate } from '../../style/Style';
 
 export default function JoinToGroup({ onJoin }) {
     const [hostUsername, setHostUsername] = useState('');
@@ -72,6 +73,8 @@ export default function JoinToGroup({ onJoin }) {
             </InputGroup.Button>
             {/* <Input type="text" value={hostUsername} onChange={(e) => setHostUsername(e)} placeholder="Host email or name..join " /> */}
         </InputGroup>
+        <br/>
+        {/* <AutoComplate placeholder={'join to a volunteer by name or email..'} list={searchUsername} value={hostUsername} onChange={setHostUsername}  /> */}
     </div>
     )
 }

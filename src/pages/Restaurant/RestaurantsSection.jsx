@@ -93,7 +93,7 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
                                             delivey={customRestaurant.deliveyCost}
                                             previewButton={() => handleCustomPreviewButton(customRestaurant)}
                                             onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: customRestaurant, menuSource: 1 } }) : null}
-                                            onRemoveClik={!isHorizontal? () => removeCustom(customRestaurant?.id):null}
+                                            onRemoveClik={!isHorizontal ? () => removeCustom(customRestaurant?.id) : null}
                                         />
                                     ) :
                                     <div className="flex flex-col gap-2 m-auto p-5">
@@ -105,14 +105,10 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
                 </Fatch>
             </Panel>
 
-            <Panel header={
-                "Menus"
-            }>
-                <div>
-                    <div className="relative">
-                        <input type="text" className="w-full p-2 shadow-sm rounded-lg bg-white" placeholder="Search.." ref={search} name='restaurant' onKeyDown={handleEnterKeyDownEvent} />
-                        <BsSearch className="cursor-pointer absolute top-3 right-3" onClick={() => { setSearchQuery(search.current.value); setReload(!reload) }} />
-                    </div>
+            <Panel header={"Menus"}>
+                <div className="relative mb-4">
+                    <input type="text" className="w-full p-2 shadow-sm rounded-lg bg-white" placeholder="Search.." ref={search} name='restaurant' onKeyDown={handleEnterKeyDownEvent} />
+                    <BsSearch className="cursor-pointer absolute top-3 right-3" onClick={() => { setSearchQuery(search.current.value); setReload(!reload) }} />
                 </div>
                 {
                     location ?
@@ -142,7 +138,7 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
 
             </Panel>
 
-            <Modal  overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
+            <Modal overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
                 <Modal.Header>
                     <h3>Preview</h3>
                 </Modal.Header>

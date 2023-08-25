@@ -38,7 +38,7 @@ export default function GroupCard({ item, isOwner, setRemoveLoad }) {
     }, []);
 
 
-    return <Panel className="bg-white shadow-md" bodyFill xs={24}>
+    return <Panel className="bg-white shadow" bodyFill xs={24}>
         <div className="grid sm:grid-cols-5 panel" onClick={() => { navigate("/Group/" + item.id); }}>
             <img src={item.photo} className={`object-cover h-32 w-full sm:col-span-1 ${(item.status === 4) ? "grayscale" : "grayscale-0"}`} alt='' draggable="false" />
             <div className="flex flex-col justify-between p-3 sm:col-span-4">

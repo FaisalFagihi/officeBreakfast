@@ -7,9 +7,12 @@ import GroupCard from "../Group/GroupCard";
 
 export default function Groups({ items }) {
 
-    return items?.length>0? items.map((group) => {
+    return items?.length > 0 ? items.map((group) => {
         return <div key={group.id} className='mb-3'>
             <GroupCard item={group} />
         </div>
-    }): <MdNoFood style={{ fontSize: "3em", width: "100%" }}  />
+    }) : <div className="flex flex-col items-center gap-2">
+        <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+        <div>there are no available groups</div>
+    </div>
 }

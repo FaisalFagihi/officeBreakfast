@@ -24,42 +24,42 @@ class Cart {
     }
 
     joinRoom = async () => {
-        this.closeConn().finally(async () => {
-            try {
-                this.connection ??= new HubConnectionBuilder()
-                    .withUrl(import.meta.env.VITE_API_URL + '/cart', { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
-                    .build();
+        // this.closeConn().finally(async () => {
+        // })
+        try {
+            this.connection ??= new HubConnectionBuilder()
+                .withUrl(import.meta.env.VITE_API_URL + '/cart', { accessTokenFactory: () => auth.getToken() }).configureLogging(LogLevel.Information)
+                .build();
 
-                this.connection.on("OrdersInCart", (orders) => {
-                    this.setOrders(orders);
-                });
+            this.connection.on("OrdersInCart", (orders) => {
+                this.setOrders(orders);
+            });
 
-                this.connection.on("ChangedGroupStatus", (orderStatusKey) => {
-                    this.setGroupStatus(orderStatusKey);
-                });
+            this.connection.on("ChangedGroupStatus", (orderStatusKey) => {
+                this.setGroupStatus(orderStatusKey);
+            });
 
-                this.connection.on("ChangedGroupDeliveryCost", (deliveryCost) => {
-                    this.setDeliveryCost(deliveryCost);
-                });
+            this.connection.on("ChangedGroupDeliveryCost", (deliveryCost) => {
+                this.setDeliveryCost(deliveryCost);
+            });
 
-                this.connection.on("ChangedGroupTimer", (endDate) => {
-                    this.setEndDate(endDate);
-                });
+            this.connection.on("ChangedGroupTimer", (endDate) => {
+                this.setEndDate(endDate);
+            });
 
-                if (!this.connection._connectionStarted)
-                    await this.connection.start();
+            if (!this.connection._connectionStarted)
+                await this.connection.start();
 
-                await this.connection.invoke("JoinRoom", this.groupID);
-                this.setConnectionStatus(true)
+            await this.connection.invoke("JoinRoom", this.groupID);
+            this.setConnectionStatus(true)
 
-                this.connection.onclose((error) => this.setConnectionStatus(false))
+            this.connection.onclose((error) => this.setConnectionStatus(false))
 
 
 
-            } catch (e) {
-                this.setConnectionStatus(false)
-            }
-        })
+        } catch (e) {
+            this.setConnectionStatus(false)
+        }
     }
 
     addToCart = async (order) => {

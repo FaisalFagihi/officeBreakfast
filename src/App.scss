@@ -694,21 +694,16 @@ th {
 
 
 button.normal {
-  padding: 8px;
   background: #efa14e;
-  border: 1px solid #ffcd99;
-  border-radius: 5px;
+  border-radius: 100%;
   color: #fff;
-  font-size: 14px;
-  font-weight: normal;
+  font-size: 16px;
   cursor: pointer;
-  box-shadow: inset 2px -3px 4px #ffd769;
-  display: block;
+  // box-shadow: inset 2px -3px 4px #ffd769;
 }
 
 button.normal:hover {
   background-color: #ffc181;
-  border: 1px solid #ffcd99;
   // color: #fff;
 }
 
