@@ -286,7 +286,7 @@ export default function GroupPage({ id }) {
                     {/* <Row>
                     <InputPicker defaultValue={orderStatus[0].value} data={orderStatus} style={{ width: 224 }} />
                 </Row> */}
-                    <div className='flex justify-start '>
+                    <div className='flex justify-center '>
 
                         <div className='flex  items-center gap-1 mb-1 bg-white rounded-full px-2'>
                             <AiOutlineWarning size={18} />

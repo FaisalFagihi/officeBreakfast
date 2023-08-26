@@ -3,6 +3,7 @@ import axiosInstance from "../interceptors/axiosInstance"
 class RestaurantController {
 
     submitCustom = (data) => {
+        console.log(data)
         return axiosInstance.post("Restaurant/Custom", data);
     }
 

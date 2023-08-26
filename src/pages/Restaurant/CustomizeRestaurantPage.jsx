@@ -6,6 +6,8 @@ import restaurantController from "../../controller/restaurantController";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import deliveryAppFactory from "../../modules/deliveryAppFactory";
 import { MenuItem } from "../../components/Menu/MenuItem";
+import { BiTrash } from 'react-icons/bi'
+import uuid from 'react-uuid';
 
 const sources = ['Phone number', 'Jahez', 'Careem', 'Marsool'].map(item => ({ label: item, value: item }));
 
@@ -84,7 +86,7 @@ export default function CustomizeRestaurantPage() {
         const activeMenuItem = Object.assign({}, menuItems[0]);
         activeMenuItem.name = "";
         activeMenuItem.nameAr = "";
-        activeMenuItem.id++;
+        activeMenuItem.id = uuid().toString();
         activeMenuItem.price = "0";
         activeMenuItem.description = "";
         activeMenuItem.image = "";
@@ -173,14 +175,14 @@ export default function CustomizeRestaurantPage() {
                                 </Row> */}
                 <div className="flex flex-col gap-2">
                     <div>
-                    <label>Image</label>
-                    <img src={restaurant?.image} className="h-24" alt="not found" draggable="false" />
+                        <label>Image</label>
+                        <img src={restaurant?.image} className="h-24" alt="not found" draggable="false" />
                     </div>
-<div>
-<label>Logo</label>
+                    <div>
+                        <label>Logo</label>
 
-                    <img src={restaurant?.logo} className="h-24" alt="not found" draggable="false" />
-</div>
+                        <img src={restaurant?.logo} className="h-24" alt="not found" draggable="false" />
+                    </div>
                 </div>
             </div>
             <Divider></Divider>
@@ -204,20 +206,25 @@ export default function CustomizeRestaurantPage() {
                                     {item?.menuItems?.map((menuItem) => <div className="flex flex-row justify-between w-full border border-[#f1f1f1] rounded-md h-30" >
 
                                         <img draggable="false" className="MenuItemImage !rounded-l-md" src={menuItem.image} alt="" onDragStart={(e) => e.preventDefault()} />
-                                        <div className="flex flex-col justify-between p-2 ">
-                                            <div className="flex flex-col">
-                                                <div>
-                                                    Name En: <input className="bg-white px-2 border border-borderGray" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'name', e.currentTarget.value, item.id)} value={menuItem.name} />
-                                                </div>
-                                                <div>
-                                                    Name Ar: <input className="bg-white px-2 border border-borderGray" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'nameAr', e.currentTarget.value, item.id)} value={menuItem.nameAr} />
-                                                </div>
+                                        <div className="flex flex-col justify-between p-2 w-full">
+                                            <div className="flex flex-row gap-2">
+                                                <div className="w-auto">ImageUrl</div>
+                                                <input className="bg-white px-2 border border-borderGray w-full" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'image', e.currentTarget.value, item.id)} value={menuItem.image} />
                                             </div>
-                                            <div className="text-right font-bold">
-                                                <input className="bg-white px-2 border border-borderGray" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'price', e.currentTarget.value, item.id)} type="number" value={menuItem.price} /> SR
+                                            <div className="flex flex-row gap-2">
+                                                <div className="w-auto">NameEn</div>
+                                                <input className="bg-white px-2 border border-borderGray w-full" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'name', e.currentTarget.value, item.id)} value={menuItem.name} />
                                             </div>
+                                            <div className="flex flex-row gap-2">
+                                                <div className="w-auto">NameAr</div>
+                                                <input className="bg-white px-2 border border-borderGray w-full" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'nameAr', e.currentTarget.value, item.id)} value={menuItem.nameAr} />
+                                            </div>
+                                            <div className="flex flex-row gap-2 font-bold">
+                                                <div className="w-auto">Price</div>
+                                                <input className="bg-white px-2 border border-borderGray w-full" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'price', e.currentTarget.value, item.id)} type="number" value={menuItem.price} /> SR
+                                            </div>
+                                            <div className={'ml-auto cursor-pointer'} onClick={() => handleRemoveMenuItemState(menuItem.id, item.id)}><BiTrash /></div>
                                         </div>
-
                                     </div>
                                     )}
                                 </div>
