@@ -29,7 +29,6 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
     const getData = () => restaurantController.getRestaurantByID(restaurantID == null ? restaurant_id : restaurantID, menuSource == null ? menu_source : menuSource)
         .then(function ({ data }) {
             setMenuData(data?.menuGroups)
-            console.log(data)
         }).catch(({ response }) => {
             toaster.push(response?.data, "error")
         })
@@ -76,14 +75,17 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
 
     return menuGroups && (
         <>
+        <div className='flex flex-row gap-2 flex-wrap'>
+
             {menuGroups?.map((item, index) =>
                 <div key={item.id} className="MenuGroups">
                     <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem" defaultChecked={index === 0} />
-                    <label htmlFor={item.id} className="MenugroupItem" onClick={() => setMenuItems(item?.menuItems)}>
+                    <label htmlFor={item.id} className="MenugroupItem py-1 px-2" onClick={() => setMenuItems(item?.menuItems)}>
                         {item.name}
                     </label>
                 </div>
             )}
+            </div>
 
             <br />
             <Container style={{ overflow: "auto", height: height }}>

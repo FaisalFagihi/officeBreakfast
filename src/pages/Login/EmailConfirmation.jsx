@@ -12,7 +12,6 @@ export default function EmailConfirmation() {
     const navigate = useNavigate()
     
     useEffect(() => {
-        console.log(response)
         if (response?.status) {
             auth.setToken(response.token)
             localStorage.setItem('username', response.username)
@@ -27,14 +26,12 @@ export default function EmailConfirmation() {
     }, [response])
 
     useEffect(() => {
-        console.log(requestError)
 
     }, [requestError]);
     
     useEffect(() => {
         
     
-        console.log(token)
     }, [token]);
     return (
         <div className='flex flex-col text-center justify-center mt-32'>

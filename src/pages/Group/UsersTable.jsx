@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Dropdown, useToaster } from 'rsuite'
 import userController from '../../controller/userController'
 import { GuestStatus, LeaderStatus } from '../../components/User/UserStatus';
-import { MdCheckCircle } from "react-icons/md"
+import { MdCheckCircle, MdNoFood } from "react-icons/md"
 import { MdCancel } from "react-icons/md"
 import { GiMoneyStack } from "react-icons/gi"
 import Avatar from 'react-avatar';
@@ -14,7 +14,12 @@ export function LeadersTable({ items, onAction }) {
                 return <UsersTable item={item} status={<GuestStatus value={item?.status} />} key={item.id} options={<GuestOptions leaderName={item.username} status={item.status} onAction={onAction} />} />
             })}
         </div>
-        : <div className='text-center p-3 text-gray-500 font-normal'>no volunteers</div>
+        : <div className='text-center p-3 text-gray-500 font-normal'>
+            <div className="flex flex-col items-center gap-2">
+                <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
+                <div>you don't have any volunteer</div>
+            </div>
+        </div>
 
 }
 
@@ -34,7 +39,7 @@ function UsersTable({ item, options, status }) {
 
     return <div className='shadow-sm grid grid-cols-6 items-center text-left p-2 bg-white mb-1 w-full rounded-lg ' key={item.id}>
 
-        <div className='grid grid-flow-col  justify-start col-span-2 gap-2'>
+        <div className='grid grid-flow-col  justify-start col-span-3 gap-2'>
             <div>
                 <Avatar name={item.firstName + ' ' + item.lastName} src={item.picture} size={24} round={true} />
             </div>
@@ -47,7 +52,7 @@ function UsersTable({ item, options, status }) {
             </div>
         </div>
         {/* <div className='hidden'>{item.username} </div> */}
-        <div className={`flex items-center gap-2 place-self-center justify-start col-span-3 `}>
+        <div className={`flex items-center gap-2 place-self-center justify-start col-span-2 `}>
             <div className={`${item?.balance < 0 ? 'text-mainRed' : 'text-black'}`}>
                 {item?.balance ? item.balance?.toFixed(2) + ' SAR' : '--'}
             </div>

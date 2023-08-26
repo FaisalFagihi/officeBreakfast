@@ -113,7 +113,7 @@ export default function Navbar() {
                         aria-current={item.current ? 'page' : undefined}
                     >
                         <div className={`flex cursor-pointer mr-auto mt-0.5`}>
-                            <Badge content={logsCount > 0 && item.name == 'Notifications' ? logsCount : false} color="green" className='m-auto'>
+                            <Badge content={logsCount > 0 && item.name == 'Notifications' ? logsCount : false} color="orange" className='m-auto'>
                                 {item.current ? item.iconFill : item.iconLine}
                             </Badge>
                             <div className='hidden mx-1 sm:block text-lg font-medium'>

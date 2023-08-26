@@ -388,18 +388,14 @@ div.MenuGroups {
 }
 
 label.MenugroupItem {
-  margin: 5px;
   display: inline-block;
   background-color: #aaa;
   color: #fff;
-  padding: 5px 10px;
-  font-size: 16px;
   cursor: pointer;
   border-radius: 30px;
   border: 1px solid #ccc;
   border-radius: 30px;
   color: #fff;
-  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   box-shadow: inset 2px -3px 4px #ccc;
@@ -415,7 +411,6 @@ input.MenugroupItem:checked+label.MenugroupItem {
   border: 1px solid #ffcd99;
   border-radius: 30px;
   color: #fff;
-  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   box-shadow: inset 2px -3px 4px #ffd769;
@@ -584,7 +579,7 @@ button.VendorSelect:hover {
 }
 
 .ChatBox {
-  height: 200px;
+  height: 225px;
   overflow-y: auto;
 }
 
@@ -695,11 +690,12 @@ th {
 
 button.normal {
   background: #efa14e;
-  border-radius: 100%;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
-  // box-shadow: inset 2px -3px 4px #ffd769;
+  font-weight: 500;
+  // border: 3px solid #ffd769;
+  box-shadow: inset 2px -3px 4px #ffd769;
 }
 
 button.normal:hover {
@@ -743,14 +739,18 @@ button.secondary:disabled {
 th,
 td,
 thead {
-  padding: 4px !important;
+  padding: 3px !important;
 }
 
 td {
-  border: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
 thead {
   background: #eee;
   color: black
+}
+
+table{
+  border: 1px solid #eee;
 }

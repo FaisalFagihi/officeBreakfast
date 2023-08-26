@@ -78,15 +78,14 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
 
     return (
         <div>
-
-            <Panel header={"My Menus"} >
+            <Panel header={"My Menus"} hidden={!customs?.length > 0}>
                 <Fatch setData={setCustoms} request={restaurantController.getAllCustoms} reload={customReload}>
-                    <div className={`${isHorizontal ? 'w-auto h-52' : ''} overflow-auto`}>
+                    <div className={`overflow-auto p-2`}>
                         <div className={`justify-start  gap-5 ${isHorizontal ? 'grid grid-rows-1 grid-flow-col' : 'flex flex-wrap'}`}>
                             {
                                 customs?.length > 0 ?
                                     customs?.map((customRestaurant) =>
-                                        <RestaurantItem className={`${isHorizontal ? 'w-72' : ''}`} isSelected={selectedRestaurentID === customRestaurant?.id} key={customRestaurant.id} name={customRestaurant.name} logo={customRestaurant.logo}
+                                        <RestaurantItem isSelected={selectedRestaurentID === customRestaurant?.id} key={customRestaurant.id} name={customRestaurant.name} logo={customRestaurant.logo}
                                             image={customRestaurant.image}
                                             distance={customRestaurant.distance}
                                             rating={customRestaurant.rating}
@@ -106,19 +105,19 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
             </Panel>
 
             <Panel header={"Menus"}>
-                <div className="relative mb-4">
+                <div className="relative mb-2">
                     <input type="text" className="w-full p-2 shadow-sm rounded-lg bg-white" placeholder="Search.." ref={search} name='restaurant' onKeyDown={handleEnterKeyDownEvent} />
                     <BsSearch className="cursor-pointer absolute top-3 right-3" onClick={() => { setSearchQuery(search.current.value); setReload(!reload) }} />
                 </div>
                 {
                     location ?
                         <Fatch setData={setResturantsResult} request={restaurantController.searchRestaurant} params={{ searchQuery, location }} reload={reload}>
-                            <div className={`${isHorizontal ? 'w-auto h-52' : ''} overflow-auto`}>
+                            <div className={`p-2 overflow-auto`}>
                                 <div className={`justify-start  gap-5 ${isHorizontal ? 'grid grid-flow-col' : 'flex flex-wrap'}`}>
 
                                     {restaurantsResult?.length > 0 ?
                                         restaurantsResult?.map((restaurant) =>
-                                            <RestaurantItem className={`${isHorizontal ? 'w-72' : ''}`} isSelected={selectedRestaurentID === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
+                                            <RestaurantItem isSelected={selectedRestaurentID === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
                                                 image={restaurant.image}
                                                 distance={restaurant.distance}
                                                 rating={restaurant.rating}
@@ -149,7 +148,6 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
                     }
                 </Modal.Body>
             </Modal>
-
         </div>
 
     );

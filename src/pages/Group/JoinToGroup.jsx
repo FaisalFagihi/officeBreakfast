@@ -56,7 +56,7 @@ export default function JoinToGroup({ onJoin }) {
     const toaster = Toaster();
 
     return (<div>
-        <InputGroup size="md">
+        {/* <InputGroup size="md">
             <AutoComplete onChange={(e) => setHostUsername(e)}
                 placeholder="join to a volunteer by name or email.. "
                 value={hostUsername}
@@ -71,10 +71,20 @@ export default function JoinToGroup({ onJoin }) {
             <InputGroup.Button disabled={hostUsername.trim() === ''} onClick={() => joinToGroup()}>
                 Join
             </InputGroup.Button>
-            {/* <Input type="text" value={hostUsername} onChange={(e) => setHostUsername(e)} placeholder="Host email or name..join " /> */}
         </InputGroup>
-        <br/>
-        {/* <AutoComplate placeholder={'join to a volunteer by name or email..'} list={searchUsername} value={hostUsername} onChange={setHostUsername}  /> */}
+        <br /> */}
+        <div className='flex w-full justify-center'>
+            <div className='flex flex-row gap-2 w-96'>
+                <AutoComplate className={''} placeholder={'join to a volunteer by name or email..'} list={searchUsername} value={hostUsername} onChange={setHostUsername} renderItem={usrename => {
+                    let user = searchData.find(x => x.username === usrename.split(':')[1]);
+                    return userCard(user.name, user.username, user.picture)
+                }} />
+
+                <button className='normal px-4 rounded-md' disabled={hostUsername.trim() === ''} onClick={() => joinToGroup()}>
+                    Join
+                </button>
+            </div>
+        </div>
     </div>
     )
 }

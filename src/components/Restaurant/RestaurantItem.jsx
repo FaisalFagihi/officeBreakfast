@@ -3,10 +3,21 @@ import { BiStopwatch } from 'react-icons/bi'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { BiTrash } from 'react-icons/bi'
 import { LuEdit } from 'react-icons/lu'
-import { Row, Col, Panel, Stack, Whisper, Tooltip, Divider } from 'rsuite';
+import { Row, Col, Panel, Stack, Whisper, Tooltip, Divider, Dropdown } from 'rsuite';
 import CheckRoundIcon from '@rsuite/icons/CheckRound';
 
 export function RestaurantItem({ name, logo, rating, rateCount, image, delivery, status, promotion, minimumOrder, timeEstimation, distance, previewButton, isSelected, onEditClik, onRemoveClik, className }) {
+    const SizeDropdown = ({ onEditClik, onRemoveClik, ...props }) => (
+        // <LuEdit className='cursor-pointer' hidden={!onEditClik} onClick={onEditClik} size={18} />
+        // <BiTrash className='cursor-pointer' hidden={!onRemoveClik} onClick={onRemoveClik} size={18} />
+
+
+        <Dropdown {...props} >
+            <Dropdown.Item hidden={!onEditClik} onClick={onEditClik}>edit</Dropdown.Item>
+            <Dropdown.Item hidden={!onRemoveClik} onClick={onRemoveClik} >remove</Dropdown.Item>
+        </Dropdown>
+    );
+
     return (
         <div className={`relative shadow-sm rounded-xl bg-white w-56 ${className}`} >
             <div className='flex flex-col items-center p-3'>
@@ -35,18 +46,15 @@ export function RestaurantItem({ name, logo, rating, rateCount, image, delivery,
                         </div>
                     </div>
                     <div className='align-middle'>
-                    <p className='text-sm truncate'>
-                        {name}
-                    </p>
-                        </div>
-                </div>
-                <div hidden={onEditClik && onRemoveClik} className='w-full' >
-
-                    <Divider className='m-0 my-1' />
-                    <div className='w-full flex flex-row justify-center gap-2 align-middle' >
-                        <LuEdit className='cursor-pointer' hidden={!onEditClik} onClick={onEditClik} size={18} />
-                        <BiTrash className='cursor-pointer' hidden={!onRemoveClik} onClick={onRemoveClik} size={18} />
+                        <p className='text-sm truncate'>
+                            {name}
+                        </p>
                     </div>
+                </div>
+                <div hidden={!onEditClik && !onRemoveClik} className='w-full' >
+
+                    <SizeDropdown onEditClik={onEditClik} onRemoveClik={onRemoveClik} placement="topEnd"  title="..." size="xs" style={{ position: "absolute", bottom: 1, right: 1, zIndex: 20 }} />
+
                 </div>
                 {/* <div className="p-1 py-2 flex justify-between items-center">
                     <div className='flex gap-1 items-center'>

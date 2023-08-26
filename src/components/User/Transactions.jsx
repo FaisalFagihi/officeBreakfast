@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal } from 'rsuite'
-import { OrdersTable } from '../../pages/Group/OrdersPage';
+import { OrderItem, OrdersTable } from '../../pages/Group/OrdersPage';
 import { useState } from 'react';
 import groupController from '../../controller/groupController';
 import { CiReceipt } from 'react-icons/ci';
@@ -48,12 +48,7 @@ export default function Transactions({ records }) {
             </tbody>
         </table>
         <Modal open={isOrderModalOpen} onClose={() => setIsOrderModalOpen(false)} >
-            <Modal.Header>
-                <Modal.Title>Modal Title</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <OrdersTable orders={[selectedOrderItem]} />
-            </Modal.Body>
+                <OrderItem selectedOrder={selectedOrderItem} />
         </Modal>
     </>
     )

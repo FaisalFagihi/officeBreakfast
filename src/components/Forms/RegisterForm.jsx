@@ -31,8 +31,7 @@ export function RegisterForm() {
                     // await localStorage.setItem('username', response.data['username'])
                     // await localStorage.setItem('firstName', response.data['firstName'])
                     // await localStorage.setItem('lastName', response.data['lastName'])
-                    console.log(response)
-                    console.log(response.data)
+     
                     setMessage(response.data)
 
                     // navigate("/")

@@ -6,8 +6,8 @@ export function MenuItem({ name, price, calories, photo, onClick }) {
     </div > : <></>
     return (
         // <div bodyFill bordered  className="w-full" style={{ height: 120, borderColor: "#f1f1f1", borderRadius: 10 }}>
-        <div className="flex justify-between w-full border border-[#f1f1f1] rounded-md h-30 " onClick={onClick}>
-            <div className="absolute">
+        <div className="flex justify-between w-full border border-[#f1f1f1] rounded-md h-30 relative" onClick={onClick}>
+            <div className="absolute bg-opacity-50">
 
                 {caloriesContent}
             </div>

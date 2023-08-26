@@ -24,7 +24,8 @@ import Toaster from '../../components/Toaster';
 import { Popover, Whisper } from 'rsuite';
 import { GroupStatus } from './GroupCard';
 import { FcCheckmark } from 'react-icons/fc'
-import { BsCart2 } from 'react-icons/bs';
+import { AiOutlineWarning } from 'react-icons/ai';
+import { VscError } from 'react-icons/vsc';
 import Fatch from '../../Helpers/Fatcher';
 export default function GroupPage({ id }) {
     const [loader, setLoader] = useState(false)
@@ -131,6 +132,8 @@ export default function GroupPage({ id }) {
 
     const time = <div className={`${((hours + minutes + seconds) > 0) ? 'text-black' : 'text-mainRed'}`}> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </div>
     const userOrders = cartItems?.filter(x => x.username === auth.getUsername())
+    const peopleOrders = cartItems?.filter(x => x.username !== auth.getUsername() && x.isConfirmed)
+    const confirmedOrders = cartItems?.filter(x => x.isConfirmed)
     const userOrderTotal = userOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
     const isUserConfirm = userOrders?.at(0)?.isConfirmed
     const userDelivery = cartItems?.filter(x => x.isConfirmed)?.length > 0 ? delivery / Object.keys(groupBy(cartItems?.filter(x => x.isConfirmed), 'username')).length : delivery;
@@ -160,8 +163,7 @@ export default function GroupPage({ id }) {
     }
 
     const addToCart = (item, Items) => {
-
-        var oItem = Items.find(x => x.id === item.id && isEqual(x.modifiersList, item.modifiersList))
+        var oItem = Items.find(x => x.itemName === item.itemName && isEqual(x.modifiersList, item.modifiersList))
         //var oItem = Items.find(x => x.id === item.id)
         if (oItem !== undefined) {
             oItem.itemQty += item.itemQty;
@@ -188,8 +190,6 @@ export default function GroupPage({ id }) {
         if (selectedGroupStatus === 2 && (orderItems.length === 0)) {
             prepareOrderingList()
         }
-
-        console.log("sadasda")
     }, [selectedGroupStatus]);
 
     const navigate = useNavigate();
@@ -219,40 +219,16 @@ export default function GroupPage({ id }) {
 
     const scrollToCart = () => {
         const lastChildElement = cartRef.current?.lastElementChild;
-        console.log('lastChildElement', lastChildElement)
 
         lastChildElement?.scrollIntoView();
     };
 
 
-    const handleOrderPriceChange = (username, id, price) => {
-        cartController.updateOrderPrice(username, id, price).then(() => {
+    const handleOrderPriceChange = (username, id, price, itemName, itemQty) => {
+        cartController.updateOrderPrice(username, id, price, itemName, itemQty).then(() => {
 
         })
     }
-
-
-    const userCart = <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 p-2 shadow-2xl lg:shadow-none lg:relative lg:p-0'>
-        <div className='flex justify-between flex-cols'>
-            <div className='flex justify-between flex-col p-1 px-4 lg:px-1 w-full'>
-                {/* <div>items: {userOrderTotal?.toFixed(1)} SAR</div> */}
-                {/* <div>Calculated Delivery: <b>{userDelivery?.toFixed(1)} SAR</b></div> */}
-                <div>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SAR </b></div>
-            </div>
-            {/* <div className='flex items-center mx-3  cursor-pointer '>
-                <Divider vertical className='h-full mx-2' />
-                <Badge color='green' content={userOrders?.length}>
-                    <BsCart2 size={20} onClick={() => scrollToCart()} />
-                </Badge>
-            </div> */}
-        </div>
-        <Divider className='my-2' />
-
-        <div className='grid grid-cols-4 gap-2 w-full'>
-            <button disabled={isUserConfirm || selectedGroupStatus != 0} onClick={() => { cartController.confirmOrder(true); }} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
-            <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
-        </div>
-    </div>
 
     const confiremUsers = <ConnectedUsers users={cartUsers?.map((user) => {
         return cartItems?.find(x => x.username === user)
@@ -260,15 +236,41 @@ export default function GroupPage({ id }) {
 
     const cartSection = <di>
 
-        <div className='flex flex-col  gap-2 mb-2'>
-
-            {/* <div >{cartUsers?.length} people share the cart.</div> */}
-        </div>
-
-        {(cartItems && cartItems?.length !== 0) ? <Cart cartItems={cartItems} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} height={280} />
+        {(userOrders && userOrders?.length !== 0) ? <Cart cartItems={userOrders} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} />
             : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>}
 
     </di>
+
+    const userActions =
+        <div className='px-4 lg:p-0'>
+            <div className='flex justify-between flex-cols'>
+                <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
+
+                    <div className='py-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SAR </b></div>
+                </div>
+            </div>
+            <div className='grid grid-cols-4 gap-2 w-full pb-4 lg:p-0'>
+                <button disabled={isUserConfirm || selectedGroupStatus != 0} onClick={() => { cartController.confirmOrder(true); }} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
+                <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
+            </div>
+        </div>
+
+    const userMobileCart = <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 '>
+        <Panel className='border-t border-borderGray rounded-none lg:hidden' bodyFill header={<div>
+            <div className='flex gap-2' >
+                <h6>Cart ({userOrders?.length})</h6>
+                {confiremUsers}
+            </div>
+            <small>{cartUsers?.length} people share the cart.</small>
+        </div>} collapsible>
+            <div className='h-28 overflow-auto px-4'>
+
+                {cartSection}
+            </div>
+        </Panel>
+
+        {userActions}
+    </div>
 
 
     return (
@@ -279,11 +281,19 @@ export default function GroupPage({ id }) {
         // })
 
         <Fatch request={groupController.getGroup} params={groupID == null ? id : groupID} setData={setGroup}>
-            {connectionStatus ?
-                <Container className='p-0 mb-24 lg:mb-0'>
+            {group ? connectionStatus ?
+                <Container className='p-0 mb-52 lg:mb-0'>
                     {/* <Row>
                     <InputPicker defaultValue={orderStatus[0].value} data={orderStatus} style={{ width: 224 }} />
                 </Row> */}
+                    <div className='flex justify-start '>
+
+                        <div className='flex  items-center gap-1 mb-1 bg-white rounded-full px-2'>
+                            <AiOutlineWarning size={18} />
+                            <div className='text-gray-400 font-light text-center text-base'>Delivery cost and items prices might be changed based on the actual receipt</div>
+                        </div>
+                    </div>
+
                     <Row>
                         <Col className='mb-3' xs={24} lg={4} hidden={!isOwner}>
                             {/* <Row>
@@ -339,18 +349,19 @@ export default function GroupPage({ id }) {
 
                         </Col>
                         <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
-                            <Panel className="bg-white shadow-sm" bordered={borderd} style={{ position: "relative", minHeight: 843 }} header={
-                                <div className='text-base font-semibold'>{group?.name}
-                                    <div className='font-light '>*delivery and items prices might be changed based on the actual receipt.</div>
-                                </div>}>
+                            <Panel className="bg-white shadow-sm" bordered={borderd} style={{ position: "relative" }} header={
+                                <div className='flex justify-between'>
+                                    <div className='text-base font-semibold'>{group?.name} </div>
+                                    <div hidden={selectedGroupStatus != 0} > <div>{time}</div></div>
+                                </div>
+                            }>
 
-                                <div className='flex flex-row justify-between items-center text-md mb-2'>
+                                <div className='flex flex-row justify-between items-center text-base mb-2'>
                                     {/* <div>Delivery {delivery} SAR </div> */}
 
-                                    <div>Estimated Delivery: <b>{userDelivery?.toFixed(2)} SAR</b></div>
-                                    <div className='flex flex-row gap-1 items-center'>
-                                        <GroupStatus status={selectedGroupStatus} />
-                                        <div hidden={selectedGroupStatus != 0} > <div className='font-bold'>{time}</div></div>
+                                    <div className='font-semibold'>Delivery: {userDelivery?.toFixed(2)} SAR</div>
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <GroupStatus className={'font-semibold'} status={selectedGroupStatus} />
                                     </div>
                                     {/* <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-12' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" /> */}
                                 </div>
@@ -368,10 +379,24 @@ export default function GroupPage({ id }) {
                                                 <FcCheckmark size={28} className='mb-2' />
                                                 Confirmed your order successfully
                                             </div>
+                                            <Panel className='w-full' header={`People Cart (${peopleOrders?.length})`}>
+                                                {(peopleOrders && peopleOrders?.length !== 0) ? <Cart cartItems={peopleOrders} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} />
+                                                    : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>
+                                                }                                            </Panel>
 
                                             {/* <Loader speed='slow' size='sm' content={''} /> */}
                                         </div>
-                                        <br />
+                                        {/* <div className='px-4 grid grid-cols-2'>
+                                            <div className='flex flex-col gap-2
+                                            '>
+                                                <div>
+                                                    Group delivery: {deliveryCost} SAR
+                                                </div>
+                                                <div>
+                                                    Delivery per person: {userDelivery} SAR
+                                                </div>
+                                            </div>
+                                        </div> */}
                                     </div>
                                 </Row>
                                 <Row hidden={selectedGroupStatus !== 1}>
@@ -382,7 +407,7 @@ export default function GroupPage({ id }) {
                                                     {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
                                                         <List.Item key={uid} index={index}>
                                                             <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
-                                                                <FlexboxGridItem colspan={22}>
+                                                                <FlexboxGridItem>
                                                                     <b> {itemQty}x {itemName}
                                                                         {/* ({itemPrice} SAR) */}
                                                                     </b>
@@ -411,44 +436,7 @@ export default function GroupPage({ id }) {
                                     </Panel>
                                     <div hidden={isOwner}>
 
-                                        <Panel header="Your Order">
-                                            {userOrders?.length > 0 ?
-                                                <>
-                                                    <List>
-                                                        {userOrders?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
-                                                            <List.Item key={uid} index={index}>
-                                                                <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
-                                                                    <FlexboxGridItem colspan={22}>
-                                                                        <b> {itemQty}x {itemName} ({itemPrice} SAR)
-                                                                        </b>
 
-                                                                        {modifiersList?.map(({ name, price }, index) => {
-                                                                            return <p key={index.toString()} index={index}>
-                                                                                {name} {price} SAR
-                                                                            </p>
-                                                                        })}
-                                                                    </FlexboxGridItem>
-                                                                </FlexboxGrid>
-                                                            </List.Item>
-                                                        ))}
-                                                    </List>
-                                                    <br />
-                                                    <div>
-                                                        <div>Items: <b>{userOrderTotal?.toFixed(1)} SAR</b></div>
-
-                                                        {/* <div>Delivery cost: {userDelivery?.toFixed(1)} SAR</div> */}
-                                                        Total: {(userOrderTotal > 0) ? <b> {(userOrderTotal + userDelivery)?.toFixed(1)} SAR</b> : <>0</>}
-                                                    </div>
-
-
-                                                </>
-
-                                                : <>You have no orders :(</>
-                                            }
-                                        </Panel>
-                                        <Panel header="Cart View">
-                                            {cartSection}
-                                        </Panel>
                                     </div>
                                     <div>
                                         <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
@@ -463,6 +451,7 @@ export default function GroupPage({ id }) {
                                         <table className='w-full text-left'>
                                             <thead>
                                                 <tr>
+                                                    <th>Username</th>
                                                     <th>Name</th>
                                                     <th>Price</th>
                                                     <th>
@@ -473,10 +462,12 @@ export default function GroupPage({ id }) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList, username }) => {
+                                                {confirmedOrders?.map(({ uid, name, itemName, itemPrice, itemQty, modifiersList, username }) => {
                                                     return <tr key={uid} className='border-t'>
-                                                        <td>{itemName}</td>
-                                                        <td> <input className='bg-white text-center' onChange={(e) => handleOrderPriceChange(username, uid, e.currentTarget.value)} type='number' value={itemPrice} /></td>
+                                                        <td>{name}</td>
+                                                        <td> <input className='bg-white border w-full' onChange={(e) => handleOrderPriceChange(username, uid, itemPrice, e.currentTarget.value, itemQty)} type='text' value={itemName} /> </td>
+                                                        <td className=''>
+                                                            <input className='bg-white text-center w-16 border' onChange={(e) => handleOrderPriceChange(username, uid, e.currentTarget.value, itemName, itemQty)} type='number' value={itemPrice} /></td>
                                                         <td className='p-0'>
                                                             <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
                                                                 <tbody>
@@ -492,7 +483,7 @@ export default function GroupPage({ id }) {
                                                                 </tbody>
                                                             </table>
                                                         </td>
-                                                        <td>{itemQty}</td>
+                                                        <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderPriceChange(username, uid, itemPrice, itemName, e.currentTarget.value)} min={0} type='number' value={itemQty} /></td>
                                                         <td>{((itemPrice * itemQty)
                                                             + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
                                                     </tr>
@@ -527,22 +518,29 @@ export default function GroupPage({ id }) {
                             </Panel>
                         </Col>
                         <Col xs={24} lg={6} >
-                            <div ref={cartRef} hidden={selectedGroupStatus != 0} className='mb-4'>
-                                <Panel className="bg-white shadow-sm" bordered={borderd} header={
+                            <div ref={cartRef} className='mb-4'>
+                                <Panel className="bg-white shadow-sm hidden lg:block" bordered={borderd} header={
                                     <div>
                                         <div className='flex gap-2' >
-                                            <h6>Cart ({cartItems?.length})</h6>
+                                            <h6>Cart ({userOrders?.length})</h6>
                                             {confiremUsers}
                                         </div>
                                         <small>{cartUsers?.length} people share the cart.</small>
                                     </div>
                                 }>
+                                    <div className='h-44 overflow-auto '>
 
-                                    {cartSection}
-                                    {userCart}
+                                        {cartSection}
+                                    </div>
+
+                                    {userActions}
                                 </Panel>
+                                <div className='block lg:hidden'>
+
+                                    {userMobileCart}
+                                </div>
                             </div>
-                            <Panel className="bg-white shadow-sm" bordered={borderd} header={<h6>Chat</h6>} >
+                            <Panel className="bg-white shadow-sm " bordered={borderd} header={<h6>Chat</h6>} >
                                 {chatController.connection ? <>
                                     <MessageContainer messages={messages} />
                                     <br />
@@ -552,13 +550,18 @@ export default function GroupPage({ id }) {
                         </Col>
                     </Row>
                 </Container>
-                : <div className='text-lg flex flex-col items-center gap-2'> 
+                : <div className='text-lg flex flex-col items-center gap-2'>
                     <div>
                         Group Disconnected
                     </div>
                     <button className='px-5 p-1  border border-borderGray' onClick={() => location.reload()}>Refresh</button>
 
-                </div>}
+                </div> : <div className='flex flex-col gap-2 items-center justify-center'>
+                <VscError size={36} />
+                <div className='text-lg'>
+                    You are not allowed to be in this page
+                </div>
+            </div>}
         </Fatch>
 
     )

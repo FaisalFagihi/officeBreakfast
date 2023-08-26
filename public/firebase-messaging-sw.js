@@ -55,7 +55,6 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
   // Customize notification here
-  console.log(payload)
   const notificationTitle = payload?.data?.title;
   var actions = []
   if (payload?.data?.tag?.startsWith("officeBreakfastGroup")) {
@@ -89,7 +88,6 @@ messaging.onBackgroundMessage((payload) => {
 self.addEventListener('notificationclick', function (event) {
 
   const baseURL = 'https://office-breakfast.com';
-  console.log(baseURL)
   switch (event.action) {
     case 'open_url':
       clients.openWindow(baseURL + event.notification.data?.url); //which we got from above

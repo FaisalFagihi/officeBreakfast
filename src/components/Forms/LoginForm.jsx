@@ -80,7 +80,7 @@ export function LoginForm({ googleLogin }) {
     return (
         <>
             <div onClick={loaded ? () => { setGoogleLoginLoad(true); signIn() } : () => { }} className={`flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-black ${!loaded ? 'bg-mainGray text-white hover:!text-white' : ''}`}  >
-                <BsGoogle size={22} />
+                <BsGoogle size={28}  />
                 <div className="my-auto w-32 flex">
                     {googleLoginLoad ? <Loader size='xs' content={'Signing In..'} className='m-auto' /> : <div className='m-auto'>Sign in with google </div>}
                 </div>
@@ -102,9 +102,11 @@ export function LoginForm({ googleLogin }) {
                         <a className='text-sm font-normal text-[#777] cursor-pointer p-1 pl-3' onClick={() => navigate('../forgotPassword')}> forgot password ?</a>
                     </div>
                 </div>
-                <button onClick={() => login()} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
+                <div className='flex justify-center'>
+                <button onClick={() => login()} className="normal w-10 h-10 rounded-full" >
                     {loginLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
                 </button>
+                    </div>
             </div>
 
         </>

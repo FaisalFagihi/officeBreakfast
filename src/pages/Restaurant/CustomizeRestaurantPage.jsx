@@ -138,7 +138,6 @@ export default function CustomizeRestaurantPage() {
             menuGroups: menuData
             // branch: { menugroups: menuData, menuitems: menuItems.map(({ status, ...menuItems }) => menuItems), modifier_groups: modifierGroups, modifiers: modifiers },
         }
-        console.log(data)
         restaurantController.submitCustom(data).then(() => {
             navigate("../restaurants")
         })
@@ -148,11 +147,16 @@ export default function CustomizeRestaurantPage() {
 
     return (
         <Panel bordered header="Resturant">
-            <div>
-                <div className="grid md:grid-cols-3 gap-2">
+            <div className="flex gap-2">
+                <div className="w-full">
+                    <label>Name</label>
                     <Input value={restaurant?.name} onChange={(e) => handleVendorEdit('name', e)} placeholder="Restaurant name" />
+                    <label>Delivery</label>
                     <Input type="number" value={restaurant?.deliveryCost} onChange={(e) => handleVendorEdit('deliveryCost', e)} placeholder="Delivery fee" />
-                    <SelectPicker data={sources} defaultValue={sources[0].value} searchable={false} block />
+                    <label>Image</label>
+                    <Input value={restaurant?.image} onChange={(e) => handleVendorEdit('image', e)} />
+                    <label>Logo</label>
+                    <Input value={restaurant?.logo} onChange={(e) => handleVendorEdit('logo', e)} />
                 </div>
                 {/* <Divider>Promotion</Divider>
                                 <Row>
@@ -167,15 +171,16 @@ export default function CustomizeRestaurantPage() {
                                         </Row>
                                     </Col>
                                 </Row> */}
-                <Divider>Cover</Divider>
-                <div>
-                    <Input value={restaurant?.image} onChange={(e) => handleVendorEdit('image', e)} />
-                    <img src={restaurant?.image} className="RestaurantImage" alt="not found" draggable="false" />
-                </div>
-                <Divider>logo</Divider>
-                <div>
-                    <Input value={restaurant?.logo} onChange={(e) => handleVendorEdit('logo', e)} />
-                    <img src={restaurant?.logo} className="RestaurantImage" alt="not found" draggable="false" />
+                <div className="flex flex-col gap-2">
+                    <div>
+                    <label>Image</label>
+                    <img src={restaurant?.image} className="h-24" alt="not found" draggable="false" />
+                    </div>
+<div>
+<label>Logo</label>
+
+                    <img src={restaurant?.logo} className="h-24" alt="not found" draggable="false" />
+</div>
                 </div>
             </div>
             <Divider></Divider>
@@ -202,14 +207,14 @@ export default function CustomizeRestaurantPage() {
                                         <div className="flex flex-col justify-between p-2 ">
                                             <div className="flex flex-col">
                                                 <div>
-                                                    Name En: <input className="bg-white px-2 border border-borderGray" onChange={(e)=>handleMenuItemsEdit(menuItem.id, 'name', e.currentTarget.value, item.id)} value={menuItem.name} />
+                                                    Name En: <input className="bg-white px-2 border border-borderGray" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'name', e.currentTarget.value, item.id)} value={menuItem.name} />
                                                 </div>
                                                 <div>
-                                                    Name Ar: <input className="bg-white px-2 border border-borderGray" onChange={(e)=>handleMenuItemsEdit(menuItem.id, 'nameAr', e.currentTarget.value, item.id)} value={menuItem.nameAr} />
+                                                    Name Ar: <input className="bg-white px-2 border border-borderGray" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'nameAr', e.currentTarget.value, item.id)} value={menuItem.nameAr} />
                                                 </div>
                                             </div>
                                             <div className="text-right font-bold">
-                                                <input className="bg-white px-2 border border-borderGray" onChange={(e)=>handleMenuItemsEdit(menuItem.id, 'price', e.currentTarget.value, item.id)} type="number" value={menuItem.price}/> SR
+                                                <input className="bg-white px-2 border border-borderGray" onChange={(e) => handleMenuItemsEdit(menuItem.id, 'price', e.currentTarget.value, item.id)} type="number" value={menuItem.price} /> SR
                                             </div>
                                         </div>
 

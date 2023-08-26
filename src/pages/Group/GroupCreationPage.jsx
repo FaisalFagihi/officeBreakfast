@@ -16,6 +16,7 @@ import { VendorCustom } from '../../components/Restaurant/RestaurantCustomItem';
 import { Panel } from '../../style/Style';
 import Fatch from '../../Helpers/Fatcher';
 import RestaurantsSection from '../Restaurant/RestaurantsSection'
+import ModalBody from 'rsuite/esm/Modal/ModalBody';
 export default function GroupCreationPage({ afterSubmit }) {
     const [vendorsResult, setResturantsResult] = React.useState([])
     const [selectedRestaurant, setSelectedRestaurant] = React.useState(0)
@@ -96,26 +97,30 @@ export default function GroupCreationPage({ afterSubmit }) {
 
     return (
         <div className='p-2'>
+            <Modal.Header>
+                <div className='flex flex-col sm:flex-row justify-between gap-2'>
+                    <div className='w-full'>
+                        <div>Restaurant</div>
+                        <Input disabled readOnly value={selectedRestaurant?.restaurant?.name} />
+                    </div>
+                    <div className='w-full'>
+                        <div>Timer</div>
+                        <InputNumber size="md" value={timer} min={1} postfix={<BsStopwatch />} onChange={(value) => setTimer(value)} />
+                    </div>
+                    <div className='w-full'>
+                        <div>Delivery</div>
+                        <InputNumber value={delivery} postfix="SR" onChange={(value) => setDelivery(value)} />
+                    </div>
+                </div>
+            </Modal.Header>
+            <Modal.Body>
 
+                <div className='h-96 overflow-auto'>
 
-            <div className='mb-3'>
-                <div>Restaurant</div>
+                    <RestaurantsSection setSelectedRestaurant={setSelectedRestaurant} isHorizontal={true} />
 
-                <Input disabled readOnly value={selectedRestaurant?.restaurant?.name} />
-
-                <div>Timer</div>
-
-                <InputNumber size="md" value={timer} min={1} postfix={<BsStopwatch />} onChange={(value) => setTimer(value)} />
-
-                <div>Delivery</div>
-
-                <InputNumber value={delivery} postfix="SR" onChange={(value) => setDelivery(value)} />
-            </div>
-            <div className='h-96 overflow-auto'>
-
-                <RestaurantsSection setSelectedRestaurant={setSelectedRestaurant} isHorizontal={true} />
-
-            </div>
+                </div>
+            </Modal.Body>
             {/* <Panel header={<h6>Custom Menu</h6>} hidden={customs?.length == 0 || !customs}>
                 {!loadCustomRestaurants ?
                     <div className='h-auto grid grid-rows-1 grid-flow-col gap-1 justify-start overflow-auto' spacing={20}  >
@@ -133,7 +138,10 @@ export default function GroupCreationPage({ afterSubmit }) {
                 }
 
             </Panel> */}
+            <Modal.Footer>
+
             <button className='secondary w-full' block onClick={() => create()}>Submit</button>
+            </Modal.Footer>
 
             {/* <Modal overflow={true} size="md" open={isModalOpen} onClose={() => setModalOpenStatus(false)}>
                 <Modal.Header>

@@ -11,7 +11,7 @@ module.exports =  withMT({
       black: colors.black,
       white: colors.white,
       gray: colors.gray,
-      mainGray:'#F8F8F8',
+      mainGray:'#f7f7f7',
       borderGray:'#E5E5E5',
       darkGray:'#333',
       mainOrange:'#ffcd99',

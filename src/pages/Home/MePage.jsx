@@ -11,7 +11,7 @@ import Username from "../../components/User/Username";
 import { MdNoFood } from 'react-icons/md';
 import GroupCreationPage from "../Group/GroupCreationPage";
 import GroupCard from "../Group/GroupCard";
-import { Panel } from "../../style/Style";
+import { AutoComplate, Panel } from "../../style/Style";
 import Fatch from "../../Helpers/Fatcher";
 import { GuestsTable } from "../Group/UsersTable";
 import Avatar from "react-avatar";
@@ -129,13 +129,12 @@ export default function MePage() {
     return (
         userMode != null ?
             userMode ?
-                <div>
-                    <div className="gap-2 w-full items-center mt-5">
-                    </div>
-                    <Panel header={
+                <div className="flex flex-col gap-4">
+   
+                    <Panel className={'py-2'} header={
                         <div className="flex flex-row justify-between w-full">
                             <div className="font-black">My Groups</div>
-                            <button hidden={!myGroups?.length > 0} disabled={!userMode} className="normal !rounded-full p-0 px-3" onClick={() => setNewRestaurantState(true)}> + </button>
+                            <button hidden={!myGroups?.length > 0} disabled={!userMode} className="normal px-3 rounded-md !text-base" onClick={() => setNewRestaurantState(true)}> + </button>
                         </div>
                     }>
 
@@ -160,26 +159,21 @@ export default function MePage() {
 
                     </Panel>
                     <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
-                        <Modal.Header>
-                            Create New Group Order
-                        </Modal.Header>
-                        <Modal.Body>
+
                             <GroupCreationPage afterSubmit={() => {
                                 setNewRestaurantState(false)
                                 fetchMyGroups()
                             }
                             } />
-                        </Modal.Body>
                     </Modal>
-                    <div className="my-5" />
                     {/* <Divider /> */}
 
-                    <Panel header={'Guests'} className='!p-0  !bg-transparent' shaded={false}>
+                    <Panel header={'Guests'} className='!p-0  !bg-transparent' shaded={false} hidden={!guests?.length>0}>
                         <Fatch request={userController.getGuests} setData={setGuests} reload={guestsReload}>
                             <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
                         </Fatch>
                     </Panel>
-                    <div className="mx-2">
+                    {/* <div className="mx-2">
 
                         <InputGroup size="md">
                             <AutoComplete
@@ -198,6 +192,19 @@ export default function MePage() {
                                 Add
                             </InputGroup.Button>
                         </InputGroup>
+                    </div> */}
+
+                    <div className='flex w-full justify-center'>
+                        <div className='flex flex-row gap-2 w-96'>
+                            <AutoComplate className={''} placeholder={'invite a guest by name or email..'} list={searchUsername} value={searchWord} onChange={setSearchWord} renderItem={usrename => {
+                                let user = searchData.find(x => x.username === usrename.split(':')[1]);
+                                return userCard(user.name, user.username, user.picture)
+                            }} />
+
+                            <button className='normal px-4 rounded-md' disabled={searchWord.trim() === ''} onClick={() => submitGuest(searchWord?.split(':')[1])}>
+                                Add
+                            </button>
+                        </div>
                     </div>
                 </div> :
                 <div className="flex flex-col gap-2 w-full items-center mt-10">

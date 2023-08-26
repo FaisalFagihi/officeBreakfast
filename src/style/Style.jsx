@@ -7,8 +7,8 @@ export function Panel({children, header, hidden, className, bordered, shaded}) {
   )
 }
 
-export function AutoComplate({children, placeholder, list, value, onChange, hidden, className}) {
+export function AutoComplate({children, placeholder, list, value, onChange,renderItem, hidden, className}) {
   return (
-    <AutoComplateControl placeholder={placeholder} value={value} onChange={onChange} className={`bg-white py-2 px-3 shadow-sm rounded-md ${className}`} hidden={hidden} children={children} list={list} />
+    <AutoComplateControl renderItem={renderItem} placeholder={placeholder} value={value} onChange={onChange} className={`bg-white py-2 px-3 shadow-sm rounded-md ${className}`} hidden={hidden} children={children} list={list} />
   )
 }

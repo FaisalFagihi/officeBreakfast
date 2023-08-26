@@ -7,7 +7,6 @@ const getInitials = (firstName, lastName) => {
 }
 
 export default function Username({ username, firstName, lastName, avatar = null, avatarOnly = false, nameOnly = false }) {
-   console.log('avatar',avatar)
     return (
         <>
             <Whisper

@@ -8,21 +8,19 @@ import { FiThumbsUp } from 'react-icons/fi';
 export default function Cart({ cartItems, removeFromCart, height, isCheckout }) {
 
     return <div style={{ overflow: "auto", height: height }} className='flex flex-col gap-1'>
-
-
         <div className='flex flex-col gap-1'>
             {cartItems?.filter(x => x.username === auth.getUsername()).map(({ name, uid, itemName, itemPrice, itemQty, modifiersList, isConfirmed }, index) => (
                 <div key={uid} index={index} className=''>
                     <div className={'MyCartOrder flex justify-between items-center'}>
-                        <div colspan={22}>
+                        <div>
                             <div className='flex items-center gap-2'>
-                                <div>
+                                {/* <div>
                                     {name}
-                                </div>
-                                <div hidden={!isConfirmed}>
+                                </div> */}
+                                {/* <div hidden={!isConfirmed}>
                                     <FiThumbsUp size={12} />
 
-                                </div>
+                                </div> */}
                             </div>
                             <b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
 
@@ -45,15 +43,15 @@ export default function Cart({ cartItems, removeFromCart, height, isCheckout }) 
             {cartItems?.filter(x => x.username !== auth.getUsername()).map(({ name, uid, itemName, itemPrice, itemQty, modifiersList, isConfirmed }, index) => (
                 <div key={uid} index={index}>
                     <div className='CartOrder'>
-                        <div colspan={22}>
+                        <div>
                             <div className='flex items-center gap-2'>
                                 <div>
                                     {name}
                                 </div>
-                                <div hidden={!isConfirmed}>
+                                {/* <div hidden={!isConfirmed}>
                                     <FiThumbsUp size={12} />
 
-                                </div>
+                                </div> */}
                             </div>
                             <b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
 

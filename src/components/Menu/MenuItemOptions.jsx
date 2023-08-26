@@ -16,7 +16,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
     const [selectedSize, setSelectedSize] = useState();
     const [selectedPackage, setSelectedPackage] = useState();
     const [basePrice, setBasePrice] = useState();
-
+    const [note, setNote] = useState();
     //#region Effects
     useEffect(() => {
         let packageTotal = selectedOptions?.reduce((a, v) => a = a + parseFloat(v.price), 0)
@@ -75,59 +75,65 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
     useEffect(() => {
     }, [selectdModifiers]);
 
-    const itemName = name + (selectedType ? ' - ' + selectedType?.description : '') + (selectedSize ? ' - ' + selectedSize?.description : '');
+    const itemName = name + (selectedType ? ' - ' + selectedType?.description : '') + (selectedSize ? ' - ' + selectedSize?.description : '') + (note ? ' (' + note + ')' : '');
     return (
         <div>
             <Modal.Header>
-                <div className="ModifierItemName"> {name} </div>
+                <div className="text-lg"> {name} </div>
             </Modal.Header>
             <Modal.Body>
-                <div className="ModifierImageContainer">
-                    <img className="ModifierImage" src={photo} alt="" draggable="false" />
-                </div>
-                <div className="ModifierGroupDescription"> {description} </div>
+                <div className='flex flex-col gap-1'>
 
-                <div className='my-2' hidden={!types?.length > 0}>
-                    <label>Type</label>
-                    {types?.map((type) => {
-                        return <div key={type.id} className={`border my-1 p-1 ${selectedType?.id === type?.id ? 'bg-gray-300' : ''}`} onClick={() => setSelectedType(type)}>
-                            {type.description} {type.price.toFixed(2)}
-                        </div>
-                    })}
-                </div>
+                    <img className="object-cover w-full h-56" src={photo} alt="" draggable="false" />
+                    <div className="ModifierGroupDescription"> {description} </div>
 
-                <div className={'my-2'} hidden={!selectedType?.sizes?.length > 0}>
-                    <label>Size</label>
-                    {selectedType?.sizes?.map((size) => {
-                        return <div key={size.id} className={`border my-1 p-1 ${selectedSize?.id === size?.id ? 'bg-gray-300' : ''} `} onClick={() => setSelectedSize(size)}>
-                            <div>
-                                {size.description}
+                    <div className='my-2' hidden={!types?.length > 0}>
+                        <label>Type</label>
+                        {types?.map((type) => {
+                            return <div key={type.id} className={`border my-1 p-1 ${selectedType?.id === type?.id ? 'bg-gray-300' : ''}`} onClick={() => setSelectedType(type)}>
+                                {type.description} {type.price.toFixed(2)}
                             </div>
-                            <div>
-                                {selectedPackage?.size?.id === size.id ? selectedPackage.package?.price.toFixed(2) : size.packages[0]?.price.toFixed(2)}
-                                {/* {selectedPackagesize?.price.toFixed(2)} */}
-                            </div>
-                        </div>
-                    })}
+                        })}
+                    </div>
 
-                    {selectedSize?.packages?.length > 1 ?
-                        selectedSize?.packages?.map((typePackage) => {
-                            return <div key={typePackage.id} className={`flex flex-col ${selectedPackage?.package?.id === typePackage?.id ? 'bg-gray-300' : ''}`} onClick={() => setSelectedPackage({ size: selectedSize, package: typePackage })} >
+                    <div className={'my-2'} hidden={!selectedType?.sizes?.length > 0}>
+                        <label>Size</label>
+                        {selectedType?.sizes?.map((size) => {
+                            return <div key={size.id} className={`border my-1 p-1 ${selectedSize?.id === size?.id ? 'bg-gray-300' : ''} `} onClick={() => setSelectedSize(size)}>
                                 <div>
-                                    {typePackage.name}
+                                    {size.description}
                                 </div>
                                 <div>
-                                    {typePackage.price.toFixed(2)}
-                                    {/* {typePackage.calories} */}
+                                    {selectedPackage?.size?.id === size.id ? selectedPackage.package?.price.toFixed(2) : size.packages[0]?.price.toFixed(2)}
+                                    {/* {selectedPackagesize?.price.toFixed(2)} */}
                                 </div>
                             </div>
-                        }) : <></>
-                    }
+                        })}
+
+                        {selectedSize?.packages?.length > 1 ?
+                            selectedSize?.packages?.map((typePackage) => {
+                                return <div key={typePackage.id} className={`flex flex-col ${selectedPackage?.package?.id === typePackage?.id ? 'bg-gray-300' : ''}`} onClick={() => setSelectedPackage({ size: selectedSize, package: typePackage })} >
+                                    <div>
+                                        {typePackage.name}
+                                    </div>
+                                    <div>
+                                        {typePackage.price.toFixed(2)}
+                                        {/* {typePackage.calories} */}
+                                    </div>
+                                </div>
+                            }) : <></>
+                        }
+                    </div>
+
+                    <Modifiers options={selectedSize?.menuOptions} setSelectedModifers={setSelectdOptions} />
+
+                    <Modifiers options={options} setSelectedModifers={setSelectdModifiers} />
+                    <div className='flex flex-col'>
+                        <label >Note</label>
+                        <textarea value={note} onChange={(e) => setNote(e.target.value)} className='bg-white border border-borderGray rounded p-2' placeholder="write your notes." />
+                    </div>
                 </div>
 
-                <Modifiers options={selectedSize?.menuOptions} setSelectedModifers={setSelectdOptions} />
-
-                <Modifiers options={options} setSelectedModifers={setSelectdModifiers} />
             </Modal.Body >
             <Modal.Footer>
 

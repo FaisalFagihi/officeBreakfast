@@ -64,7 +64,6 @@ class Cart {
 
     addToCart = async (order) => {
         try {
-            console.log(order)
             order.groupID = this.groupID;
             await this.connection.invoke("AddToCart", order);
         } catch (e) {
@@ -86,9 +85,9 @@ class Cart {
         }
     }
 
-    updateOrderPrice = async (username, uid, price) => {
+    updateOrderPrice = async (username, uid, price, itemName, itemQty) => {
         try {
-            await this.connection.invoke("UpdateOrderPrice", username, uid, parseFloat(price));
+            await this.connection.invoke("UpdateOrderPrice", username, uid, parseFloat(price), itemName, parseInt(itemQty));
         } catch (e) {
         }
     }

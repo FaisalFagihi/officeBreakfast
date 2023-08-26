@@ -19,7 +19,6 @@ class RestaurantController {
     }
 
     getRestaurantByID = (id, menuSource) => {
-        console.log('menuSource', menuSource)
         return axiosInstance.get("Restaurant/Get", { params: { id, menuSource } })
     }
 
