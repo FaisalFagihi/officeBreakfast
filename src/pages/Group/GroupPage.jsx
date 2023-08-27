@@ -27,50 +27,16 @@ import { FcCheckmark } from 'react-icons/fc'
 import { AiOutlineWarning } from 'react-icons/ai';
 import { VscError } from 'react-icons/vsc';
 import Fatch from '../../Helpers/Fatcher';
-export default function GroupPage({ id }) {
-    const [loader, setLoader] = useState(false)
 
-    const [delivery, setDelivery] = useState(0);
-    const [endDate, setEndDate] = useState(0);
+
+
+const GroupTimer = ({ endDate }) => {
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
-    const [group, setGroup] = useState(null);
-    const [cartItems, setCartItems] = useState([]);
-
-    const [timer, setTimer] = useState(10);
-    const [deliveryCost, setDeliveryCost] = useState(10);
-    const [users, setUsers] = useState([]);
-
-    const [messages, setMessages] = useState([]);
-
-    const [borderd, setBorderd] = useState(false);
     const [interval, setTimerInterval] = useState();
-    const [isOwner, setIsOwner] = useState(false);
-    const { groupID } = useParams();
 
-    const [orderItems, setOrderItems] = useState([]);
-    const toaster = Toaster();
-
-    const [connectionStatus, setConnectionStatus] = useState(true);
-
-
-    useEffect(() => {
-        if (group == null)
-            return
-
-        setIsOwner(auth.getUsername() === group.ownerName)
-        setSelectedGroupStatus(group.status)
-        setEndDate(group.endDate)
-        setDeliveryCost(group.delivery)
-        setDelivery(group.delivery)
-
-        chatController.sign(setMessages, setUsers);
-        chatController.joinRoom(parseInt(groupID));
-
-        cartController.sign(setCartItems, setSelectedGroupStatus, setDelivery, setEndDate, parseInt(groupID), setConnectionStatus)
-        cartController.joinRoom()
-    }, [group]);
+    const time = <div className={`${((hours + minutes + seconds) > 0) ? 'text-black' : 'text-mainRed'}`}> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </div>
 
     const getTime = () => {
         let time = Date.parse(endDate + " GMT") - Date.parse(new Date().toUTCString())
@@ -102,6 +68,266 @@ export default function GroupPage({ id }) {
         }
     }, [interval]);
 
+    return time
+}
+
+const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, isMobileHidden, children }) => {
+
+    const header = <div>
+        <div className='flex gap-2' >
+            <h6>Cart ({userOrders?.length})</h6>
+            <ConnectedUsers users={cartUsers} />
+        </div>
+        <small>{cartUsers?.length} people share the cart.</small>
+    </div>
+
+    const body = (userOrders?.length !== 0) ? <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} />
+        : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>
+
+    return (
+        <div className='mb-4'>
+            <Panel className="bg-white shadow-sm hidden lg:block" header={header}>
+                <div className='h-44 overflow-auto '>
+                    {body}
+                </div>
+                {children}
+            </Panel>
+
+            <div className='block lg:hidden'>
+                <div hidden={isMobileHidden} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 '>
+                    <Panel className='border-t border-borderGray rounded-none lg:hidden' bodyFill header={header} collapsible>
+
+                        <div className='h-28 overflow-auto px-4'>
+                            {body}
+                        </div>
+
+                        {children}
+                    </Panel>
+                </div>
+            </div>
+        </div>
+    )
+
+}
+
+const GroupActions = ({ onConfirmOrderClick, onCancelOrderClick, isConfirmed, isValid, changeOrderStatus }) => {
+    return (
+        <div className='grid grid-cols-4 gap-2 w-full pb-4 lg:p-0'>
+            <button disabled={isConfirmed || !isValid} onClick={() => onConfirmOrderClick()} className={`${(isConfirmed && isValid) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isConfirmed ? 'Confirmed' : 'Confirm'} </button>
+            <button hidden={!isConfirmed || !isValid} onClick={() => onCancelOrderClick()} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
+        </div>)
+}
+
+const GroupControl = ({ status, changeStatus, timer, setTimer, changeTimer, delivery, setDelivery, changeDeliveryCost, isCartEmpty }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    return (
+        <Panel header={<h6>Control</h6>} className="bg-white shadow-sm">
+            <label className='mb-1' htmlFor="timerInput">Timer</label>
+            <InputGroup disabled={status !== 0}
+            >
+                <Input type='Number' id="timerInput" onChange={(e) => setTimer(e)} value={timer} min={0} />
+                <InputGroup.Button onClick={() => changeTimer(timer)}>
+                    <ReloadIcon>Reset</ReloadIcon>
+                </InputGroup.Button>
+            </InputGroup>
+            <label className='mt-2 mb-1' htmlFor="deliverInput">Delivery</label>
+            <InputGroup disabled={status >= 3} >
+                <Input id='deliverInput' type='Number' onChange={(e) => setDelivery(e)} value={delivery} min={0} />
+                <InputGroup.Button onClick={() => changeDeliveryCost(delivery)}>
+                    <ReloadIcon>Reset</ReloadIcon>
+                </InputGroup.Button>
+            </InputGroup>
+            <Divider className="my-3" />
+            <Stack alignItems='stretch' justifyContent='center' divider={<Divider vertical />} direction="column" disabled={status >= 4}>
+                <Button block disabled={status === 0 || status === 4} onClick={() => changeStatus(0)} className='secondary'>Collecting</Button>
+                <Button block disabled={status === 1 || isCartEmpty || status === 4} onClick={() => changeStatus(1)} className='secondary'>Ordering</Button>
+                <Button block disabled={status === 0 || status === 2 || status === 4} onClick={() => changeStatus(2)} className='secondary'>Ordered</Button>
+                <Button block disabled={status !== 2 || status === 4} onClick={() => changeStatus(3)} className='secondary'>Arrived</Button>
+            </Stack>
+            <Divider className="my-3" />
+            <Button hidden={status >= 4} block style={{ background: "#bd5353", color: "white" }} onClick={() => setIsModalOpen(true)}>Cancel ?</Button>
+
+            <Modal backdrop="static" role="alertdialog" keyboard={false} open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <Modal.Header>
+                    <Modal.Title>Group Cancellation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <RemindIcon style={{ color: '#ffb300', fontSize: 24 }} />
+                    Canelling the group will clear the cart and close the group.
+                    Are you sure that you want to cancel this group?!
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={() => { changeStatus(4); setIsModalOpen(false) }} appearance="default">
+                        Yes
+                    </Button>
+                    <Button onClick={() => setIsModalOpen(false)} appearance="subtle">
+                        No
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </Panel>)
+}
+
+const GroupHeader = ({ delivery, children }) => {
+    return (<div className='flex flex-row justify-between items-center text-base mb-2'>
+
+        <div className='font-semibold'>Delivery: {delivery?.toFixed(2)} SAR</div>
+        <div className='flex flex-row gap-2 items-center justify-between'>
+            {children}
+        </div>
+    </div>)
+}
+
+const GroupOrderingStatus = ({ isOwner, orderItems }) => {
+    return (
+        <div>
+
+            <Panel header="Orders Review" hidden={!isOwner}>
+                {orderItems?.length > 0 ?
+                    <>
+                        <List>
+                            {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
+                                <List.Item key={uid} index={index}>
+                                    <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
+                                        <FlexboxGridItem>
+                                            <b> {itemQty}x {itemName}
+                                                {/* ({itemPrice} SAR) */}
+                                            </b>
+
+                                            {modifiersList?.map(({ name, price }, index) => {
+                                                return <p key={index.toString()} index={index}>
+                                                    {name} {price} SAR
+                                                </p>
+                                            })}
+                                        </FlexboxGridItem>
+                                    </FlexboxGrid>
+                                </List.Item>
+                            ))}
+                        </List>
+                        <br />
+                        {/* <div>
+        <div>Items total: {itemsTotal?.toFixed(1)} SAR</div>
+        
+        <div>Delivery cost: {delivery?.toFixed(1)} SAR</div>
+        {(itemsTotal > 0) ? <b>Total: {(itemsTotal + delivery)?.toFixed(1)} SAR</b> : <>Total: 0</>}
+    </div> */}
+                    </>
+
+                    : <>There are no orders</>
+                }
+            </Panel>
+            <div>
+                <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+            </div>
+        </div>
+    )
+}
+
+const GroupOrderedStatus = ({ isOwner, confirmedOrders, handleOrderChange }) => {
+    return (
+        <Panel header="Receipt Check" hidden={!isOwner}>
+            <p>Compare the actual receipt with the following one, they should be matched.</p>
+            <p>If not guests shall be refunded/charged manually.</p>
+            <br />
+            <table className='w-full text-left'>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>
+                            Modifiers
+                        </th>
+                        <th>QTY</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {confirmedOrders?.map(({ uid, name, itemName, itemPrice, itemQty, modifiersList, username }) => {
+                        return <tr key={uid} className='border-t'>
+                            <td>{name}</td>
+                            <td> <input className='bg-white border w-full' onChange={(e) => handleOrderChange(username, uid, itemPrice, e.currentTarget.value, itemQty)} type='text' value={itemName} /> </td>
+                            <td className=''>
+                                <input className='bg-white text-center w-16 border' onChange={(e) => handleOrderChange(username, uid, e.currentTarget.value, itemName, itemQty)} type='number' value={itemPrice} /></td>
+                            <td className='p-0'>
+                                <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
+                                    <tbody>
+                                        {modifiersList?.length > 0 ?
+                                            modifiersList.map((item) => {
+                                                return <tr key={item.id}>
+                                                    <td>{item.name}</td>
+                                                    <td>{item.price.toFixed(2)}</td>
+                                                </tr>
+                                            })
+
+                                            : <tr><td>N/A</td></tr>}
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderChange(username, uid, itemPrice, itemName, e.currentTarget.value)} min={0} type='number' value={itemQty} /></td>
+                            <td>{((itemPrice * itemQty)
+                                + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
+                        </tr>
+                    })}
+                </tbody>
+            </table>
+        </Panel>)
+}
+
+export default function GroupPage({ id }) {
+    const [loader, setLoader] = useState(false)
+
+    const [delivery, setDelivery] = useState(0);
+    const [endDate, setEndDate] = useState(0);
+
+    const [group, setGroup] = useState(null);
+    const [cartItems, setCartItems] = useState([]);
+
+    const [deliveryCost, setDeliveryCost] = useState(10);
+    const [users, setUsers] = useState([]);
+
+    const [messages, setMessages] = useState([]);
+
+    const [borderd, setBorderd] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const { groupID } = useParams();
+
+    const [orderItems, setOrderItems] = useState([]);
+    const toaster = Toaster();
+
+    const [connectionStatus, setConnectionStatus] = useState(null);
+
+    const [joiningLoder, setJoiningLoder] = useState(true);
+    const [timer, setTimer] = useState(10);
+
+    useEffect(() => {
+        if (connectionStatus != null) {
+            setJoiningLoder(false)
+        }
+    }, [connectionStatus]);
+
+    useEffect(() => {
+        if (group == null)
+            return
+
+        setIsOwner(auth.getUsername() === group.ownerName)
+        setSelectedGroupStatus(group.status)
+        setEndDate(group.endDate)
+        setDeliveryCost(group.delivery)
+        setDelivery(group.delivery)
+
+        chatController.sign(setMessages, setUsers);
+        chatController.joinRoom(parseInt(groupID));
+
+        cartController.sign(setCartItems, setSelectedGroupStatus, setDelivery, setEndDate, parseInt(groupID), setConnectionStatus)
+        cartController.joinRoom()
+    }, [group]);
+
+
+
+
+
     const isEqual = (a, b) => {
         a = a.sort((a, b) => (a.id > b.id ? 1 : 0));
         b = b.sort((a, b) => (a.id > b.id ? 1 : 0));
@@ -130,12 +356,11 @@ export default function GroupPage({ id }) {
         }, {}); // empty object is the initial value for result object
     }
 
-    const time = <div className={`${((hours + minutes + seconds) > 0) ? 'text-black' : 'text-mainRed'}`}> {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')} </div>
     const userOrders = cartItems?.filter(x => x.username === auth.getUsername())
     const peopleOrders = cartItems?.filter(x => x.username !== auth.getUsername() && x.isConfirmed)
     const confirmedOrders = cartItems?.filter(x => x.isConfirmed)
     const userOrderTotal = userOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
-    const isUserConfirm = userOrders?.at(0)?.isConfirmed
+    const isUserConfirmed = userOrders?.at(0)?.isConfirmed
     const userDelivery = cartItems?.filter(x => x.isConfirmed)?.length > 0 ? delivery / Object.keys(groupBy(cartItems?.filter(x => x.isConfirmed), 'username')).length : delivery;
     const [selectedGroupStatus, setSelectedGroupStatus] = useState(0);
 
@@ -154,7 +379,7 @@ export default function GroupPage({ id }) {
     }
 
     const changeTimer = (timer) => {
-        clearInterval(interval);
+        // clearInterval(interval);
 
         groupController.changeTimer(parseInt(groupID), timer).catch(({ response }) => {
             toaster.push(response?.data, "error")
@@ -224,169 +449,74 @@ export default function GroupPage({ id }) {
     };
 
 
-    const handleOrderPriceChange = (username, id, price, itemName, itemQty) => {
+    const handleOrderChange = (username, id, price, itemName, itemQty) => {
         cartController.updateOrderPrice(username, id, price, itemName, itemQty).then(() => {
 
         })
     }
 
-    const confiremUsers = <ConnectedUsers users={cartUsers?.map((user) => {
-        return cartItems?.find(x => x.username === user)
-    })} />
 
-    const cartSection = <di>
 
-        {(userOrders && userOrders?.length !== 0) ? <Cart cartItems={userOrders} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} />
-            : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>}
-
-    </di>
-
-    const userActions =
-        <div className='px-4 lg:p-0'>
-            <div className='flex justify-between flex-cols'>
-                <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
-
-                    <div className='py-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SAR </b></div>
-                </div>
-            </div>
-            <div className='grid grid-cols-4 gap-2 w-full pb-4 lg:p-0'>
-                <button disabled={isUserConfirm || selectedGroupStatus != 0} onClick={() => { cartController.confirmOrder(true); }} className={`${(isUserConfirm && selectedGroupStatus == 0) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isUserConfirm ? 'Confirmed' : 'Confirm'} </button>
-                <button hidden={!isUserConfirm || selectedGroupStatus != 0} onClick={() => cartController.confirmOrder(false)} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
-            </div>
+    const warning = <div className='flex justify-center '>
+        <div className='flex  items-center gap-1 mb-1 bg-white rounded-full px-2'>
+            <AiOutlineWarning size={18} />
+            <div className='text-gray-400 font-light text-center text-base'>Delivery cost and items prices might be changed based on the actual receipt</div>
         </div>
-
-    const userMobileCart = <div hidden={!userOrderTotal} className='bg-white fixed z-10 w-full left-0 right-0 bottom-0 '>
-        <Panel className='border-t border-borderGray rounded-none lg:hidden' bodyFill header={<div>
-            <div className='flex gap-2' >
-                <h6>Cart ({userOrders?.length})</h6>
-                {confiremUsers}
-            </div>
-            <small>{cartUsers?.length} people share the cart.</small>
-        </div>} collapsible>
-            <div className='h-28 overflow-auto px-4'>
-
-                {cartSection}
-            </div>
-        </Panel>
-
-        {userActions}
     </div>
 
 
     return (
-        // groupController.getGroup(groupID == null ? id : groupID).then(({ data }) => {
+        // groupController.getGroup(groupID == null ? id : groupID).then(({data}) => {
         //     setGroup(data)
         // }).finally(() => {
         //     setLoader(true)
         // })
+        <>
 
-        <Fatch request={groupController.getGroup} params={groupID == null ? id : groupID} setData={setGroup}>
-            {group ? connectionStatus ?
-                <Container className='p-0 mb-52 lg:mb-0'>
-                    {/* <Row>
-                    <InputPicker defaultValue={orderStatus[0].value} data={orderStatus} style={{ width: 224 }} />
-                </Row> */}
-                    <div className='flex justify-center '>
 
-                        <div className='flex  items-center gap-1 mb-1 bg-white rounded-full px-2'>
-                            <AiOutlineWarning size={18} />
-                            <div className='text-gray-400 font-light text-center text-base'>Delivery cost and items prices might be changed based on the actual receipt</div>
-                        </div>
-                    </div>
+            <Fatch request={groupController.getGroup} params={groupID == null ? id : groupID} setData={setGroup}>
+                {!joiningLoder ?
 
-                    <Row>
-                        <Col className='mb-3' xs={24} lg={4} hidden={!isOwner}>
-                            {/* <Row>
-                            <Panel shaded bordered={borderd} header={<h6>Connected ({users.length})</h6>}>
-                                <ConnectedUsers users={users} />
-                            </Panel>
-                        </Row> */}
-                            <Panel bordered={borderd} header={<h6>Control</h6>} className="bg-white shadow-sm">
-                                <label className='mb-1' htmlFor="timerInput">Timer</label>
-                                <InputGroup disabled={selectedGroupStatus !== 0}
-                                >
-                                    <Input type='Number' id="timerInput" onChange={(e) => setTimer(e)} value={timer} min={0} />
-                                    <InputGroup.Button onClick={() => changeTimer(timer)}>
-                                        <ReloadIcon>Reset</ReloadIcon>
-                                    </InputGroup.Button>
-                                </InputGroup>
-                                <label className='mt-2 mb-1' htmlFor="deliverInput">Delivery</label>
-                                <InputGroup disabled={selectedGroupStatus >= 3} >
-                                    <Input id='deliverInput' type='Number' onChange={(e) => setDeliveryCost(e)} value={deliveryCost} min={0} />
-                                    <InputGroup.Button onClick={() => changeDeliveryCost(deliveryCost)}>
-                                        <ReloadIcon>Reset</ReloadIcon>
-                                    </InputGroup.Button>
-                                </InputGroup>
-                                <Divider className="my-3" />
-                                <Stack alignItems='stretch' justifyContent='center' divider={<Divider vertical />} direction="column" disabled={selectedGroupStatus >= 4}>
-                                    <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(0)} className='secondary'>Collecting</Button>
-                                    <Button block disabled={selectedGroupStatus === 1 || cartItems?.length === 0 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(1)} className='secondary'>Ordering</Button>
-                                    <Button block disabled={selectedGroupStatus === 0 || selectedGroupStatus === 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(2)} className='secondary'>Ordered</Button>
-                                    <Button block disabled={selectedGroupStatus !== 2 || selectedGroupStatus === 4} onClick={() => changeOrderStatus(3)} className='secondary'>Arrived</Button>
-                                </Stack>
-                                <Divider className="my-3" />
-                                <Button hidden={selectedGroupStatus >= 4} block style={{ background: "#bd5353", color: "white" }} onClick={() => setIsModalOpen(true)}>Cancel ?</Button>
+                    group ? connectionStatus ?
+                        <Container className='p-0 mb-52 lg:mb-0'>
+                            {warning}
+                            <Row>
+                                <Col className='mb-3' xs={24} lg={4} hidden={!isOwner}>
+                                    <GroupControl changeStatus={changeOrderStatus} status={selectedGroupStatus} delivery={deliveryCost} setDelivery={setDeliveryCost} timer={timer} setTimer={setTimer} isCartEmpty={cartItems?.length == 0} changeDeliveryCost={changeDeliveryCost} changeTimer={changeTimer} />
+                                </Col>
+                                <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
+                                    <Panel className="bg-white shadow-sm" bordered={borderd} style={{ position: "relative" }} header={<div className='flex justify-between'>
+                                        <div className='text-base font-semibold'>{group?.name} </div>
+                                        {/* <div hidden={selectedGroupStatus != 0} >
+                                            </div> */}
+                                        <GroupTimer endDate={endDate} />
+                                    </div>}>
 
-                                <Modal backdrop="static" role="alertdialog" keyboard={false} open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                                    <Modal.Header>
-                                        <Modal.Title>Group Cancellation</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <RemindIcon style={{ color: '#ffb300', fontSize: 24 }} />
-                                        Canelling the group will clear the cart and close the group.
-                                        Are you sure that you want to cancel this group?!
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button onClick={() => { changeOrderStatus(4); setIsModalOpen(false) }} appearance="default">
-                                            Yes
-                                        </Button>
-                                        <Button onClick={() => setIsModalOpen(false)} appearance="subtle">
-                                            No
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
-                            </Panel>
+                                        <GroupHeader delivery={userDelivery}>
+                                            <GroupStatus className={'font-semibold'} status={selectedGroupStatus} />
+                                        </GroupHeader>
 
-                        </Col>
-                        <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
-                            <Panel className="bg-white shadow-sm" bordered={borderd} style={{ position: "relative" }} header={
-                                <div className='flex justify-between'>
-                                    <div className='text-base font-semibold'>{group?.name} </div>
-                                    <div hidden={selectedGroupStatus != 0} > <div>{time}</div></div>
-                                </div>
-                            }>
 
-                                <div className='flex flex-row justify-between items-center text-base mb-2'>
-                                    {/* <div>Delivery {delivery} SAR </div> */}
-
-                                    <div className='font-semibold'>Delivery: {userDelivery?.toFixed(2)} SAR</div>
-                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <GroupStatus className={'font-semibold'} status={selectedGroupStatus} />
-                                    </div>
-                                    {/* <img src='https://lf16-adcdn-va.ibytedtos.com/obj/i18nblog//images/916cfdb23feb3d4101060bbf755cbdcd.jpg' alt='logo' className='h-12' style={{ position: "absolute", top: 0, right: 0, opacity: 0.7, borderRadius: "0px 0px 0px 15px" }} draggable="false" /> */}
-                                </div>
-                                <Row>
-                                    <Divider className='mt-0' />
-                                </Row>
-                                <Row hidden={selectedGroupStatus !== 0} >
-                                    <div hidden={isUserConfirm}>
-                                        <Loader className="m-auto" hidden={true} />
-                                        <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
-                                    </div>
-                                    <div hidden={!isUserConfirm}>
-                                        <div className='flex flex-col gap-5 mt-10 items-center align-middle'>
-                                            <div className='flex flex-row gap-1 items-center text-xl'>
-                                                <FcCheckmark size={28} className='mb-2' />
-                                                Confirmed your order successfully
+                                        <Row>
+                                            <Divider className='mt-0' />
+                                        </Row>
+                                        <Row hidden={selectedGroupStatus !== 0} >
+                                            <div hidden={isUserConfirmed}>
+                                                <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
                                             </div>
-                                            <Panel className='w-full' header={`People Cart (${peopleOrders?.length})`}>
-                                                {(peopleOrders && peopleOrders?.length !== 0) ? <Cart cartItems={peopleOrders} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} />
-                                                    : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>
-                                                }                                            </Panel>
+                                            <div hidden={!isUserConfirmed}>
+                                                <div className='flex flex-col gap-5 mt-10 items-center align-middle'>
+                                                    <div className='flex flex-row gap-1 items-center text-xl'>
+                                                        <FcCheckmark size={28} className='mb-2' />
+                                                        Confirmed your order successfully
+                                                    </div>
+                                                    {/* <Panel className='w-full' header={`People Cart (${peopleOrders?.length})`}>
+                                                        {(peopleOrders && peopleOrders?.length !== 0) ? <Cart cartItems={peopleOrders} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} />
+                                                            : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>
+                                                        }                                            </Panel> */}
+                                                </div>
 
-                                            {/* <Loader speed='slow' size='sm' content={''} /> */}
-                                        </div>
-                                        {/* <div className='px-4 grid grid-cols-2'>
+                                                {/* <div className='px-4 grid grid-cols-2'>
                                             <div className='flex flex-col gap-2
                                             '>
                                                 <div>
@@ -397,172 +527,80 @@ export default function GroupPage({ id }) {
                                                 </div>
                                             </div>
                                         </div> */}
-                                    </div>
-                                </Row>
-                                <Row hidden={selectedGroupStatus !== 1}>
-                                    <Panel header="Orders Review" hidden={!isOwner}>
-                                        {orderItems?.length > 0 ?
-                                            <>
-                                                <List>
-                                                    {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
-                                                        <List.Item key={uid} index={index}>
-                                                            <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
-                                                                <FlexboxGridItem>
-                                                                    <b> {itemQty}x {itemName}
-                                                                        {/* ({itemPrice} SAR) */}
-                                                                    </b>
+                                            </div>
+                                        </Row>
+                                        <Row hidden={selectedGroupStatus !== 1}>
+                                            <GroupOrderingStatus isOwner={isOwner} orderItems={orderItems} />
+                                        </Row>
+                                        <Row hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
 
-                                                                    {modifiersList?.map(({ name, price }, index) => {
-                                                                        return <p key={index.toString()} index={index}>
-                                                                            {name} {price} SAR
-                                                                        </p>
-                                                                    })}
-                                                                </FlexboxGridItem>
-                                                            </FlexboxGrid>
-                                                        </List.Item>
-                                                    ))}
-                                                </List>
+                                            <GroupOrderedStatus isOwner={isOwner} confirmedOrders={confirmedOrders} handleOrderChange={handleOrderChange} />
+                                        </Row>
+                                        <Row hidden={selectedGroupStatus !== 2}>
+                                            <img src='https://c.tenor.com/RjNXHT-Ejy0AAAAd/flyby-sailby.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+
+                                        </Row>
+
+                                        <Row hidden={selectedGroupStatus !== 3}>
+                                            <Panel hidden={!isOwner}>
+                                                <p>By checking out all the guests will be charged and cart will be cleared.</p>
                                                 <br />
-                                                {/* <div>
-                                                <div>Items total: {itemsTotal?.toFixed(1)} SAR</div>
+                                                <Button className='secondary' block disabled={selectedGroupStatus !== 2 && selectedGroupStatus !== 3} onClick={() => checkOut()}>Checkout</Button>
 
-                                                <div>Delivery cost: {delivery?.toFixed(1)} SAR</div>
-                                                {(itemsTotal > 0) ? <b>Total: {(itemsTotal + delivery)?.toFixed(1)} SAR</b> : <>Total: 0</>}
-                                            </div> */}
-                                            </>
+                                            </Panel>
+                                            <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
 
-                                            : <>There are no orders</>
-                                        }
+                                        </Row>
+                                        <Row hidden={selectedGroupStatus !== 4}>
+                                            <Panel>
+                                                <h5>Group is closed</h5>
+                                                <Button className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(5)} >Open</Button>
+                                                <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
+
+                                            </Panel>
+                                        </Row>
                                     </Panel>
-                                    <div hidden={isOwner}>
+                                </Col>
 
+                                <Col xs={24} lg={6} >
 
-                                    </div>
-                                    <div>
-                                        <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' width={400} style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
-                                    </div>
-                                </Row>
-                                <Row hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
+                                    <GroupCart cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={userOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} isMobileHidden={!userOrderTotal} >
 
-                                    <Panel header="Receipt Check" hidden={!isOwner}>
-                                        <p>Compare the actual receipt with the following one, they should be matched.</p>
-                                        <p>If not guests shall be refunded/charged manually.</p>
-                                        <br />
-                                        <table className='w-full text-left'>
-                                            <thead>
-                                                <tr>
-                                                    <th>Username</th>
-                                                    <th>Name</th>
-                                                    <th>Price</th>
-                                                    <th>
-                                                        Modifiers
-                                                    </th>
-                                                    <th>QTY</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {confirmedOrders?.map(({ uid, name, itemName, itemPrice, itemQty, modifiersList, username }) => {
-                                                    return <tr key={uid} className='border-t'>
-                                                        <td>{name}</td>
-                                                        <td> <input className='bg-white border w-full' onChange={(e) => handleOrderPriceChange(username, uid, itemPrice, e.currentTarget.value, itemQty)} type='text' value={itemName} /> </td>
-                                                        <td className=''>
-                                                            <input className='bg-white text-center w-16 border' onChange={(e) => handleOrderPriceChange(username, uid, e.currentTarget.value, itemName, itemQty)} type='number' value={itemPrice} /></td>
-                                                        <td className='p-0'>
-                                                            <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
-                                                                <tbody>
-                                                                    {modifiersList?.length > 0 ?
-                                                                        modifiersList.map((item) => {
-                                                                            return <tr key={item.id}>
-                                                                                <td>{item.name}</td>
-                                                                                <td>{item.price.toFixed(2)}</td>
-                                                                            </tr>
-                                                                        })
+                                        <div className='flex justify-between flex-cols'>
+                                            <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
 
-                                                                        : <tr><td>N/A</td></tr>}
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                        <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderPriceChange(username, uid, itemPrice, itemName, e.currentTarget.value)} min={0} type='number' value={itemQty} /></td>
-                                                        <td>{((itemPrice * itemQty)
-                                                            + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
-                                                    </tr>
-                                                })}
-                                            </tbody>
-                                        </table>
-                                    </Panel>
-                                </Row>
-                                <Row hidden={selectedGroupStatus !== 2}>
-                                    <img src='https://c.tenor.com/RjNXHT-Ejy0AAAAd/flyby-sailby.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
-
-                                </Row>
-
-                                <Row hidden={selectedGroupStatus !== 3}>
-                                    <Panel hidden={!isOwner}>
-                                        <p>By checking out all the guests will be charged and cart will be cleared.</p>
-                                        <br />
-                                        <Button className='secondary' block disabled={selectedGroupStatus !== 2 && selectedGroupStatus !== 3} onClick={() => checkOut()}>Checkout</Button>
-
-                                    </Panel>
-                                    <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
-
-                                </Row>
-                                <Row hidden={selectedGroupStatus !== 4}>
-                                    <Panel>
-                                        <h5>Group is closed</h5>
-                                        <Button className="secondary" hidden={!isOwner} block onClick={() => changeOrderStatus(5)} >Open</Button>
-                                        <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' style={{ display: "block", border: "3px solid #ddd", boxShadow: "inner 0 0 2px 5px #333", marginLeft: "auto", marginRight: "auto" }} alt='Ordering gif' draggable="false" />
-
-                                    </Panel>
-                                </Row>
-                            </Panel>
-                        </Col>
-                        <Col xs={24} lg={6} >
-                            <div ref={cartRef} className='mb-4'>
-                                <Panel className="bg-white shadow-sm hidden lg:block" bordered={borderd} header={
-                                    <div>
-                                        <div className='flex gap-2' >
-                                            <h6>Cart ({userOrders?.length})</h6>
-                                            {confiremUsers}
+                                                <div className='py-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SAR </b></div>
+                                            </div>
                                         </div>
-                                        <small>{cartUsers?.length} people share the cart.</small>
-                                    </div>
-                                }>
-                                    <div className='h-44 overflow-auto '>
 
-                                        {cartSection}
-                                    </div>
+                                        <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
+                                    </GroupCart>
 
-                                    {userActions}
-                                </Panel>
-                                <div className='block lg:hidden'>
-
-                                    {userMobileCart}
-                                </div>
+                                    <Panel className="bg-white shadow-sm " bordered={borderd} header={<h6>Chat</h6>} >
+                                        {chatController.connection ? <>
+                                            <MessageContainer messages={messages} />
+                                            <br />
+                                            <SendMessageForm sendMessage={chatController.sendMessage} /> </> :
+                                            <></>}
+                                    </Panel>
+                                </Col>
+                            </Row>
+                        </Container>
+                        : <div className='text-lg flex flex-col items-center gap-2'>
+                            <div>
+                                Group Disconnected
                             </div>
-                            <Panel className="bg-white shadow-sm " bordered={borderd} header={<h6>Chat</h6>} >
-                                {chatController.connection ? <>
-                                    <MessageContainer messages={messages} />
-                                    <br />
-                                    <SendMessageForm sendMessage={chatController.sendMessage} /> </> :
-                                    <></>}
-                            </Panel>
-                        </Col>
-                    </Row>
-                </Container>
-                : <div className='text-lg flex flex-col items-center gap-2'>
-                    <div>
-                        Group Disconnected
-                    </div>
-                    <button className='px-5 p-1  border border-borderGray' onClick={() => location.reload()}>Refresh</button>
+                            <button className='px-5 p-1  border border-borderGray' onClick={() => location.reload()}>Refresh</button>
 
-                </div> : <div className='flex flex-col gap-2 items-center justify-center'>
-                <VscError size={36} />
-                <div className='text-lg'>
-                    You are not allowed to be in this page
-                </div>
-            </div>}
-        </Fatch>
+                        </div> : <div className='flex flex-col gap-2 items-center justify-center'>
+                        <VscError size={36} />
+                        <div className='text-lg'>
+                            You are not allowed to be in this page
+                        </div>
+                    </div> : <div className='flex justify-center'> <Loader /> </div>}
+            </Fatch>
+        </>
+
 
     )
 }

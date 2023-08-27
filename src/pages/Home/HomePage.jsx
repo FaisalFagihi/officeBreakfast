@@ -8,6 +8,7 @@ import Fatch from "../../Helpers/Fatcher";
 import userController from "../../controller/userController";
 import { LeadersTable } from "../Group/UsersTable";
 import { Panel } from "../../style/Style";
+import WrapAround from "../../style/WrapAround";
 
 
 export default function HomePage() {
@@ -19,8 +20,8 @@ export default function HomePage() {
 
     return (
         <div className="flex flex-col gap-2">
-            <Panel header='Groups' className='!p-0 !bg-transparent' shaded={false} hidden={!leaders.length>0}>
-                <Fatch request={groupController.getAllGroups} setData={setGroups} reload={groupsReload}>
+            <Panel header='Groups' className='!p-0 !bg-transparent' shaded={false} hidden={!leaders.length > 0}>
+                <Fatch request={groupController.getAllGroups} setData={setGroups} reload={groupsReload || leadersReload}>
                     <Groups items={groups} />
                 </Fatch>
             </Panel>

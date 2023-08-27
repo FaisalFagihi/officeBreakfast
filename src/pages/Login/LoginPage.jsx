@@ -12,9 +12,9 @@ export default function LoginPage() {
     return (
         auth.isAuthenticated() ?
             <Navigate to="/" /> :
-            <div className='sm:flex justify-center '>
+            <div className='sm:flex justify-center'>
 
-                <div className=" h-screen p-10 sm:w-[450px] sm:h-[450px] bg-white sm:rounded-full sm:!px-14 sm:!pt-0  sm:border-0 sm:shadow-sm sm:my-12">
+                <div className=" h-screen p-10 sm:w-[450px] sm:h-[450px] bg-white sm:rounded-full sm:!px-14 sm:!pt-0  sm:border-0 sm:shadow-sm sm:my-36">
                     <div className='p-1'>
 
                         <img src='/assets/logo_512.png' className='m-auto mt-4 h-[100px] sm:h-[80px] ' draggable="false" />
