@@ -207,7 +207,7 @@ export default function MePage() {
                         </div>
                     </div>
                 </div> :
-                <div className="flex flex-col gap-2 w-full items-center mt-10">
+                <div className="flex flex-col gap-2 w-full items-center mt-11">
                     <div className="text-lg">
                         Volunteer Mode <Toggle onClick={() => updateUserMode(!userMode)} checked={userMode} size="md" checkedChildren="ON" unCheckedChildren="OFF" />
                     </div>
