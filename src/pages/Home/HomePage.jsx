@@ -8,7 +8,6 @@ import Fatch from "../../Helpers/Fatcher";
 import userController from "../../controller/userController";
 import { LeadersTable } from "../Group/UsersTable";
 import { Panel } from "../../style/Style";
-import WrapAround from "../../style/WrapAround";
 
 
 export default function HomePage() {
