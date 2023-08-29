@@ -19,7 +19,7 @@ export function RestaurantItem({ name, logo, rating, rateCount, image, delivery,
     );
 
     return (
-        <div className={`relative shadow-sm rounded-xl bg-white w-56 ${className}`} >
+        <div className={`relative shadow-sm rounded-xl bg-white ${className}`} >
             <div className='flex flex-col items-center p-3'>
                 <div className='w-full flex flex-col items-center gap-1  ' onClick={previewButton} >
 

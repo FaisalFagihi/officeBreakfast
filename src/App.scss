@@ -4,6 +4,7 @@
 // @import '@fontsource/roboto/700.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
 * {
   font-family: 'Tajawal', sans-serif;
   unicode-bidi: embed;
@@ -751,6 +752,19 @@ thead {
   color: black
 }
 
-table{
+table {
   border: 1px solid #eee;
+}
+
+.rs-panel-header {
+  padding: 10px 20px !important;
+  padding-bottom: 20px !important;
+}
+
+.rs-icon {
+  top: 20px;
+}
+
+.cartHeight {
+  height: calc(100vh - 418px) !important;
 }

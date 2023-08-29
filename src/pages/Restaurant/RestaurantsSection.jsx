@@ -85,15 +85,17 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
                             {
                                 customs?.length > 0 ?
                                     customs?.map((customRestaurant) =>
-                                        <RestaurantItem isSelected={selectedRestaurentID === customRestaurant?.id} key={customRestaurant.id} name={customRestaurant.name} logo={customRestaurant.logo}
-                                            image={customRestaurant.image}
-                                            distance={customRestaurant.distance}
-                                            rating={customRestaurant.rating}
-                                            delivey={customRestaurant.deliveyCost}
-                                            previewButton={() => handleCustomPreviewButton(customRestaurant)}
-                                            onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: customRestaurant, menuSource: 1 } }) : null}
-                                            onRemoveClik={!isHorizontal ? () => removeCustom(customRestaurant?.id) : null}
-                                        />
+                                        <div className={'w-full sm:w-56'}>
+                                            <RestaurantItem isSelected={selectedRestaurentID === customRestaurant?.id} key={customRestaurant.id} name={customRestaurant.name} logo={customRestaurant.logo}
+                                                image={customRestaurant.image}
+                                                distance={customRestaurant.distance}
+                                                rating={customRestaurant.rating}
+                                                delivey={customRestaurant.deliveyCost}
+                                                previewButton={() => handleCustomPreviewButton(customRestaurant)}
+                                                onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: customRestaurant, menuSource: 1 } }) : null}
+                                                onRemoveClik={!isHorizontal ? () => removeCustom(customRestaurant?.id) : null}
+                                            />
+                                        </div>
                                     ) :
                                     <div className="flex flex-col gap-2 m-auto p-5">
                                         <MdNoFood style={{ fontSize: "3em", width: "100%" }} />
@@ -117,13 +119,16 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
 
                                     {restaurantsResult?.length > 0 ?
                                         restaurantsResult?.map((restaurant) =>
-                                            <RestaurantItem isSelected={selectedRestaurentID === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
-                                                image={restaurant.image}
-                                                distance={restaurant.distance}
-                                                rating={restaurant.rating}
-                                                delivey={restaurant.deliveyCost}
-                                                previewButton={() => handlePreviewButton(restaurant)}
-                                                onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: restaurant, menuSource: 0 } }) : null} />
+                                            <div className={'w-full sm:w-56'}>
+
+                                                <RestaurantItem isSelected={selectedRestaurentID === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
+                                                    image={restaurant.image}
+                                                    distance={restaurant.distance}
+                                                    rating={restaurant.rating}
+                                                    delivey={restaurant.deliveyCost}
+                                                    previewButton={() => handlePreviewButton(restaurant)}
+                                                    onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: restaurant, menuSource: 0 } }) : null} />
+                                            </div>
                                         ) :
                                         <div className="flex flex-col gap-2 m-auto p-5">
                                             <MdNoFood style={{ fontSize: "3em", width: "100%" }} />

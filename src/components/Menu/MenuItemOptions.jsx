@@ -75,7 +75,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
     useEffect(() => {
     }, [selectdModifiers]);
 
-    const itemName = name + (selectedType ? ' - ' + selectedType?.description : '') + (selectedSize ? ' - ' + selectedSize?.description : '') + (note ? ' (' + note + ')' : '');
+    const itemName =  (selectedType ? ' - ' + selectedType?.description : name) + (selectedSize ? ' - ' + selectedSize?.description : '') + (note ? ' (' + note + ')' : '');
     return (
         <div>
             <Modal.Header>

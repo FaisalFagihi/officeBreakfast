@@ -75,11 +75,11 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
 
     return menuGroups && (
         <>
-        <div className='flex flex-row gap-2 flex-wrap'>
+        <div className='flex  gap-2 items-start overflow-auto w-full  lg:flex-wrap whitespace-nowrap pb-2 h-12 lg:h-auto'>
 
             {menuGroups?.map((item, index) =>
-                <div key={item.id} className="MenuGroups">
-                    <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem" defaultChecked={index === 0} />
+                <div key={item.id} className="MenuGroups w-auto">
+                    <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem w-full" defaultChecked={index === 0} />
                     <label htmlFor={item.id} className="MenugroupItem py-1 px-2" onClick={() => setMenuItems(item?.menuItems)}>
                         {item.name}
                     </label>
@@ -88,8 +88,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
             </div>
 
             <br />
-            <Container style={{ overflow: "auto", height: height }}>
-                <div className='grid md:grid-cols-2 gap-2 p-2'>
+                <div className='cartHeight flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start '>
                     {menuItems?.map((item) =>
                         <MenuItem key={item.id} name={item.name}
                             price={item.price}
@@ -98,7 +97,6 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
                             onClick={() => openMenuItem(item)} />
                     )}
                 </div>
-            </Container>
 
             <Modal  open={modalValue.isOpen && !isPreview} onClose={() => setModalValue({ isOpen: false })}>
                 <Fatch request={restaurantController.getMeniItemOptionsByID} params={{id: `${selectedMenuItemID}&${restaurantID}`, menuSource:menuSource}} setData={setMenuItemOptions} >
