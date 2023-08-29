@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { InputGroup, Row, Col, AutoComplete } from "rsuite";
+import { InputGroup, Row, Col, AutoComplete, Loader } from "rsuite";
 import UserController from "../../controller/userController";
 import Toaster from "../../components/Toaster";
 import Avatar from 'react-avatar';
@@ -10,8 +10,10 @@ export default function JoinToGroup({ onJoin }) {
     const [message, setMessage] = useState("");
     const [searchUsername, setSearchUsername] = useState([]);
     const [searchData, setSearchData] = useState([]);
+    const [joinLoader, setJoinLoader] = useState(false);
 
     const joinToGroup = () => {
+        setJoinLoader(true)
         UserController.sendJoinRequest(hostUsername?.split(':')[1]).then(({ data }) => {
             setMessage(data)
             toaster.push("You have been joined to the group successfully", "success")
@@ -20,6 +22,8 @@ export default function JoinToGroup({ onJoin }) {
 
         }).catch(({ response }) => {
             toaster.push(response?.data, "error")
+        }).finally(()=>{
+            setJoinLoader(false)
         })
     }
 
@@ -81,7 +85,7 @@ export default function JoinToGroup({ onJoin }) {
                 }} />
 
                 <button className='normal px-4 rounded-md' disabled={hostUsername.trim() === ''} onClick={() => joinToGroup()}>
-                    Join
+                   {joinLoader? <Loader size='xs' />:'Join' } 
                 </button>
             </div>
         </div>

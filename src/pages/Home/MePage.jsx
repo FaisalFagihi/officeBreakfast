@@ -37,6 +37,7 @@ export default function MePage() {
 
     const [joinRequests, setJoinRequests] = useState([]);
     const [requestReload, setRequestReload] = useState(false);
+    const [inviteLoader, setInviteLoader] = useState(false);
 
     const toaster = Toaster();
 
@@ -91,11 +92,14 @@ export default function MePage() {
 
 
     const submitGuest = (guestUsername) => {
+        setInviteLoader(true)
         userController.submitGuest(guestUsername).then(({ data }) => {
             setGuestsReload(!guestsReload)
             setSearchWord('')
         }).catch(({ response }) => {
             toaster.push(response?.data, "error")
+        }).finally(() => {
+            setInviteLoader(false)
         })
     }
 
@@ -130,7 +134,7 @@ export default function MePage() {
         userMode != null ?
             userMode ?
                 <div className="flex flex-col gap-4">
-   
+
                     <Panel className={'py-2'} header={
                         <div className="flex flex-row justify-between w-full">
                             <div className="font-black">My Groups</div>
@@ -160,15 +164,15 @@ export default function MePage() {
                     </Panel>
                     <Modal open={isNewRestaurant} onClose={() => setNewRestaurantState(false)} size="lg">
 
-                            <GroupCreationPage afterSubmit={() => {
-                                setNewRestaurantState(false)
-                                fetchMyGroups()
-                            }
-                            } />
+                        <GroupCreationPage afterSubmit={() => {
+                            setNewRestaurantState(false)
+                            fetchMyGroups()
+                        }
+                        } />
                     </Modal>
                     {/* <Divider /> */}
 
-                    <Panel header={'Guests'} className='!p-0  !bg-transparent' shaded={false} hidden={!guests?.length>0}>
+                    <Panel header={'Guests'} className='!p-0  !bg-transparent' shaded={false} hidden={!guests?.length > 0}>
                         <Fatch request={userController.getGuests} setData={setGuests} reload={guestsReload}>
                             <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
                         </Fatch>
@@ -202,7 +206,7 @@ export default function MePage() {
                             }} />
 
                             <button className='normal px-4 rounded-md' disabled={searchWord.trim() === ''} onClick={() => submitGuest(searchWord?.split(':')[1])}>
-                                Add
+                                {inviteLoader ? <Loader size='xs' /> : 'Add'}
                             </button>
                         </div>
                     </div>
