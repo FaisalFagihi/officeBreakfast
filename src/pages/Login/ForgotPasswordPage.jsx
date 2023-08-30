@@ -45,12 +45,10 @@ export default function ForgotPasswordPage() {
                         </div>
                         <div className='flex flex-col gap-3'>
                             <input placeholder="Email" className='input !rounded-full mt-3' ref={email} />
-                            <div>
                                 {/* <button onClick={() => className='normal w-full !rounded-full'>Reset</button> */}
                                 <button onClick={() => resetPassword(email)} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
                                     {resetPasswordLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
                                 </button>
-                            </div>
 
                             <p className="text-center p-2 text-base"><b className='cursor-pointer' onClick={() => navigate('../')}>Login ?</b></p>
                         </div>

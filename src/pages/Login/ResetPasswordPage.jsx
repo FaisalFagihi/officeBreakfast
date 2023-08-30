@@ -17,7 +17,7 @@ export const ResetPasswordPage = () => {
   const updatePassword = () => {
     setMessage('Updating password..')
     setResetPasswordLoad(true)
-    userController.updatePassword(password.current.value, resetToken).then(async ({data}) => {
+    userController.updatePassword(password.current.value, resetToken).then(async ({ data }) => {
       setMessage(data?.message)
       auth.setToken(data?.token)
       localStorage.setItem('username', data?.username)
@@ -31,7 +31,7 @@ export const ResetPasswordPage = () => {
       }
     }).finally(() => {
       setResetPasswordLoad(false)
-  })
+    })
   }
   return (
 
@@ -57,12 +57,10 @@ export const ResetPasswordPage = () => {
       <button onClick={()=>updatePassword()}>Update</button> */}
 
               <input type='password' placeholder="Password" className='input !rounded-full mt-3' ref={password} />
-              <div>
-                {/* <button onClick={() => className='normal w-full !rounded-full'>Reset</button> */}
-                <button onClick={() => updatePassword()} className="m-auto mt-0 normal w-10 h-10 !rounded-full" >
-                  {resetPasswordLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
-                </button>
-              </div>
+              {/* <button onClick={() => className='normal w-full !rounded-full'>Reset</button> */}
+              <button onClick={() => updatePassword()} className="m-auto mt-0 normal w-10 h-10 !rounded-full " >
+                {resetPasswordLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
+              </button>
             </div>
           </div>
         </div>
