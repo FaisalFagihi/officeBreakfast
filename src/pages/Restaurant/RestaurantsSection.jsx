@@ -125,7 +125,7 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
                                                     image={restaurant.image}
                                                     distance={restaurant.distance}
                                                     rating={restaurant.rating}
-                                                    delivey={restaurant.deliveyCost}
+                                                    delivey={restaurant.delivreyCost}
                                                     previewButton={() => handlePreviewButton(restaurant)}
                                                     onEditClik={!isHorizontal ? () => navigate("./customize/", { state: { restaurant: restaurant, menuSource: 0 } }) : null} />
                                             </div>

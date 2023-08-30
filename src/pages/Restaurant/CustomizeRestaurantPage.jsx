@@ -63,26 +63,26 @@ export default function CustomizeRestaurantPage() {
     const navigate = useNavigate()
 
     const [restaurant, setRestaurant] = useState(null);
-    const [menuData, setMenuData] = useState(null);
+    const [menuGroups, setMenuGroups] = useState(null);
     const [modifierGroups, setModifierGroups] = useState(null);
     const [modifiers, setModifiers] = useState(null);
 
     const handleMenuItemsEditState = (id, menuGroupID) => {
-        const nextData = Object.assign([], menuData)
+        const nextData = Object.assign([], menuGroups)
         const activeItem = nextData.find(item => item.id === menuGroupID).menuItems.find(item => item.id === id)
         activeItem.status = activeItem.status ? null : 'EDIT'
-        setMenuData(nextData)
+        setMenuGroups(nextData)
     }
 
     const handleRemoveMenuItemState = (id, menuGroupID) => {
 
-        const nextData = Object.assign([], menuData)
+        const nextData = Object.assign([], menuGroups)
         nextData.find(item => item.id === menuGroupID).menuItems = nextData.find(item => item.id === menuGroupID).menuItems.filter(item => item.id !== id)
-        setMenuData(nextData);
+        setMenuGroups(nextData);
     }
 
     const handleNewMenuItemState = (menuGroup) => {
-        const menuItems = menuData.find(x => x.id == menuGroup.id).menuItems
+        const menuItems = menuGroups.find(x => x.id == menuGroup.id).menuItems
         const activeMenuItem = Object.assign({}, menuItems[0]);
         activeMenuItem.name = "";
         activeMenuItem.nameAr = "";
@@ -92,10 +92,27 @@ export default function CustomizeRestaurantPage() {
         activeMenuItem.image = "";
         activeMenuItem.status = "EDIT";
 
-        const nextData = Object.assign([], menuData);
+        const nextData = Object.assign([], menuGroups);
         nextData.find(item => item.id === menuGroup.id).menuItems = [activeMenuItem, ...menuItems];
-        setMenuData(nextData)
+        setMenuGroups(nextData)
     };
+
+    const handleNewMenuGroupState = () => {
+        const activeMenuGroup = Object.assign({}, menuGroups[0]);
+        activeMenuGroup.name = "";
+        activeMenuGroup.nameAr = "";
+        activeMenuGroup.menuItems = []
+        activeMenuGroup.id = uuid().toString();
+        setMenuGroups([activeMenuGroup, ...menuGroups])
+
+    };
+
+    const handleRemoveMenuGroupState = (id) => {
+
+        const nextData = Object.assign([], menuGroups)
+        
+        setMenuGroups(nextData?.filter(item => item.id !== id));
+    }
 
     useEffect(() => {
         setRestaurant(
@@ -110,7 +127,7 @@ export default function CustomizeRestaurantPage() {
             }
         )
         restaurantController.getRestaurantByID(location.state.restaurant.id, location.state.menuSource).then(function ({ data }) {
-            setMenuData(data?.menuGroups)
+            setMenuGroups(data?.menuGroups)
         }).catch(function (error) {
 
         });
@@ -123,21 +140,21 @@ export default function CustomizeRestaurantPage() {
     }
 
     const handleMenuGeoupsEdit = (id, key, value) => {
-        const nextData = Object.assign([], menuData);
+        const nextData = Object.assign([], menuGroups);
         nextData.find(item => item.id === id)[key] = value;
-        setMenuData(nextData)
+        setMenuGroups(nextData)
     }
 
     const handleMenuItemsEdit = (id, key, value, menuGroupID) => {
-        const nextData = Object.assign([], menuData);
+        const nextData = Object.assign([], menuGroups);
         nextData.find(item => item.id === menuGroupID).menuItems.find(item => item.id === id)[key] = value;
-        setMenuData(nextData)
+        setMenuGroups(nextData)
     }
 
     const submit = () => {
         let data = {
             restaurant: restaurant,
-            menuGroups: menuData
+            menuGroups: menuGroups
             // branch: { menugroups: menuData, menuitems: menuItems.map(({ status, ...menuItems }) => menuItems), modifier_groups: modifierGroups, modifiers: modifiers },
         }
         restaurantController.submitCustom(data).then(() => {
@@ -187,8 +204,10 @@ export default function CustomizeRestaurantPage() {
             </div>
             <Divider></Divider>
             <div>
-                <PanelGroup accordion defaultActiveKey={0} bordered={true} header="Menu Groups" hidden={menuData === null}>
-                    {menuData?.map((item, index) => (
+                <PanelGroup accordion defaultActiveKey={0} bordered={true} header="Menu Groups" hidden={menuGroups === null}>
+                    <Button block onClick={() => handleNewMenuGroupState()}>+</Button>
+
+                    {menuGroups?.map((item, index) => (
                         <Panel header={item.name} defaultExpanded bodyFill eventKey={index} bordered className="m-3" style={{ borderColor: "#ffd1a8" }} key={index} index={index} >
                             <div>
                                 <div>
@@ -199,6 +218,7 @@ export default function CustomizeRestaurantPage() {
                                     <label>Name (EN):</label>
                                     <Input value={item.name} onChange={(e) => handleMenuGeoupsEdit(item.id, 'name', e)} style={{ width: 160 }} />
                                 </div>
+                                <div className={'ml-auto cursor-pointer'} onClick={() => handleRemoveMenuGroupState(item.id)}><BiTrash /></div>
                             </div>
                             <div className="my-2 border border-borderGray " >
                                 <Button block onClick={() => handleNewMenuItemState(item)}>+</Button>

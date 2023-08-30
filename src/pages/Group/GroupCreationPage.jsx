@@ -37,7 +37,7 @@ export default function GroupCreationPage({ afterSubmit }) {
 
 
     useEffect(() => {
-        if (selectedRestaurant == null)
+        if (!selectedRestaurant)
             return;
         setDelivery(selectedRestaurant?.restaurant?.deliveryCost ?? 0)
     }, [selectedRestaurant])
@@ -50,7 +50,7 @@ export default function GroupCreationPage({ afterSubmit }) {
                 name: selectedRestaurant.restaurant.name,
                 image: selectedRestaurant.restaurant.image,
                 logo: selectedRestaurant.restaurant.logo,
-                deliveryCost: delivery == null ? 0 : delivery,
+                deliveryCost: !delivery? 0 : delivery,
                 timer: timer,
                 menuSource: selectedRestaurant.menuSource
             }
@@ -79,21 +79,6 @@ export default function GroupCreationPage({ afterSubmit }) {
         }
     };
 
-    const selectRestaurent = (restaurant, menuSource) => {
-        let data = {
-            id: 0,
-            restaurantID: restaurant.id,
-            name: restaurant.name,
-            photo: restaurant.photo,
-            logo: restaurant.logo,
-            timer: timer,
-            delivery: restaurant.deliveryCost,
-            promotionMinimumOrder: parseInt(restaurant.promotion?.minimum_order),
-            promotionName: restaurant.promotion?.message,
-            menuSource: menuSource
-        }
-        setSelectedRestaurant(data)
-    }
 
     return (
         <div className='p-2'>
