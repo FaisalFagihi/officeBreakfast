@@ -39,7 +39,7 @@ export default function MenuItemModifiers({ modifierGroups, selectModifers }) {
                                     onChange={() => handleModifierChange(modifierGroup, item)}
                                     name={modifierGroup.id} />
                                 <label htmlFor={item.id}>{item.name}</label>
-                                <label htmlFor={item.id}> ({item.price} SAR)</label>
+                                <label htmlFor={item.id}> ({item.price} SR)</label>
                             </div>
                         );
                     })

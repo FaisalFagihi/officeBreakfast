@@ -33,7 +33,7 @@ const GuestBalence = ({ guestUsername, guestName, balence, records, onInsertReco
         <Grid fluid >
           <Row >
             <Col xs={24} sm={18} className='pt-2'>
-              {guestName + balenceLabel} (<p style={{ color: balence < 0 ? "red" : "green", display: "inline-block" }}> {balence.toFixed(2)}</p>) SAR
+              {guestName + balenceLabel} (<p style={{ color: balence < 0 ? "red" : "green", display: "inline-block" }}> {balence.toFixed(2)}</p>) SR
             </Col>
             <Col xs={24} sm={6} className='pt-2'>
               <InputGroup >

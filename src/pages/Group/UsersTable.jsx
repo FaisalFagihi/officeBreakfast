@@ -54,7 +54,7 @@ function UsersTable({ item, options, status }) {
         {/* <div className='hidden'>{item.username} </div> */}
         <div className={`flex items-center gap-2 place-self-center justify-start col-span-2 `}>
             <div className={`${item?.balance < 0 ? 'text-mainRed' : 'text-black'}`}>
-                {item?.balance ? item.balance?.toFixed(2) + ' SAR' : '--'}
+                {item?.balance ? item.balance?.toFixed(2) + ' SR' : '--'}
             </div>
             <div hidden={!item?.balance}>
                 <GiMoneyStack size={24} />

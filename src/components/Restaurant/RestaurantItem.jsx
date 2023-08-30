@@ -62,7 +62,7 @@ export function RestaurantItem({ name, logo, rating, rateCount, image, delivery,
 
                     </div>
                     <div className="text-xs font-semibold mt-auto gap-1" hidden={!delivery}>
-                        {delivery} SAR <TbTruckDelivery className='text-lg' />
+                        {delivery} SR <TbTruckDelivery className='text-lg' />
                     </div>
                 </div> */}
                 <CheckRoundIcon hidden={!isSelected} fill='#90ee90ee' style={{ fontSize: "3em", position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)" }} />

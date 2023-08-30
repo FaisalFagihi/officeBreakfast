@@ -75,8 +75,8 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
 
     return menuGroups && (
         <>
-        <div className='flex  gap-2 items-start overflow-auto w-full  lg:flex-wrap whitespace-nowrap pb-2 h-12 lg:h-auto'>
-
+        <div className='menugroupsContainer flex  gap-2 items-start overflow-auto w-full  lg:flex-wrap whitespace-nowrap pb-0 
+        scroll-smooth scroll-'>
             {menuGroups?.map((item, index) =>
                 <div key={item.id} className="MenuGroups w-auto">
                     <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem w-full" defaultChecked={index === 0} />
@@ -88,7 +88,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
             </div>
 
             <br />
-                <div className='cartHeight flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start '>
+                <div className='cartHeight flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start scroll-smooth'>
                     {menuItems?.map((item) =>
                         <MenuItem key={item.id} name={item.name}
                             price={item.price}

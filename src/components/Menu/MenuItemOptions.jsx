@@ -75,7 +75,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
     useEffect(() => {
     }, [selectdModifiers]);
 
-    const itemName =  (selectedType ? ' - ' + selectedType?.description : name) + (selectedSize ? ' - ' + selectedSize?.description : '') + (note ? ' (' + note + ')' : '');
+    const itemName =  name + (selectedType ? ' - ' + selectedType?.description : '') + (selectedSize ? ' - ' + selectedSize?.description : '') + (note ? ' (' + note + ')' : '');
     return (
         <div>
             <Modal.Header>
@@ -128,9 +128,9 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
                     <Modifiers options={selectedSize?.menuOptions} setSelectedModifers={setSelectdOptions} />
 
                     <Modifiers options={options} setSelectedModifers={setSelectdModifiers} />
-                    <div className='flex flex-col'>
-                        <label >Note</label>
-                        <textarea value={note} onChange={(e) => setNote(e.target.value)} className='bg-white border border-borderGray rounded p-2' placeholder="write your notes." />
+                    <div className='flex flex-col mt-4'>
+                        <label className='text-base font-bold'>Note</label>
+                        <textarea value={note} onChange={(e) => setNote(e.target.value)} className='resize-none border border-borderGray rounded caret-orange-400 bg-white p-2 mr-4' placeholder="write your notes." />
                     </div>
                 </div>
 
@@ -195,7 +195,7 @@ const Modifiers = ({ options, setSelectedModifers }) => {
                             onChange={() => handleModifierChange(modifierGroup, item)}
                             name={modifierGroup.id} />
                         <label htmlFor={item.id}>{item.name}</label>
-                        <label htmlFor={item.id}> ({item.price.toFixed(2)} SAR)</label>
+                        <label htmlFor={item.id}> ({item.price.toFixed(2)} SR)</label>
                     </div>
                 )
             })}

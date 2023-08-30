@@ -22,7 +22,7 @@ export default function MenuItemComponents({ components, selectComponents }) {
                         defaultChecked={false}
                         onChange={() => handleComponentsChange(item)} />
                     <label htmlFor={item.id}>{item.name}</label>
-                    <label htmlFor={item.id}> ({item.price} SAR)</label>
+                    <label htmlFor={item.id}> ({item.price} SR)</label>
                 </div>
             );
         })

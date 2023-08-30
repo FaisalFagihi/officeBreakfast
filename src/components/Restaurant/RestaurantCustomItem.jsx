@@ -28,7 +28,7 @@ export function VendorCustom({ name, logo, image, delivery, kitchens, promotion,
                         </div>
                     </div>
                     <div className="flex text-xs font-semibold mt-auto gap-1" hidden={!delivery}>
-                        {delivery} SAR <TbTruckDelivery className='text-lg' />
+                        {delivery} SR <TbTruckDelivery className='text-lg' />
                     </div>
 
                 </div>

@@ -67,7 +67,7 @@ export const OrdersTable = ({ orders }) => {
               {order.submitDate}
             </div>
             <div>
-              {order.orderItemsTotal + order.deliveryCost} SAR
+              {order.orderItemsTotal + order.deliveryCost} SR
             </div>
           </div>
         })}

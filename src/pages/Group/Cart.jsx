@@ -22,16 +22,16 @@ export default function Cart({ cartItems, removeFromCart, height, isCheckout }) 
 
                                 </div> */}
                             </div>
-                            <b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
+                            <b> {itemQty}x {itemName} ({itemPrice} SR) </b>
 
                             {modifiersList?.map(({ name, price }, index) => {
                                 return <p key={index.toString()} index={index}>
-                                    {name} {price} SAR
+                                    {name} {price} SR
                                 </p>
                             })}
                         </div>
                         <div>
-                            <TrashIcon hidden={isCheckout} style={{ color: "red", fontSize: 12, cursor: "pointer" }} onClick={() => removeFromCart(uid)} />
+                            <TrashIcon hidden={isCheckout} className='text-red-400 hover:text-red-800 text-xs cursor-pointer mx-2' onClick={() => removeFromCart(uid)} />
                         </div>
                     </div>
                     <Divider className='m-1' />
@@ -53,11 +53,11 @@ export default function Cart({ cartItems, removeFromCart, height, isCheckout }) 
 
                                 </div> */}
                             </div>
-                            <b> {itemQty}x {itemName} ({itemPrice} SAR) </b>
+                            <b> {itemQty}x {itemName} ({itemPrice} SR) </b>
 
                             {modifiersList?.map(({ name, price }, index) => {
                                 return <p key={index.toString()} index={index}>
-                                    {name} {price} SAR
+                                    {name} {price} SR
                                 </p>
                             })}
                         </div>

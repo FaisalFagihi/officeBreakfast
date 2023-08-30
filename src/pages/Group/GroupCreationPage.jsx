@@ -39,7 +39,7 @@ export default function GroupCreationPage({ afterSubmit }) {
     useEffect(() => {
         if (selectedRestaurant == null)
             return;
-        setDelivery(selectedRestaurant?.restaurant?.deliveryCost)
+        setDelivery(selectedRestaurant?.restaurant?.deliveryCost ?? 0)
     }, [selectedRestaurant])
 
 
@@ -109,7 +109,7 @@ export default function GroupCreationPage({ afterSubmit }) {
                     </div>
                     <div className='w-full'>
                         <div>Delivery</div>
-                        <InputNumber value={delivery} postfix="SR" onChange={(value) => setDelivery(value)} />
+                        <InputNumber value={delivery} min={0} postfix="SR" onChange={(value) => setDelivery(value)} />
                     </div>
                 </div>
             </Modal.Header>
