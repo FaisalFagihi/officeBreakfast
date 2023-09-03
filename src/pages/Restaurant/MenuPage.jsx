@@ -81,7 +81,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
                 <div key={item.id} className="MenuGroups w-auto">
                     <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem w-full" defaultChecked={index === 0} />
                     <label htmlFor={item.id} className="MenugroupItem py-1 px-2" onClick={() => setMenuItems(item?.menuItems)}>
-                        {item.name}
+                        {item.nameAr}
                     </label>
                 </div>
             )}
@@ -90,7 +90,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
             <br />
                 <div className='cartHeight flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start scroll-smooth'>
                     {menuItems?.map((item) =>
-                        <MenuItem key={item.id} name={item.name}
+                        <MenuItem key={item.id} name={item.nameAr}
                             price={item.price}
                             calories={item.calories}
                             photo={item.image}

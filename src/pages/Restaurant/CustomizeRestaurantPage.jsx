@@ -208,7 +208,8 @@ export default function CustomizeRestaurantPage() {
                     <Button block onClick={() => handleNewMenuGroupState()}>+</Button>
 
                     {menuGroups?.map((item, index) => (
-                        <Panel header={item.name} defaultExpanded bodyFill eventKey={index} bordered className="m-3" style={{ borderColor: "#ffd1a8" }} key={index} index={index} >
+                        <>
+                        <Panel header={item?.name == '' ? 'none': item?.name} defaultExpanded bodyFill eventKey={index} bordered className="m-3" style={{ borderColor: "#ffd1a8" }} key={index} index={index} >
                             <div>
                                 <div>
                                     <label>Name (AR):</label>
@@ -292,6 +293,7 @@ export default function CustomizeRestaurantPage() {
                                 </Table> */}
                             </div>
                         </Panel>
+                        </>
                     ))}
 
                 </PanelGroup>
