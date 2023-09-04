@@ -412,13 +412,11 @@ label.MenugroupItem {
   display: inline-block;
   background-color: #aaa;
   color: #fff;
-  cursor: pointer;
   border-radius: 30px;
   border: 1px solid #ccc;
   border-radius: 30px;
   color: #fff;
   font-weight: bold;
-  cursor: pointer;
   box-shadow: inset 2px -3px 4px #ccc;
 
 }
@@ -433,7 +431,6 @@ input.MenugroupItem:checked+label.MenugroupItem {
   border-radius: 30px;
   color: #fff;
   font-weight: bold;
-  cursor: pointer;
   box-shadow: inset 2px -3px 4px #ffd769;
 }
 

@@ -12,9 +12,9 @@ export default function JoinToGroup({ onJoin }) {
     const [searchData, setSearchData] = useState([]);
     const [joinLoader, setJoinLoader] = useState(false);
 
-    const joinToGroup = () => {
+    const joinToGroup = (username) => {
         setJoinLoader(true)
-        UserController.sendJoinRequest(hostUsername?.split(':')[1]).then(({ data }) => {
+        UserController.sendJoinRequest(username?.split(':')[1]).then(({ data }) => {
             setMessage(data)
             toaster.push("You have been joined to the group successfully", "success")
             setHostUsername("")
@@ -56,6 +56,10 @@ export default function JoinToGroup({ onJoin }) {
     }, [hostUsername]);
 
 
+const handleOnSelect = (item)=>{
+    setHostUsername(item)
+    joinToGroup(item)
+}
 
     const toaster = Toaster();
 
@@ -79,12 +83,12 @@ export default function JoinToGroup({ onJoin }) {
         <br /> */}
         <div className='flex w-full justify-center'>
             <div className='flex flex-row gap-2 w-96'>
-                <AutoComplate className={''} placeholder={'join to a volunteer by name or email..'} list={searchUsername} value={hostUsername} onChange={setHostUsername} renderItem={usrename => {
+                <AutoComplate className={''} placeholder={'join to a volunteer by name or email..'} list={searchUsername} value={hostUsername} onChange={setHostUsername} onSelect={handleOnSelect} renderItem={usrename => {
                     let user = searchData.find(x => x.username === usrename.split(':')[1]);
                     return userCard(user.name, user.username, user.picture)
                 }} />
 
-                <button className='normal px-4 rounded-md' disabled={hostUsername.trim() === ''} onClick={() => joinToGroup()}>
+                <button className='normal px-4 rounded-md' disabled={hostUsername.trim() === ''} onClick={() => joinToGroup(hostUsername)}>
                    {joinLoader? <Loader size='xs' />:'Join' } 
                 </button>
             </div>

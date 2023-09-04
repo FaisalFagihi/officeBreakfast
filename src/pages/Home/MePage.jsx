@@ -20,23 +20,17 @@ export default function MePage() {
     const [myGroups, setmyGroups] = useState([]);
     const [myGroupLoader, setMyGroupLoader] = useState(true);
     const [removeLoad, setRemoveLoad] = useState(false);
-    const [hostUsername, setHostUsername] = useState('');
     const [message, setMessage] = useState("");
-    const [userOwners, setUserOwners] = useState([]);
     const [isNewRestaurant, setNewRestaurantState] = useState(false);
 
     const [guests, setGuests] = useState([]);
     const [guestsReload, setGuestsReload] = useState(false);
 
 
-    const [myInvitations, setMyInvitations] = useState([]);
-    const [invatationReload, setInvatationReload] = useState(false);
     const [searchUsername, setSearchUsername] = useState([]);
     const [searchData, setSearchData] = useState([]);
     const [searchWord, setSearchWord] = useState("");
 
-    const [joinRequests, setJoinRequests] = useState([]);
-    const [requestReload, setRequestReload] = useState(false);
     const [inviteLoader, setInviteLoader] = useState(false);
 
     const toaster = Toaster();
@@ -51,6 +45,7 @@ export default function MePage() {
             setMyGroupLoader(false)
         });
     }
+
     useEffect(() => {
 
         if (!removeLoad) {
@@ -75,7 +70,6 @@ export default function MePage() {
             <Dropdown.Item onClick={() => removeGroup(groupID)}>remove</Dropdown.Item>
         </Dropdown>
     );
-
 
     const userCard = (username, name, picture) => {
         return (
@@ -118,7 +112,6 @@ export default function MePage() {
     const [userMode, setUserMode] = useState(null);
 
     useEffect(() => {
-
         userController.getUserMode().then(({ data }) => {
             setUserMode(data)
         })
@@ -128,6 +121,11 @@ export default function MePage() {
         userController.updateUserMode(value).then(() => {
             setUserMode(value)
         })
+    }
+
+    const handleOnSelect = (item)=>{
+        setSearchWord(item)
+        submitGuest(item?.split(':')[1])
     }
 
     return (
@@ -177,30 +175,10 @@ export default function MePage() {
                             <GuestsTable items={guests} onAction={() => setGuestsReload(!guestsReload)} />
                         </Fatch>
                     </Panel>
-                    {/* <div className="mx-2">
-
-                        <InputGroup size="md">
-                            <AutoComplete
-                                className='!border-none !bg-none !shadow-none'
-                                placeholder="add a guest by name or email.."
-                                value={searchWord} onChange={(e) => setSearchWord(e)}
-                                data={searchUsername}
-                                size="md"
-
-                                renderMenuItem={usrename => {
-                                    let user = searchData.find(x => x.username === usrename.split(':')[1]);
-                                    return userCard(user.name, user.username, user.picture)
-                                }}
-                            />
-                            <InputGroup.Button disabled={searchWord.trim() === ''} onClick={() => submitGuest(searchWord?.split(':')[1])}>
-                                Add
-                            </InputGroup.Button>
-                        </InputGroup>
-                    </div> */}
 
                     <div className='flex w-full justify-center'>
                         <div className='flex flex-row gap-2 w-96'>
-                            <AutoComplate className={''} placeholder={'invite a guest by name or email..'} list={searchUsername} value={searchWord} onChange={setSearchWord} renderItem={usrename => {
+                            <AutoComplate className={''} placeholder={'invite a guest by name or email..'} list={searchUsername} value={searchWord} onSelect={handleOnSelect} onChange={setSearchWord} renderItem={usrename => {
                                 let user = searchData.find(x => x.username === usrename.split(':')[1]);
                                 return userCard(user.name, user.username, user.picture)
                             }} />

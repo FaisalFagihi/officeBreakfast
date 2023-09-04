@@ -25,6 +25,7 @@ import { Popover, Whisper } from 'rsuite';
 import { GroupStatus } from './GroupCard';
 import { FcCheckmark } from 'react-icons/fc'
 import { AiOutlineWarning } from 'react-icons/ai';
+import { BiSolidCopyAlt } from 'react-icons/bi';
 import { VscError } from 'react-icons/vsc';
 import Fatch from '../../Helpers/Fatcher';
 
@@ -40,7 +41,7 @@ const GroupTimer = ({ endDate }) => {
         return numberStr.padStart(2, "0");
     }
 
-    const time = <div className={`${((hours + minutes + seconds) > 0) ? 'text-black' : 'text-mainRed'}`}> {zeroPad(hours.toString())} : {zeroPad(minutes.toString())} : {zeroPad(seconds.toString())} </div>
+    const time = <div className={`${((hours + minutes + seconds) > 0) ? 'text-black' : 'text-mainRed'}`}> {zeroPad(hours.toString())}:{zeroPad(minutes.toString())}:{zeroPad(seconds.toString())} </div>
 
     const getTime = () => {
         let time = Date.parse(endDate + " GMT") - Date.parse(new Date().toUTCString())
@@ -181,98 +182,96 @@ const GroupHeader = ({ delivery, children }) => {
     </div>)
 }
 
-const GroupOrderingStatus = ({ isOwner, orderItems }) => {
-    return (isOwner ?
-        <div>
-            <Panel header="Orders Review">
-                {orderItems?.length > 0 ?
-                    <>
-                        <List>
-                            {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
-                                <List.Item key={uid} index={index}>
-                                    <FlexboxGrid align="middle" style={{ textAlign: "left" }}>
-                                        <FlexboxGridItem>
-                                            <b> {itemQty}x {itemName}
-                                                {/* ({itemPrice} SR) */}
-                                            </b>
+const GroupOrderingStatus = ({ orderItems }) => {
+    return (
+        <div className='flex flex-col gap-2 justify-center items-center '>
+            <div className='text-xl'>
+                Orders Review
+            </div>
+            {orderItems?.length > 0 ?
+                <>
+                    <div className='grid gap-1 border p-3' dir='rtl'>
+                        <div className='mr-auto cursor-pointer hover:text-darkGray' onClick={() => navigator.clipboard.writeText(orderItems?.map(item => item.itemQty + ' ' + item.itemName + '\n').join(''))}>
+                            <BiSolidCopyAlt size={24} />
+                        </div>
+                        {orderItems?.map(({ uid, itemName, itemPrice, itemQty, modifiersList }, index) => (
+                            <div key={uid} index={index}>
+                                <b> {itemQty} {itemName}
+                                    {/* ({itemPrice} SR) */}
+                                </b>
 
-                                            {modifiersList?.map(({ name, price }, index) => {
-                                                return <p key={index.toString()} index={index}>
-                                                    {name} {price} SR
-                                                </p>
-                                            })}
-                                        </FlexboxGridItem>
-                                    </FlexboxGrid>
-                                </List.Item>
-                            ))}
-                        </List>
-                        <br />
-                        {/* <div>
+                                {modifiersList?.map(({ name, price }, index) => {
+                                    return <p key={index.toString()} index={index}>
+                                        {name} {price} SR
+                                    </p>
+                                })}
+                            </div>
+                        ))}
+                    </div>
+                    <br />
+                    {/* <div>
         <div>Items total: {itemsTotal?.toFixed(1)} SR</div>
         
         <div>Delivery cost: {delivery?.toFixed(1)} SR</div>
         {(itemsTotal > 0) ? <b>Total: {(itemsTotal + delivery)?.toFixed(1)} SR</b> : <>Total: 0</>}
     </div> */}
-                    </>
+                </>
 
-                    : <>There are no orders</>
-                }
-            </Panel>
-        </div> : <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' className='rounded w-full' alt='Ordering gif' draggable="false" />
-
+                : <>There are no orders</>
+            }
+        </div>
     )
 }
 
-const GroupOrderedStatus = ({ isOwner, confirmedOrders, handleOrderChange }) => {
+const GroupOrderedStatus = ({ confirmedOrders, handleOrderChange }) => {
     return (
-        isOwner ?
-            <Panel header="Receipt Check">
-                <p>Compare the actual receipt with the following one, they should be matched.</p>
-                <p>If not guests shall be refunded/charged manually.</p>
-                <br />
-                <table className='w-full text-left'>
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>
-                                Modifiers
-                            </th>
-                            <th>QTY</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {confirmedOrders?.map(({ uid, name, itemName, itemPrice, itemQty, modifiersList, username }) => {
-                            return <tr key={uid} className='border-t'>
-                                <td>{name}</td>
-                                <td> <input className='bg-white border w-full' onChange={(e) => handleOrderChange(username, uid, itemPrice, e.currentTarget.value, itemQty)} type='text' value={itemName} /> </td>
-                                <td className=''>
-                                    <input className='bg-white text-center w-16 border' onChange={(e) => handleOrderChange(username, uid, e.currentTarget.value, itemName, itemQty)} type='number' value={itemPrice} /></td>
-                                <td className='p-0'>
-                                    <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
-                                        <tbody>
-                                            {modifiersList?.length > 0 ?
-                                                modifiersList.map((item) => {
-                                                    return <tr key={item.id}>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.price.toFixed(2)}</td>
-                                                    </tr>
-                                                })
+        <Panel header="Receipt Check">
+            <p>Compare the actual receipt with the following one, they should be matched.</p>
+            <p>If not guests shall be refunded/charged manually.</p>
+            <br />
+            <table className='w-full text-right' dir='rtl'>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>
+                            Modifiers
+                        </th>
+                        <th>QTY</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {confirmedOrders?.map(({ uid, name, itemName, itemPrice, itemQty, modifiersList, username }) => {
+                        return <tr key={uid} className='border-t'>
+                            <td>{name}</td>
+                            <td> <input className='bg-white border w-full' onChange={(e) => handleOrderChange(username, uid, itemPrice, e.currentTarget.value, itemQty)} type='text' value={itemName} /> </td>
+                            <td className=''>
+                                <input className='bg-white text-center w-16 border' onChange={(e) => handleOrderChange(username, uid, e.currentTarget.value, itemName, itemQty)} type='number' value={itemPrice} /></td>
+                            <td className='p-0'>
+                                <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
+                                    <tbody>
+                                        {modifiersList?.length > 0 ?
+                                            modifiersList.map((item) => {
+                                                return <tr key={item.id}>
+                                                    <td>{item.name}</td>
+                                                    <td>{item.price.toFixed(2)}</td>
+                                                </tr>
+                                            })
 
-                                                : <tr><td>N/A</td></tr>}
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderChange(username, uid, itemPrice, itemName, e.currentTarget.value)} min={0} type='number' value={itemQty} /></td>
-                                <td>{((itemPrice * itemQty)
-                                    + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
-                            </tr>
-                        })}
-                    </tbody>
-                </table>
-            </Panel> : <></>
+                                            : <tr><td>N/A</td></tr>}
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderChange(username, uid, itemPrice, itemName, e.currentTarget.value)} min={0} type='number' value={itemQty} /></td>
+                            <td>{((itemPrice * itemQty)
+                                + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
+                        </tr>
+                    })}
+                </tbody>
+            </table>
+        </Panel>
     )
 }
 
@@ -490,7 +489,15 @@ export default function GroupPage({ id }) {
                                 <Panel className="bg-white shadow-sm w-full" bordered={borderd} header={
                                     <div className='flex flex-col justify-between gap-2 pt-4 lg:pt-0'>
                                         <div className='flex flex-row justify-between'>
-                                            <div className='text-base font-semibold'>{group?.name} </div>
+                                            <div className='flex items-center gap-2'>
+                                                <div>
+                                                    <img src={group?.logo} className='h-7 rounded-full' />
+                                                </div>
+                                                <div className='text-base font-semibold'>
+
+                                                    {group?.name}
+                                                </div>
+                                            </div>
                                             <GroupTimer endDate={endDate} />
                                         </div>
                                         <GroupHeader delivery={userDelivery}>
@@ -500,17 +507,17 @@ export default function GroupPage({ id }) {
                                     </div>
                                 }>
 
-                                    <div hidden={selectedGroupStatus !== 0} >
-                                        <div hidden={isUserConfirmed} className='h-full'>
-                                            <MenuPage restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
+                                    <div hidden={selectedGroupStatus !== 0 && isOwner}>
+                                        <div hidden={isUserConfirmed} className={`h-full  ${selectedGroupStatus !== 0 ? 'grayscale' : ''}`} >
+                                            <MenuPage disabled={selectedGroupStatus !== 0} restaurantID={group?.restaurantID} menuSource={group?.menuSource} addToCart={cartController.addToCart} height={570} />
                                         </div>
                                         <div hidden={!isUserConfirmed}>
                                             <div className='flex flex-col gap-5 mt-0 items-center align-middle px-5'>
                                                 <div className='flex flex-row gap-1 items-center text-xl'>
-                                                    <FcCheckmark size={30} className='mb-2' />
+                                                    <FcCheckmark size={30} className='mb-2 ' />
                                                     Confirmed your order successfully
                                                 </div>
-{/* 
+                                                {/* 
                                                 <div className=''>
                                                     <div>
                                                         Group delivery: {deliveryCost} SR
@@ -520,59 +527,89 @@ export default function GroupPage({ id }) {
                                                     </div>
                                                 </div> */}
 
-                                                {/* <Panel className='w-full' header={`People Cart (${peopleOrders?.length})`}>
-                                                        {(peopleOrders && peopleOrders?.length !== 0) ? <Cart cartItems={peopleOrders} isCheckout={selectedGroupStatus !== 0 || isUserConfirm} removeFromCart={cartController.removeFromCart} />
+                                                {/* <Panel className='w-full' header={`Cart (${confirmedOrders?.length})`}>
+                                                    {(confirmedOrders && confirmedOrders?.length !== 0) ? <Cart cartItems={confirmedOrders} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} removeFromCart={cartController.removeFromCart} />
                                                         : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>
-                                                    }                                            </Panel> */}
-                                                <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />
+                                                    }
 
-                                            </div>
+                                                    <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
+                                                </Panel> */}
+
+                                                {/* <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" /> */}
+
+                                                <Panel bodyFill className='w-full' hidden={!isUserConfirmed} >
+                                                    <GroupCart cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} />
+                                                    <div className='flex flex-col justify-between p-3 pt-0'>
+                                                        <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
+                                                            <div className='pb-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SR </b></div>
+                                                            <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
+                                                        </div>
+                                                    </div>
+                                                </Panel>                                            </div>
 
 
 
                                         </div>
                                     </div>
-                                    <div hidden={selectedGroupStatus !== 1}>
-                                        <GroupOrderingStatus isOwner={isOwner} orderItems={orderItems} />
-                                    </div>
-                                    <div hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
+                                    <div hidden={!isOwner}>
 
-                                        <GroupOrderedStatus isOwner={isOwner} confirmedOrders={confirmedOrders} handleOrderChange={handleOrderChange} />
-                                        <img hidden={selectedGroupStatus !== 2 || isOwner} src='https://c.tenor.com/RjNXHT-Ejy0AAAAd/flyby-sailby.gif' className='rounded-lg  w-full' alt='Ordering gif' draggable="false" />
+                                        <div hidden={selectedGroupStatus !== 1}>
+                                            <GroupOrderingStatus orderItems={orderItems} />
+                                        </div>
+                                        <div hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
 
-                                    </div>
+                                            <GroupOrderedStatus confirmedOrders={confirmedOrders} handleOrderChange={handleOrderChange} />
+                                            <div className='flex justify-between items-center px-5'>
+                                                <div className='text-base font-bold'>
+                                                    Paid: {itemsTotal + deliveryCost} SR
+                                                </div>
+                                                <div >
 
-                                    <div hidden={selectedGroupStatus !== 3}>
-                                        {isOwner ?
+                                                    <div>
+                                                        Group Total: {itemsTotal} SR
+                                                    </div>
+                                                    <div>
+                                                        Group delivery: {deliveryCost} SR
+                                                    </div>
+                                                    <div>
+                                                        Number of people: {cartUsers.length}
+                                                    </div>
+                                                    <div>
+                                                        Delivery per person: {userDelivery} SR
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div hidden={selectedGroupStatus !== 3}>
                                             <div>
-
                                                 <p>By checking out all the guests will be charged and cart will be cleared.</p>
                                                 <br />
                                                 <Button className='secondary' block disabled={selectedGroupStatus !== 2 && selectedGroupStatus !== 3} onClick={() => checkOut()}>Checkout</Button>
                                             </div>
-                                            : <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
 
-                                    </div>
-                                    <div hidden={selectedGroupStatus !== 4}>
-                                        {isOwner ?
-                                            <div>
-                                                <h5>Group is closed</h5>
-                                                <Button className="secondary" block onClick={() => changeOrderStatus(5)} >Open</Button>
-                                            </div>
-                                            : <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' className='rounded-lg  w-full' alt='Ordering gif' draggable="false" />
-                                        }
+                                        </div>
+                                        <div hidden={selectedGroupStatus !== 4}>
+                                            {isOwner ?
+                                                <div>
+                                                    <h5>Group is closed</h5>
+                                                    <Button className="secondary" block onClick={() => changeOrderStatus(5)} >Open</Button>
+                                                </div>
+                                                : <img src='https://media.tenor.com/Kjs1TtCLkVoAAAAC/open-closed.gif' className='rounded-lg  w-full' alt='Ordering gif' draggable="false" />
+                                            }
 
+                                        </div>
                                     </div>
                                 </Panel>
                                 {/* <Col className='mb-3' xs={24} lg={!isOwner ? 18 : 14}>
                                 </Col> */}
 
 
-                                <Panel bodyFill className='bg-white shadow-sm fixed  z-10  left-0 bottom-0 w-full lg:w-[500px]  lg:static' >
+                                <Panel bodyFill className='bg-white shadow-sm fixed  z-10  left-0 bottom-0 w-full lg:w-[500px]  lg:static' hidden={isUserConfirmed} >
                                     <GroupCart cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={userOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} />
                                     <div className='flex flex-col justify-between p-3 pt-0'>
                                         <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
-                                            <div className='pb-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SR </b></div>
+                                            <div className='pb-2'>Total: <b>{(userOrderTotal)?.toFixed(1)} SR </b></div>
                                             <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                         </div>
                                     </div>
