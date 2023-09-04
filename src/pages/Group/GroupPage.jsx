@@ -200,9 +200,9 @@ const GroupOrderingStatus = ({ orderItems }) => {
                                     {/* ({itemPrice} SR) */}
                                 </b>
 
-                                {modifiersList?.map(({ name, price }, index) => {
+                                {modifiersList?.map(({ nameAr, price }, index) => {
                                     return <p key={index.toString()} index={index}>
-                                        {name} {price} SR
+                                        {nameAr}
                                     </p>
                                 })}
                             </div>
@@ -453,12 +453,7 @@ export default function GroupPage({ id }) {
 
 
 
-    const warning = <div className='flex justify-center '>
-        <div className='flex  items-center gap-1 mb-1 bg-white rounded-full px-2'>
-            <AiOutlineWarning size={18} />
-            <div className='text-gray-400 font-light text-center text-base'>Delivery cost and items prices might be changed based on the actual receipt</div>
-        </div>
-    </div>
+
 
 
     return (

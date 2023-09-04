@@ -24,9 +24,9 @@ export default function Cart({ cartItems, removeFromCart, height, isCheckout }) 
                             </div>
                             <b> {itemQty}x {itemName} ({itemPrice} SR) </b>
 
-                            {modifiersList?.map(({ name, price }, index) => {
+                            {modifiersList?.map(({ nameAr, price }, index) => {
                                 return <p key={index.toString()} index={index}>
-                                    {name} {price} SR
+                                    {nameAr} ({price} SR)
                                 </p>
                             })}
                         </div>
@@ -55,9 +55,9 @@ export default function Cart({ cartItems, removeFromCart, height, isCheckout }) 
                             </div>
                             <b> {itemQty}x {itemName} ({itemPrice} SR) </b>
 
-                            {modifiersList?.map(({ name, price }, index) => {
+                            {modifiersList?.map(({ nameAr, price }, index) => {
                                 return <p key={index.toString()} index={index}>
-                                    {name} {price} SR
+                                    {nameAr} ({price} SR)
                                 </p>
                             })}
                         </div>

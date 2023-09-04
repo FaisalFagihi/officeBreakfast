@@ -52,7 +52,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
     }, [menuData]);
 
     const getMenuItemOption = async (item) => {
-        return restaurantController.getMeniItemOptionsByID(`${item.id}&${restaurantID}`).then(({ data }) => {
+        return restaurantController.getMeniItemOptionsByID(`${item.id}`).then(({ data }) => {
             setMenuItemOptions(data)
         }).catch(({ response }) => {
             toaster.push(response?.data, "error")
@@ -75,31 +75,31 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
 
     return menuGroups && (
         <>
-        <div className='menugroupsContainer flex  gap-2 items-start overflow-auto w-full  lg:flex-wrap whitespace-nowrap pb-0 
+            <div className='menugroupsContainer flex  gap-2 items-start overflow-auto w-full  lg:flex-wrap whitespace-nowrap pb-0 
         scroll-smooth '>
-            {menuGroups?.map((item, index) =>
-                <div key={item.id} className="MenuGroups w-auto">
-                    <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem w-full" defaultChecked={index === 0} />
-                    <label htmlFor={item.id} className={`MenugroupItem py-1 px-2 ${disabled? 'cursor-not-allowed':'cursor-pointer'}`} onClick={(e) => !disabled ? setMenuItems(item?.menuItems):e.preventDefault() }>
-                        {item.nameAr}
-                    </label>
-                </div>
-            )}
+                {menuGroups?.map((item, index) =>
+                    <div key={item.id} className="MenuGroups w-auto">
+                        <input id={item.id} name='{item.id}' type="radio" className="MenugroupItem w-full" defaultChecked={index === 0} />
+                        <label htmlFor={item.id} className={`MenugroupItem py-1 px-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`} onClick={(e) => !disabled ? setMenuItems(item?.menuItems) : e.preventDefault()}>
+                            {item.nameAr}
+                        </label>
+                    </div>
+                )}
             </div>
 
             <br />
-                <div className={`cartHeight flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start scroll-smooth ${disabled? 'cursor-not-allowed':'cursor-default'}`}>
-                    {menuItems?.map((item) =>
-                        <MenuItem key={item.id} name={item.nameAr}
-                            price={item.price}
-                            calories={item.calories}
-                            photo={item.image}
-                            onClick={!disabled? () => openMenuItem(item):()=>{}} />
-                    )}
-                </div>
+            <div className={`cartHeight flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start scroll-smooth ${disabled ? 'cursor-not-allowed' : 'cursor-default'}`}>
+                {menuItems?.map((item) =>
+                    <MenuItem key={item.id} name={item.nameAr}
+                        price={item.price}
+                        calories={item.calories}
+                        photo={item.image}
+                        onClick={!disabled ? () => openMenuItem(item) : () => { }} />
+                )}
+            </div>
 
-            <Modal  open={modalValue.isOpen && !isPreview} onClose={() => setModalValue({ isOpen: false })}>
-                <Fatch request={restaurantController.getMeniItemOptionsByID} params={{id: `${selectedMenuItemID}&${restaurantID}`, menuSource:menuSource}} setData={setMenuItemOptions} >
+            <Modal open={modalValue.isOpen && !isPreview} onClose={() => setModalValue({ isOpen: false })}>
+                <Fatch request={restaurantController.getMeniItemOptionsByID} params={{ id: `${selectedMenuItemID}&${restaurantID}`, menuSource: menuSource }} setData={setMenuItemOptions} >
                     <MenuItemOptions
                         key={menuItemOptions?.id}
                         id={menuItemOptions?.id}
@@ -111,6 +111,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
                         options={menuItemOptions?.modifierGroups}
                         types={menuItemOptions?.types}
                         addToCart={addToCart}
+                        modifierOnline={menu_source != 1}
                         onAddToCart={() => setModalValue({ isOpen: false })} />
                 </Fatch>
             </Modal>

@@ -102,18 +102,27 @@ export const OrderItem = ({ selectedOrder }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <div className={'flex flex-col gap-2 px-2'}>
-
-          <div className="font-bold">
+          <div className="text-center text-base font-bold underline mb-2">
             Your Items
           </div>
+        <div className={'flex flex-col gap-2 px-2'} dir='rtl'>
+
           {selectedOrder?.orderItemsList?.map((orderItem) => {
-            return <div key={orderItem.id} className='border-b flex gap-2 justify-between' >
-              <div>
-                {orderItem?.itemQty}x {orderItem?.itemName}
+            return <div key={orderItem.id} className='border-b flex flex-col' >
+              <div className='flex gap-2 justify-between'>
+                <div>
+                  {orderItem?.itemQty}x {orderItem?.itemName}
+                </div>
+                <div>
+                  {orderItem?.itemPrice?.toFixed(2)}
+                </div>
               </div>
-              <div>
-                {orderItem?.itemPrice?.toFixed(2)}
+              <div className='flex flex-col text-xs p-2'>
+                {orderItem.modifiersList?.map(({ nameAr, price }, index) => {
+                  return <p key={index.toString()} index={index}>
+                    {nameAr} ({price} SR)
+                  </p>
+                })}
               </div>
             </div>
           })}

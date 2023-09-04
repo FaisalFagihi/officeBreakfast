@@ -28,7 +28,7 @@ class RestaurantController {
     }
 
     getMenuItemModifiersByID = (id) => {
-        return axiosInstance.get("Restaurant/GetMenuItemModifiers", { params: { id } })
+        return axiosInstance.get("Restaurant/GetMenuItemModifiers", { params: { id: id } })
     }
     getItemComponentsByID = (id) => {
         return axiosInstance.get("Restaurant/GetItemComponents", { params: { id } })

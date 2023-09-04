@@ -4,9 +4,11 @@ import { Modal } from 'rsuite';
 import React from 'react';
 import uuid from 'react-uuid';
 import auth from '../../modules/auth';
+import restaurantController from '../../controller/restaurantController';
+import { setOptions } from 'leaflet';
 
 
-export default function MenuItemOptions({ id, name, photo, description, types, options, price, addToCart, onAddToCart }) {
+export default function MenuItemOptions({ id, name, photo, description, types, options, price, addToCart, onAddToCart, modifierOnline }) {
     const [selectedMenuItemOption, selectMenuItemOption] = useState(null)
     const [selectdModifiers, setSelectdModifiers] = useState([])
     const [selectedOptions, setSelectdOptions] = useState([])
@@ -17,6 +19,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
     const [selectedPackage, setSelectedPackage] = useState();
     const [basePrice, setBasePrice] = useState();
     const [note, setNote] = useState();
+    const [menuItemOptions, setMenuItemOptions] = useState();
     //#region Effects
     useEffect(() => {
         let packageTotal = selectedOptions?.reduce((a, v) => a = a + parseFloat(v.price), 0)
@@ -49,13 +52,20 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
         if (selectedSize) {
             setSelectedPackage(selectedSize.packages[0])
         }
-
+        setMenuItemOptions(selectedSize?.menuOptions)
     }, [selectedSize]);
 
     useEffect(() => {
 
         if (selectedType) {
             setBasePrice(selectedType.price)
+        }
+
+        if (modifierOnline) {
+            restaurantController.getMenuItemModifiersByID(selectedType?.id).then(({ data }) => {
+                console.log('selectedSize', data)
+                setMenuItemOptions(data?.modifierGroups)
+            })
         }
     }, [selectedType]);
 
@@ -75,7 +85,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
     useEffect(() => {
     }, [selectdModifiers]);
 
-    const itemName =  name + (selectedType ? ' - ' + selectedType?.description : '') + (selectedSize ? ' - ' + selectedSize?.description : '') + (note ? ' (' + note + ')' : '');
+    const itemName = name + (selectedType ? ' - ' + selectedType?.description : '') + (selectedSize ? ' - ' + selectedSize?.description : '') + (note ? ' (' + note + ')' : '');
     return (
         <div>
             <Modal.Header>
@@ -125,7 +135,7 @@ export default function MenuItemOptions({ id, name, photo, description, types, o
                         }
                     </div>
 
-                    <Modifiers options={selectedSize?.menuOptions} setSelectedModifers={setSelectdOptions} />
+                    <Modifiers options={menuItemOptions} setSelectedModifers={setSelectdOptions} />
 
                     <Modifiers options={options} setSelectedModifers={setSelectdModifiers} />
                     <div className='flex flex-col mt-4'>
@@ -184,7 +194,7 @@ const Modifiers = ({ options, setSelectedModifers }) => {
     return options?.map((modifierGroup) => {
         return <div key={modifierGroup.id} className="my-1 p-1">
             <div>
-                {modifierGroup.name}
+                {modifierGroup.nameAr}
             </div>
             {modifierGroup?.modifierItems?.map((item, index) => {
                 return (
@@ -194,7 +204,7 @@ const Modifiers = ({ options, setSelectedModifers }) => {
                             defaultChecked={index === 0 && modifierGroup.minQty > 0}
                             onChange={() => handleModifierChange(modifierGroup, item)}
                             name={modifierGroup.id} />
-                        <label htmlFor={item.id}>{item.name}</label>
+                        <label htmlFor={item.id}>{item.nameAr}</label>
                         <label htmlFor={item.id}> ({item.price.toFixed(2)} SR)</label>
                     </div>
                 )
