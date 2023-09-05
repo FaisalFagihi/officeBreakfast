@@ -76,7 +76,7 @@ const GroupTimer = ({ endDate }) => {
     return <div className='text-lg'>{time}</div>
 }
 
-const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children }) => {
+const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children, isCollapsible = true }) => {
 
     const header = <div>
         <div className='flex flex-col gap-0 pb-2' >
@@ -89,7 +89,7 @@ const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children
         </div>
     </div>
 
-    const body = (userOrders?.length !== 0) ? <div className='h-24 lg:h-44 overflow-auto'> <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} /></div>
+    const body = (userOrders?.length !== 0) ? <div className={`${isCollapsible?'h-24 lg:h-44':'h-60'} overflow-auto`}> <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} /></div>
         : <div style={{ textAlign: 'center', color: "#ccc" }}>Empty</div>
 
     const content = <div> <div className='!px-4 '>
@@ -98,16 +98,19 @@ const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children
         {children}
     </div>
     return (
-        <>
-            <div className='mobileCartContainer'>
-                <Panel bodyFill header={header} className='block lg:hidden !p-0 border-t' collapsible>
+        isCollapsible ?
+            <>
+                <div className='mobileCartContainer'>
+                    <Panel bodyFill header={header} className='block lg:hidden !p-0 border-t' collapsible>
+                        {content}
+                    </Panel>
+                </div>
+                <Panel bodyFill header={header} className='hidden lg:block' >
                     {content}
                 </Panel>
-            </div>
-            <Panel bodyFill header={header} className='hidden lg:block' >
+            </> : <Panel bodyFill header={header} >
                 {content}
             </Panel>
-        </>
 
     )
 
@@ -533,7 +536,7 @@ export default function GroupPage({ id }) {
                                                 {/* <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" /> */}
 
                                                 <Panel bodyFill className='w-full' hidden={!isUserConfirmed} >
-                                                    <GroupCart cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} />
+                                                    <GroupCart isCollapsible={false} cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} />
                                                     <div className='flex flex-col justify-between p-3 pt-0'>
                                                         <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
                                                             <div className='pb-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SR </b></div>
