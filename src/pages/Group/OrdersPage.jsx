@@ -147,7 +147,7 @@ export const OrderItem = ({ selectedOrder }) => {
               Total
             </div>
             <div className='font-bold'>
-              SR {selectedOrder?.orderItemsTotal + selectedOrder?.deliveryCost}
+              SR {(selectedOrder?.orderItemsTotal + selectedOrder?.deliveryCost).toFixed(2)}
             </div>
           </div>
         </div>

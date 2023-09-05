@@ -112,6 +112,11 @@ export default function WalletPage() {
       </div>
 
       <div hidden={active !== 2}>
+        <div className='flex'>
+          <div className='p-5 py-7 border rounded-full'>
+            {guests?.map(x => x.balence).reduce((partialSum, a) => partialSum + a, 0).toFixed(2)}
+          </div>
+        </div>
         {guests?.map((guest, index) => {
           return <GuestBalence key={index} guestUsername={guest.ownerName} guestName={guest.name} balence={guest.balence} records={guest.records} onInsertRecord={getGuestRecords} />
         })}
