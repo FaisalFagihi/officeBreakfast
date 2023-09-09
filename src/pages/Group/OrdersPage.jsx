@@ -54,7 +54,7 @@ export const OrdersTable = ({ orders }) => {
       //     })}
       //   </tbody>
       // </table> 
-      <div className='flex gap-2'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2'>
         {orders.map((order) => {
           return <div key={order.id} onClick={() => setOrder(order)} className='shadow p-2 bg-white rounded-md cursor-pointer hover:bg-opacity-50 '>
             <div>

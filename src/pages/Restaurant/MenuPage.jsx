@@ -88,7 +88,7 @@ export default function MenuPage({ restaurantID, menu, menuSource = 0, isPreview
             </div>
 
             <br />
-            <div className={`cartHeight flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start scroll-smooth ${disabled ? 'cursor-not-allowed' : 'cursor-default'}`}>
+            <div className={`cartHeight mb-20 flex flex-col xl:grid xl:grid-cols-2 gap-2 p-2 xl:max-h-[600px] xl:!h-full overflow-auto items-start scroll-smooth ${disabled ? 'cursor-not-allowed' : 'cursor-default'}`}>
                 {menuItems?.map((item) =>
                     <MenuItem key={item.id} name={item.nameAr}
                         price={item.price}
