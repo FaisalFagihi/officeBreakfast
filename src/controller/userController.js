@@ -121,8 +121,18 @@ class UserController {
     }
 
     updateUserMode = (isVolunteer) => {
-        return axiosInstance.get("UpdateUserMode", { params: { isVolunteer: isVolunteer } });
+        return axiosInstance.post("UpdateUserMode", { isVolunteer: isVolunteer });
     }
+
+    updateVolunteerBalanceLimit = (amount) => {
+        return axiosInstance.post("UpdateBalanceLimit", { amount: amount });
+    }
+
+    
+    getVoluneerInfo = () => {
+        return axiosInstance.get("VolunteerInfo");
+    }
+
 
 
 }

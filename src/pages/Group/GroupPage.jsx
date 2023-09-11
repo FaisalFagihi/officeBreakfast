@@ -430,7 +430,7 @@ export default function GroupPage({ id }) {
     const [isModalOpen, setIsModalOpen] = useState();
 
     const cartUsers = Object.keys(groupBy(cartItems?.filter(x => x.isConfirmed), 'username'));
-    const itemsTotal = cartItems?.map(x => x.total).reduce((a, v) => a + v, 0);
+    const itemsTotal = confirmedOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
 
 
     useEffect(() => {
@@ -559,7 +559,7 @@ export default function GroupPage({ id }) {
                                             <GroupOrderedStatus confirmedOrders={confirmedOrders} handleOrderChange={handleOrderChange} />
                                             <div className='flex justify-between items-center px-5'>
                                                 <div className='text-base font-bold'>
-                                                    Paid: {itemsTotal + deliveryCost} SR
+                                                    Paid: {(itemsTotal + parseFloat(deliveryCost))} SR
                                                 </div>
                                                 <div >
 

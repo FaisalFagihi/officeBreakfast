@@ -10,6 +10,7 @@ import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 import auth from "../../modules/auth";
 import { Panel } from "../../style/Style";
 import userController from "../../controller/userController";
+import { FiRefreshCcw } from "react-icons/fi";
 
 
 
@@ -54,31 +55,38 @@ export default function AccountInfo() {
     // refresh();
   }, [])
 
-  const [userInfo, setUserInfo] = useState({});
-  const [addresses, setAddresses] = useState([]);
-  const [isConnected, setHungerStationConnectivity] = useState(false);
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  let navigate = useNavigate();
-  
   const [userMode, setUserMode] = useState(false);
-    
+  const [balanceLimit, setBalanceLimit] = useState(0);
   useEffect(() => {
-      
-      userController.getUserMode().then(({ data }) => {
-          setUserMode(data)
-      })
+
+    getVoluneerInfo()
   }, []);
 
   const updateUserMode = (value) => {
-      userController.updateUserMode(value).then(() => {
-          setUserMode(value)
-      })
+    userController.updateUserMode(value).finally(() =>{
+      getVoluneerInfo()
+    })
+  }
+
+const getVoluneerInfo = ()=>{
+  userController.getVoluneerInfo().then(({data})=>{
+    console.log('data',data)
+    setBalanceLimit(data?.volunteerBalanceLimit)
+    setUserMode(data?.isVolunteer)
+  })
+}
+
+  const updateBalanceLimit = (value)=>{
+    userController.updateVolunteerBalanceLimit(value).finally(()=>{
+      
+      getVoluneerInfo()
+
+    })
   }
   return (
     <div className={'grid grid-cols-2 gap-2 items-center'}>
       <label>Email</label>
-      <input value={auth.getUsername()} disabled className="rounded py-1 px-3 border-borderGray disabled:bg-gray" />
+      <input value={auth.getUsername()} disabled className="input rounded py-1 px-3 border-borderGray disabled:bg-gray" />
       {/* <Row>
           <Col xs={12}>
           <label> Statsus</label>
@@ -92,8 +100,8 @@ export default function AccountInfo() {
         <label>Name</label>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        <input placeholder="First Name" value={auth.getFirstName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-gray" />
-        <input placeholder="Last Name" value={auth.getLastName()} disabled className="rounded border-borderGray py-1 px-3 disabled:bg-gray" />
+        <input placeholder="First Name" value={auth.getFirstName()} disabled className="input rounded border-borderGray py-1 px-3 disabled:bg-gray" />
+        <input placeholder="Last Name" value={auth.getLastName()} disabled className="input rounded border-borderGray py-1 px-3 disabled:bg-gray" />
       </div>
       <div>
         <label>Photo</label>
@@ -101,10 +109,18 @@ export default function AccountInfo() {
       <div>
         <Avatar name={auth.getName()} src={auth.getPicture()} size={100} round={true} />
       </div>
-      <div className="text-lg">
+      <div className="">
         Volunteer Mode
       </div>
       <Toggle onClick={() => updateUserMode(!userMode)} checked={userMode} size="md" checkedChildren="ON" unCheckedChildren="OFF" />
+
+      <div className="">
+        Volunteer Balance Limit
+      </div>
+      <div className="flex gap-1">
+        <input type="number" value={balanceLimit} min={-100} max={0} onChange={(e)=>setBalanceLimit(e.target.value)} className="input disabled:bg-gray" />
+        <button className="normal px-4 rounded-md" onClick={()=> updateBalanceLimit(balanceLimit)} ><FiRefreshCcw size={16} /></button>
+      </div>
     </div>
   )
 }

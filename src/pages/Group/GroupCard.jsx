@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { MdMoneyOff } from "react-icons/md";
+import { CgUnblock } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { Stack, Panel, Divider } from "rsuite";
 
@@ -38,7 +40,7 @@ export default function GroupCard({ item, isOwner, setRemoveLoad }) {
     }, []);
 
 
-    return <Panel className="bg-white shadow" bodyFill xs={24}>
+    return <Panel className="bg-white shadow relative" bodyFill xs={24}>
         <div className="grid sm:grid-cols-5 panel" onClick={() => { navigate("/Group/" + item.id); }}>
             <img src={item.photo} className={`object-cover h-32 w-full sm:col-span-1 ${(item.status === 4) ? "grayscale" : "grayscale-0"}`} alt='' draggable="false" />
             <div className="flex flex-col justify-between p-3 sm:col-span-4">
@@ -58,12 +60,24 @@ export default function GroupCard({ item, isOwner, setRemoveLoad }) {
 
             </div>
         </div>
+        <div hidden={((item?.balance >= item?.balanceLimit) || isOwner)}>
+            <div className="absolute bg-white opacity-60 h-full w-full top-0 left-0 z-2">
+            </div>
+            <div className="absolute h-full w-full top-0 z-3 flex justify-center cursor-not-allowed">
+                <div className="pl-1 pr-4 rounded m-auto flex gap-2 items-center">
+                    <CgUnblock className="text-mainRed" size={40} />
+                    <div className="text-lg sm:text-2xl text-black">
+                        Excced balance limit by {item?.balance} SR
+                    </div>
+                </div>
+            </div>
+        </div>
     </Panel>
 }
 
 
 
-export const GroupStatus = ({ status, className}) => {
+export const GroupStatus = ({ status, className }) => {
     const groupStatus = ['Collecting ', 'Ordering', 'Ship has sailed', 'Orders arrived', 'Closed']
     let indicatorColorLight = 'bg-gray-300'
     let indicatorColor = 'bg-gray-500'
@@ -91,13 +105,13 @@ export const GroupStatus = ({ status, className}) => {
             break;
     }
     return (<div className={`flex flex-row gap-1 items-center`}>
-            {/* <span className={`flex w-3 h-3 ${indicatorColor}  rounded-full mx-1`} /> */}
-            <span className="relative flex h-2.5 w-2.5">
-                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${indicatorColorLight} opacity-75`}></span>
-                <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${indicatorColor}`}></span>
-            </span>
-            <div className={`${className}`}>{groupStatus[status]}</div>
-        </div>
+        {/* <span className={`flex w-3 h-3 ${indicatorColor}  rounded-full mx-1`} /> */}
+        <span className="relative flex h-2.5 w-2.5">
+            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${indicatorColorLight} opacity-75`}></span>
+            <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${indicatorColor}`}></span>
+        </span>
+        <div className={`${className}`}>{groupStatus[status]}</div>
+    </div>
     )
 }
 
