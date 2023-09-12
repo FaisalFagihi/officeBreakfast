@@ -76,7 +76,7 @@ const GroupTimer = ({ endDate }) => {
     return <div className='text-lg'>{time}</div>
 }
 
-const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children, isCollapsible = true }) => {
+const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children, numberOfPeople,isCollapsible = true }) => {
 
     const header = <div>
         <div className='flex flex-col gap-0 pb-2' >
@@ -85,11 +85,11 @@ const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children
                 <h6>Cart ({userOrders?.length})</h6>
                 <ConnectedUsers users={cartUsers} />
             </div>
-            <small>{cartUsers?.length} people share the cart.</small>
+            <small>{numberOfPeople} people share the cart.</small>
         </div>
     </div>
 
-    const body = (userOrders?.length !== 0) ? <div className={`${isCollapsible?'h-40 lg:h-44':'h-60'} overflow-auto`}> <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} /></div>
+    const body = (userOrders?.length !== 0) ? <div className={`${isCollapsible ? 'h-40 lg:h-44' : 'h-60'} overflow-auto`}> <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} /></div>
         : <div className='text-[#ccc] text-center h-40'>Empty</div>
 
     const content = <div> <div className='!px-4 '>
@@ -119,7 +119,7 @@ const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children
 const GroupActions = ({ onConfirmOrderClick, onCancelOrderClick, isConfirmed, isValid }) => {
     return (
         <div className='grid grid-cols-4 gap-2 w-full lg:p-0'>
-            <button disabled={isConfirmed || !isValid} onClick={() => onConfirmOrderClick()} className={`${(isConfirmed && isValid) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainDarkGray text-white  disabled:bg-borderGray`}>{isConfirmed ? 'Confirmed' : isValid ? 'Confirm' : 'Unconfirmed'} </button>
+            <button disabled={isConfirmed || !isValid} onClick={() => onConfirmOrderClick()} className={`${(isConfirmed && isValid) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-green-400 text-white  disabled:bg-borderGray`}>{isConfirmed ? 'Confirmed' : isValid ? 'Confirm' : 'Unconfirmed'} </button>
             <button hidden={!isConfirmed || !isValid} onClick={() => onCancelOrderClick()} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
         </div>)
 }
@@ -242,16 +242,19 @@ const GroupOrderedStatus = ({ confirmedOrders, handleOrderChange }) => {
                             Modifiers
                         </th>
                         <th>QTY</th>
+                        <th>People</th>
                         <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {confirmedOrders?.map(({ uid, name, itemName, itemPrice, itemQty, modifiersList, username }) => {
+                    {confirmedOrders?.map(({ uid, name, itemName, itemPrice, itemQty, modifiersList, username, numberOfPeople }) => {
                         return <tr key={uid} className='border-t'>
                             <td>{name}</td>
-                            <td> <input className='bg-white border w-full' onChange={(e) => handleOrderChange(username, uid, itemPrice, e.currentTarget.value, itemQty)} type='text' value={itemName} /> </td>
+                            <td>
+                                <input className='bg-white border w-full' onChange={(e) => handleOrderChange(username, uid, itemPrice, e.currentTarget.value, itemQty, numberOfPeople)} type='text' value={itemName} /> </td>
                             <td className=''>
-                                <input className='bg-white text-center w-16 border' onChange={(e) => handleOrderChange(username, uid, e.currentTarget.value, itemName, itemQty)} type='number' value={itemPrice} /></td>
+                                <input className='bg-white text-center w-16 border' onChange={(e) => handleOrderChange(username, uid, e.currentTarget.value, itemName, itemQty, numberOfPeople)} type='number' value={itemPrice} />
+                            </td>
                             <td className='p-0'>
                                 <table size="sm" className='m-0' style={{ borderColor: "transparent" }} >
                                     <tbody>
@@ -267,7 +270,9 @@ const GroupOrderedStatus = ({ confirmedOrders, handleOrderChange }) => {
                                     </tbody>
                                 </table>
                             </td>
-                            <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderChange(username, uid, itemPrice, itemName, e.currentTarget.value)} min={0} type='number' value={itemQty} /></td>
+                            <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderChange(username, uid, itemPrice, itemName, e.currentTarget.value, numberOfPeople)} min={0} type='number' value={itemQty} /></td>
+                            <td><input className='bg-white text-center w-14 border' onChange={(e) => handleOrderChange(username, uid, itemPrice, itemName, itemQty, e.currentTarget.value)} min={0} type='number' value={numberOfPeople} /></td>
+
                             <td>{((itemPrice * itemQty)
                                 + (modifiersList?.map(x => x.price).reduce((partialSum, a) => partialSum + a, 0))).toFixed(2)}</td>
                         </tr>
@@ -360,7 +365,13 @@ export default function GroupPage({ id }) {
     const confirmedOrders = cartItems?.filter(x => x.isConfirmed)
     const userOrderTotal = userOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
     const isUserConfirmed = userOrders?.at(0)?.isConfirmed
-    const userDelivery = cartItems?.filter(x => x.isConfirmed)?.length > 0 ? delivery / Object.keys(groupBy(cartItems?.filter(x => x.isConfirmed), 'username')).length : delivery;
+
+    const confirmedOrdersByUsername = groupBy(confirmedOrders, 'username')
+    const cartUsers = Object.keys(confirmedOrdersByUsername);
+    const userNumberOfPeople = confirmedOrdersByUsername[auth.getUsername()]?.at(0)?.numberOfPeople;
+    const totalNumberOfPeople = cartUsers?.map(key => confirmedOrdersByUsername[key]?.at(0)?.numberOfPeople)?.reduce((a, v) => a + v, 0)
+    const userDelivery = confirmedOrders?.length > 0 ? ((delivery / totalNumberOfPeople) * (userNumberOfPeople ?? 1)) : delivery;
+    const itemsTotal = confirmedOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
     const [selectedGroupStatus, setSelectedGroupStatus] = useState(0);
 
     const changeOrderStatus = (groupStatusID) => {
@@ -429,13 +440,12 @@ export default function GroupPage({ id }) {
 
     const [isModalOpen, setIsModalOpen] = useState();
 
-    const cartUsers = Object.keys(groupBy(cartItems?.filter(x => x.isConfirmed), 'username'));
-    const itemsTotal = confirmedOrders?.map(x => x.total).reduce((a, v) => a + v, 0);
 
 
     useEffect(() => {
 
         prepareOrderingList()
+        console.log('cartItems', cartItems)
     }, [cartItems]);
 
 
@@ -448,8 +458,8 @@ export default function GroupPage({ id }) {
     };
 
 
-    const handleOrderChange = (username, id, price, itemName, itemQty) => {
-        cartController.updateOrderPrice(username, id, price, itemName, itemQty).then(() => {
+    const handleOrderChange = (username, id, price, itemName, itemQty, numberOfPeople) => {
+        cartController.updateOrderPrice(username, id, price, itemName, itemQty, numberOfPeople).then(() => {
 
         })
     }
@@ -536,9 +546,9 @@ export default function GroupPage({ id }) {
                                                 {/* <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" /> */}
 
                                                 <Panel bodyFill className='w-full' hidden={!isUserConfirmed} >
-                                                    <GroupCart isCollapsible={false} cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} />
+                                                    <GroupCart isCollapsible={false} cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} numberOfPeople={totalNumberOfPeople} />
                                                     <div className='flex flex-col justify-between p-3 pt-0'>
-                                                        <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
+                                                        <div className='flex justify-between flex-col p-1 pb-2 lg:px-1 w-full text-base'>
                                                             <div className='pb-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SR </b></div>
                                                             <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                                         </div>
@@ -570,7 +580,7 @@ export default function GroupPage({ id }) {
                                                         Group delivery: {deliveryCost} SR
                                                     </div>
                                                     <div>
-                                                        Number of people: {cartUsers.length}
+                                                        Number of people: {totalNumberOfPeople}
                                                     </div>
                                                     <div>
                                                         Delivery per person: {userDelivery} SR
@@ -604,9 +614,9 @@ export default function GroupPage({ id }) {
 
 
                                 <Panel bodyFill className='bg-white shadow-sm fixed  z-10  left-0 bottom-0 w-full lg:w-[500px]  lg:static' hidden={isUserConfirmed} >
-                                    <GroupCart cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={userOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} />
+                                    <GroupCart cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={userOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} numberOfPeople={totalNumberOfPeople} />
                                     <div className='flex flex-col justify-between p-3 pt-0'>
-                                        <div className='flex justify-between flex-col p-1 lg:px-1 w-full text-base'>
+                                        <div className='flex justify-between flex-col p-1 pb-2 lg:px-1 w-full text-base'>
                                             <div className='pb-2'>Total: <b>{(userOrderTotal)?.toFixed(1)} SR </b></div>
                                             <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                         </div>

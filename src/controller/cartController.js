@@ -85,9 +85,9 @@ class Cart {
         }
     }
 
-    updateOrderPrice = async (username, uid, price, itemName, itemQty) => {
+    updateOrderPrice = async (username, uid, price, itemName, itemQty, numberOfPeople) => {
         try {
-            await this.connection.invoke("UpdateOrderPrice", username, uid, parseFloat(price), itemName, parseInt(itemQty));
+            await this.connection.invoke("UpdateOrderPrice", username, uid, parseFloat(price), itemName, parseInt(itemQty), parseInt(numberOfPeople));
         } catch (e) {
         }
     }
