@@ -76,7 +76,7 @@ const GroupTimer = ({ endDate }) => {
     return <div className='text-lg'>{time}</div>
 }
 
-const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children, numberOfPeople,isCollapsible = true }) => {
+const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children, numberOfPeople, isCollapsible = true }) => {
 
     const header = <div>
         <div className='flex flex-col gap-0 pb-2' >
@@ -120,7 +120,7 @@ const GroupActions = ({ onConfirmOrderClick, onCancelOrderClick, isConfirmed, is
     return (
         <div className='grid grid-cols-4 gap-2 w-full lg:p-0'>
             <button disabled={isConfirmed || !isValid} onClick={() => onConfirmOrderClick()} className={`${(isConfirmed && isValid) ? 'col-span-2' : 'col-span-4'} rounded-md p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-green-400 text-white  disabled:bg-borderGray`}>{isConfirmed ? 'Confirmed' : isValid ? 'Confirm' : 'Unconfirmed'} </button>
-            <button hidden={!isConfirmed || !isValid} onClick={() => onCancelOrderClick()} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Chnage</button>
+            <button hidden={!isConfirmed || !isValid} onClick={() => onCancelOrderClick()} className={`col-span-2 p-2 text-sm focus:outline-none hover:outline-none focus:ring-2 focus:ring-inset focus:ring-white w-full bg-mainYello text-black rounded-md`}>Change</button>
         </div>)
 }
 
@@ -308,9 +308,16 @@ export default function GroupPage({ id }) {
     const [timer, setTimer] = useState(10);
 
     useEffect(() => {
+        if (group == null)
+            return
         if (connectionStatus != null) {
             setJoiningLoder(false)
         }
+        if (connectionStatus == false) {
+            console.log("reloaded")
+            location.reload()
+        }
+
     }, [connectionStatus]);
 
     useEffect(() => {
@@ -478,7 +485,7 @@ export default function GroupPage({ id }) {
         <>
 
 
-            <Fatch request={groupController.getGroup} params={groupID == null ? id : groupID} setData={setGroup}>
+            <Fatch request={groupController.getGroup} params={groupID == null ? id : groupID} setData={setGroup} setError={(e) => navigate("/")} reload={groupID} >
                 {!joiningLoder ?
 
                     group ? connectionStatus ?
@@ -543,7 +550,10 @@ export default function GroupPage({ id }) {
                                                     <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                                 </Panel> */}
 
-                                                {/* <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" /> */}
+                                                {(selectedGroupStatus == 0) && <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
+                                                {(selectedGroupStatus == 1) && <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
+                                                {(selectedGroupStatus == 2) && <img src='https://i.pinimg.com/originals/db/a8/d8/dba8d87bfdc9d8c88669da7f2a066524.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
+                                                {(selectedGroupStatus == 3) && <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
 
                                                 <Panel bodyFill className='w-full' hidden={!isUserConfirmed} >
                                                     <GroupCart isCollapsible={false} cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} numberOfPeople={totalNumberOfPeople} />

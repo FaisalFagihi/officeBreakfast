@@ -25,7 +25,7 @@ export default function HomePage() {
     </div>
     return (
         <div className="flex flex-col gap-2">
-                        <div>{warning}</div>
+                        {/* <div>{warning}</div> */}
 
             <Panel header='Groups' className='!p-0 !bg-transparent' shaded={false} hidden={!leaders.length > 0}>
                 <Fatch request={groupController.getAllGroups} setData={setGroups} reload={groupsReload || leadersReload}>

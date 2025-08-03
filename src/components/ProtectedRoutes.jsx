@@ -8,6 +8,23 @@ import Navbar from "./Navbar/Navbar";
 const ProtectedRoutes = () => {
   const [activeKey, setActiveKey] = React.useState(null);
 
+  const isNotificationEnabled = () => {
+
+    if (Notification.permission === "granted") {
+      return true
+    }
+    else {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          return true
+        }
+      });
+    }
+
+    return false
+  }
+
   return auth.isAuthenticated() ?
     <>
       {/* <BootstrapNavbar appearance="subtle" activeKey={activeKey} onSelect={setActiveKey} /> */}
