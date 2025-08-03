@@ -331,8 +331,8 @@ export default function GroupPage({ id }) {
         setDeliveryCost(group.delivery)
         setDelivery(group.delivery)
 
-        chatController.sign(setMessages, setUsers);
-        chatController.joinRoom(parseInt(groupID));
+        // chatController.sign(setMessages, setUsers);
+        // chatController.joinRoom(parseInt(groupID));
 
         cartController.sign(setCartItems, setSelectedGroupStatus, setDelivery, setEndDate, parseInt(groupID), setConnectionStatus)
         cartController.joinRoom()
