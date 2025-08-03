@@ -8,11 +8,12 @@ importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js')
 const firebaseConfig = {
   apiKey: "AIzaSyCxX9DZbrzNCrm6erQS3oumCWwEwbTIUig",
   authDomain: "office-breakfast.firebaseapp.com",
+  databaseURL: "https://office-breakfast-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "office-breakfast",
-  storageBucket: "office-breakfast.appspot.com",
+  storageBucket: "office-breakfast.firebasestorage.app",
   messagingSenderId: "400832963899",
   appId: "1:400832963899:web:ccf4ee10ead891dacd431e",
-  measurementId: "G-LVE0Z9PM03",
+  measurementId: "G-LVE0Z9PM03"
 }
 
 firebase.initializeApp(firebaseConfig)
@@ -59,7 +60,7 @@ messaging.onBackgroundMessage((payload) => {
   var actions = []
   if (payload?.data?.tag?.startsWith("officeBreakfastGroup")) {
     actions = [{ action: "open_url", title: "join" }, { action: "close", title: "ignore" }]
-  }else {
+  } else {
     actions = [{ action: "open_url", title: "view" }]
   }
 
