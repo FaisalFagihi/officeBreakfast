@@ -550,12 +550,14 @@ export default function GroupPage({ id }) {
                                                     <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                                 </Panel> */}
 
-                                                <Panel bodyFill className='w-full' hidden={!isUserConfirmed} >
-
+                                                <div className='flex'>
                                                     {(selectedGroupStatus == 0) && <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 1) && <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 2) && <img src='https://i.pinimg.com/originals/db/a8/d8/dba8d87bfdc9d8c88669da7f2a066524.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 3) && <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
+                                                </div>
+
+                                                <Panel bodyFill className='w-full' hidden={!isUserConfirmed} >
                                                     <GroupCart isCollapsible={false} cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} numberOfPeople={totalNumberOfPeople} />
                                                     <div className='flex flex-col justify-between p-3 pt-0'>
                                                         <div className='flex justify-between flex-col p-1 pb-2 lg:px-1 w-full text-base'>
