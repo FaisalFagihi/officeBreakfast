@@ -550,7 +550,7 @@ export default function GroupPage({ id }) {
                                                     <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                                 </Panel> */}
 
-                                                <div>
+                                                <div className='flex h-72'>
                                                     {(selectedGroupStatus == 0) && <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 1) && <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 2) && <img src='https://i.pinimg.com/originals/db/a8/d8/dba8d87bfdc9d8c88669da7f2a066524.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
