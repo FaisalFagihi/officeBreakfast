@@ -89,7 +89,7 @@ const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children
         </div>
     </div>
 
-    const body = (userOrders?.length !== 0) ? <div className={`${isCollapsible ? 'h-40 lg:h-44' : 'h-60'} overflow-auto`}> <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} /></div>
+    const body = (userOrders?.length !== 0) ? <div className={`${isCollapsible ? 'h-40 lg:h-44' : 'h-auto'} overflow-auto`}> <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} /></div>
         : <div className='text-[#ccc] text-center h-auto'>Empty</div>
 
     const content = <div> <div className='!px-4 '>
