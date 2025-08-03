@@ -313,10 +313,10 @@ export default function GroupPage({ id }) {
         if (connectionStatus != null) {
             setJoiningLoder(false)
         }
-        if (connectionStatus == false) {
-            console.log("reloaded")
-            location.reload()
-        }
+        // if (connectionStatus == false) {
+        //     console.log("reloaded")
+        //     location.reload()
+        // }
 
     }, [connectionStatus]);
 
