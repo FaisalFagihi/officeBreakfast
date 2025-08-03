@@ -90,7 +90,7 @@ const GroupCart = ({ userOrders, cartUsers, removeFromCart, isCheckout, children
     </div>
 
     const body = (userOrders?.length !== 0) ? <div className={`${isCollapsible ? 'h-40 lg:h-44' : 'h-60'} overflow-auto`}> <Cart cartItems={userOrders} isCheckout={isCheckout} removeFromCart={removeFromCart} /></div>
-        : <div className='text-[#ccc] text-center h-40'>Empty</div>
+        : <div className='text-[#ccc] text-center h-auto'>Empty</div>
 
     const content = <div> <div className='!px-4 '>
         {body}
@@ -550,22 +550,22 @@ export default function GroupPage({ id }) {
                                                     <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                                 </Panel> */}
 
-                                                <div className='flex'>
+                                                <div>
                                                     {(selectedGroupStatus == 0) && <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 1) && <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 2) && <img src='https://i.pinimg.com/originals/db/a8/d8/dba8d87bfdc9d8c88669da7f2a066524.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                     {(selectedGroupStatus == 3) && <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                 </div>
 
-                                                <Panel bodyFill className='w-full overflow-auto' hidden={!isUserConfirmed} >
+                                                <Panel bodyFill className='w-full justify-between' hidden={!isUserConfirmed} >
                                                     <GroupCart isCollapsible={false} cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} numberOfPeople={totalNumberOfPeople} />
                                                     <div className='flex flex-col justify-between p-3 pt-0'>
-                                                        <div className='flex justify-between flex-col p-1 pb-2 lg:px-1 w-full text-base'>
+                                                        <div className='flex justify-around flex-col p-1 pb-2 lg:px-1 w-full text-base'>
                                                             <div className='pb-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SR </b></div>
+                                                            <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                                         </div>
                                                     </div>
                                                 </Panel>
-                                                <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                             </div>
 
 
