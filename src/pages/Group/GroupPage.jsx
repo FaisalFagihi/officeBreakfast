@@ -557,15 +557,15 @@ export default function GroupPage({ id }) {
                                                     {(selectedGroupStatus == 3) && <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' className='rounded-lg w-full' alt='Ordering gif' draggable="false" />}
                                                 </div>
 
-                                                <Panel bodyFill className='w-full' hidden={!isUserConfirmed} >
+                                                <Panel bodyFill className='w-full overflow-auto' hidden={!isUserConfirmed} >
                                                     <GroupCart isCollapsible={false} cartUsers={cartUsers?.map((user) => cartItems?.find(x => x.username === user))} userOrders={confirmedOrders} removeFromCart={cartController.removeFromCart} isCheckout={selectedGroupStatus !== 0 || isUserConfirmed} numberOfPeople={totalNumberOfPeople} />
                                                     <div className='flex flex-col justify-between p-3 pt-0'>
                                                         <div className='flex justify-between flex-col p-1 pb-2 lg:px-1 w-full text-base'>
                                                             <div className='pb-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SR </b></div>
-                                                            <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                                         </div>
                                                     </div>
                                                 </Panel>
+                                                <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                             </div>
 
 
