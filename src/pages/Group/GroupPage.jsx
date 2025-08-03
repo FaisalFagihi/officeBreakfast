@@ -551,10 +551,10 @@ export default function GroupPage({ id }) {
                                                 </Panel> */}
 
                                                 <div className='h-auto'>
-                                                    {(selectedGroupStatus == 0) && <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif'  className='rounded-lg w-full h-60' alt='Ordering gif' draggable="false" />}
-                                                    {(selectedGroupStatus == 1) && <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' className='rounded-lg w-full h-60' alt='Ordering gif' draggable="false" />}
-                                                    {(selectedGroupStatus == 2) && <img src='https://i.pinimg.com/originals/db/a8/d8/dba8d87bfdc9d8c88669da7f2a066524.gif' className='rounded-lg w-full h-60' alt='Ordering gif' draggable="false" />}
-                                                    {(selectedGroupStatus == 3) && <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' className='rounded-lg w-full h-60' alt='Ordering gif' draggable="false" />}
+                                                    {(selectedGroupStatus == 0) && <img src='https://media.tenor.com/O3FkWgScIUMAAAAC/sponge-bob-thumbs-up.gif'  className='rounded-lg md:w-full md:h-auto  h-40' alt='Ordering gif' draggable="false" />}
+                                                    {(selectedGroupStatus == 1) && <img src='https://media.tenor.com/UxTmlMq2lgMAAAAd/writing-notes.gif' className='rounded-lg md:w-full md:h-auto h-40' alt='Ordering gif' draggable="false" />}
+                                                    {(selectedGroupStatus == 2) && <img src='https://i.pinimg.com/originals/db/a8/d8/dba8d87bfdc9d8c88669da7f2a066524.gif' className='rounded-lg md:w-full md:h-auto h-40' alt='Ordering gif' draggable="false" />}
+                                                    {(selectedGroupStatus == 3) && <img src='https://media.tenor.com/ip354kQhpVsAAAAC/foods-delivered.gif' className='rounded-lg md:w-full md:h-auto h-40' alt='Ordering gif' draggable="false" />}
                                                 </div>
 
                                                 <Panel bodyFill className='w-full justify-between' hidden={!isUserConfirmed} >
