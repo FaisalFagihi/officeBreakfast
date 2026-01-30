@@ -8,6 +8,7 @@ import deliveryAppFactory from "../../modules/deliveryAppFactory";
 import { MenuItem } from "../../components/Menu/MenuItem";
 import { BiTrash } from 'react-icons/bi'
 import uuid from 'react-uuid';
+import ImageWithFallback from "../../components/ImageWithFallback ";
 
 const sources = ['Phone number', 'Jahez', 'Careem', 'Marsool'].map(item => ({ label: item, value: item }));
 
@@ -193,12 +194,12 @@ export default function CustomizeRestaurantPage() {
                 <div className="flex flex-col gap-2">
                     <div>
                         <label>Image</label>
-                        <img src={restaurant?.image} className="h-24" alt="not found" draggable="false" />
+                        <ImageWithFallback src={restaurant?.image} className="h-24" alt="not found" draggable="false" />
                     </div>
                     <div>
                         <label>Logo</label>
 
-                        <img src={restaurant?.logo} className="h-24" alt="not found" draggable="false" />
+                        <ImageWithFallback src={restaurant?.logo} className="h-24" alt="not found" draggable="false" />
                     </div>
                 </div>
             </div>

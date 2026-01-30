@@ -9,6 +9,7 @@ import restaurantController from '../../controller/restaurantController';
 import deliveryAppFactory from '../../modules/deliveryAppFactory';
 import MenuItemModifiers from './MenuItemModifiers';
 import MenuItemComponents from './MenuItemComponents';
+import ImageWithFallback from '../ImageWithFallback ';
 
 export default function MenuItemControl({ name, photo, description, options, components, addToCart, onAddToCart }) {
     const [selectedMenuItemOption, selectMenuItemOption] = useState(null)
@@ -53,7 +54,7 @@ export default function MenuItemControl({ name, photo, description, options, com
             </Modal.Header>
             <Modal.Body>
                 <div className="ModifierImageContainer">
-                    <img className="ModifierImage" src={photo} alt="" draggable="false" />
+                    <ImageWithFallback className="ModifierImage" src={photo} alt="" draggable="false" />
                 </div>
                 <div className="ModifierGroupDescription"> {description} </div>
                 <MenuItemOptionsComponent options={options} selectOption={selectMenuItemOption} />

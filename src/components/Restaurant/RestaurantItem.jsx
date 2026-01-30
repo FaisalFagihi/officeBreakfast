@@ -5,6 +5,7 @@ import { BiTrash } from 'react-icons/bi'
 import { LuEdit } from 'react-icons/lu'
 import { Row, Col, Panel, Stack, Whisper, Tooltip, Divider, Dropdown } from 'rsuite';
 import CheckRoundIcon from '@rsuite/icons/CheckRound';
+import ImageWithFallback from '../ImageWithFallback '
 
 export function RestaurantItem({ name, logo, rating, rateCount, image, delivery, status, promotion, minimumOrder, timeEstimation, distance, previewButton, isSelected, onEditClik, onRemoveClik, className }) {
     const SizeDropdown = ({ onEditClik, onRemoveClik, ...props }) => (
@@ -20,11 +21,11 @@ export function RestaurantItem({ name, logo, rating, rateCount, image, delivery,
 
     return (
         <div className={`relative shadow-sm rounded-xl bg-white ${className}`} >
-            <div className='flex flex-col items-center p-3'>
+            <div className='flex flex-col items-center p-2'>
                 <div className='w-full flex flex-col items-center gap-1  ' onClick={previewButton} >
 
                     <div className='relative w-full h-28'>
-                        <img className="rounded-xl w-full object-cover h-full" src={image} alt='' draggable="false" />
+                        <ImageWithFallback className="rounded-xl w-full object-cover h-full" src={image} alt='' draggable="false" />
                         {/* <div className='absolute bottom-0'>
                         <Whisper
                         placement="topStart"
@@ -45,8 +46,8 @@ export function RestaurantItem({ name, logo, rating, rateCount, image, delivery,
                             </div>
                         </div>
                     </div>
-                    <div className='align-middle'>
-                        <p className='text-sm truncate'>
+                    <div className='align-middle pt-1'>
+                        <p className='truncate'>
                             {name}
                         </p>
                     </div>

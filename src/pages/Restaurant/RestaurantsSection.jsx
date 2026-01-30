@@ -85,7 +85,7 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
                             {
                                 customs?.length > 0 ?
                                     customs?.map((customRestaurant) =>
-                                        <div className={'w-full sm:w-56'}>
+                                        <div className={'w-full sm:w-72'}>
                                             <RestaurantItem isSelected={selectedRestaurentID === customRestaurant?.id} key={customRestaurant.id} name={customRestaurant.name} logo={customRestaurant.logo}
                                                 image={customRestaurant.image}
                                                 distance={customRestaurant.distance}
@@ -119,7 +119,7 @@ export default function RestaurantsSection({ setSelectedRestaurant, isHorizontal
 
                                     {restaurantsResult?.length > 0 ?
                                         restaurantsResult?.map((restaurant) =>
-                                            <div className={'w-full sm:w-56'}>
+                                            <div className={'w-full sm:w-72'}>
 
                                                 <RestaurantItem isSelected={selectedRestaurentID === restaurant?.id} key={restaurant.id} name={restaurant.name} logo={restaurant.logo}
                                                     image={restaurant.image}

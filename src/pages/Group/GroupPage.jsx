@@ -28,6 +28,7 @@ import { AiOutlineWarning } from 'react-icons/ai';
 import { BiSolidCopyAlt } from 'react-icons/bi';
 import { VscError } from 'react-icons/vsc';
 import Fatch from '../../Helpers/Fatcher';
+import ImageWithFallback from '../../components/ImageWithFallback ';
 
 
 
@@ -506,7 +507,7 @@ export default function GroupPage({ id }) {
                                         <div className='flex flex-row justify-between'>
                                             <div className='flex items-center gap-2'>
                                                 <div>
-                                                    <img src={group?.logo} className='h-7 rounded-full' />
+                                                    <ImageWithFallback src={group?.logo} className='h-7 rounded-full' />
                                                 </div>
                                                 <div className='text-base font-semibold'>
 

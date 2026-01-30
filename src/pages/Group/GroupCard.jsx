@@ -3,6 +3,7 @@ import { MdMoneyOff } from "react-icons/md";
 import { CgUnblock } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { Stack, Panel, Divider } from "rsuite";
+import ImageWithFallback from "../../components/ImageWithFallback ";
 
 
 export default function GroupCard({ item, isOwner, setRemoveLoad }) {
@@ -42,7 +43,7 @@ export default function GroupCard({ item, isOwner, setRemoveLoad }) {
 
     return <Panel className="bg-white shadow relative" bodyFill xs={24}>
         <div className="grid sm:grid-cols-5 panel" onClick={() => { navigate("/Group/" + item.id); }}>
-            <img src={item.photo} className={`object-cover h-32 w-full sm:col-span-1 ${(item.status === 4) ? "grayscale" : "grayscale-0"}`} alt='' draggable="false" />
+            <ImageWithFallback src={item.photo} className={`object-cover h-32 w-full sm:col-span-1 ${(item.status === 4) ? "grayscale" : "grayscale-0"}`} alt='' draggable="false" />
             <div className="flex flex-col justify-between p-3 sm:col-span-4">
                 <div>
                     <div className="flex flex-col sm:flex-row justify-between gap-2">

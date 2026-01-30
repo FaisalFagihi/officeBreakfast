@@ -1,4 +1,5 @@
 import { Row, Col, Panel } from "rsuite";
+import ImageWithFallback from "../ImageWithFallback ";
 
 export function MenuItem({ name, price, calories, photo, onClick }) {
     const caloriesContent = (calories != null) ? < div className="Calories"  >
@@ -12,7 +13,7 @@ export function MenuItem({ name, price, calories, photo, onClick }) {
                 {caloriesContent}
             </div>
 
-            <img draggable="false" className="MenuItemImage !rounded-l-md" src={photo} alt="" onDragStart={(e) => e.preventDefault()} />
+            <ImageWithFallback draggable="false" className="MenuItemImage !rounded-l-md" src={photo} alt="" onDragStart={(e) => e.preventDefault()} />
             <div className="flex flex-col justify-between p-2 ">
                 <div>
                     {name}
