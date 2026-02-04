@@ -3,8 +3,7 @@ import auth from '../../modules/auth'
 import { useNavigate } from 'react-router-dom';
 import { Divider, Loader } from 'rsuite';
 import ArrowRightLineIcon from '@rsuite/icons/ArrowRightLine';
-import { GoogleLogin, useGoogleLogin } from 'react-google-login';
-import { gapi } from "gapi-script"
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 import { BsGoogle } from 'react-icons/bs';
 
@@ -24,6 +23,7 @@ export function LoginForm({ googleLogin }) {
         setLoginLoad(true);
         setMessage("Signing in..")
         auth.login(email.current.value, password.current.value).then(async (response) => {
+            console.log(response?.status)
             if (response?.status === 200) {
                 auth.setToken(response.data['token'])
                 await localStorage.setItem('username', response.data['username'])
@@ -45,46 +45,68 @@ export function LoginForm({ googleLogin }) {
 
 
 
-    const clientID = "727515938547-5knpt0voai55equqiu8okhaaoh2h26du.apps.googleusercontent.com"
-    useEffect(() => {
-        const start = () => {
-            gapi.client.init({
-                clientId: clientID,
-                scope: ""
-            })
-        }
+    // useEffect(() => {
+    //     const start = () => {
+    //         gapi.client.init({
+    //             clientId: import.meta.env.GOOGLE_CLIENT_ID,
+    //             scope: ""
+    //         })
+    //     }
 
-        gapi.load('client:auth2', start)
-    }, []);
+    //     gapi.load('client:auth2', start)
+    // }, []);
 
-    const { signIn, loaded } = useGoogleLogin({
-        clientId: clientID,
-        onSuccess: credentialResponse => {
-            auth.loginByGoogleAuth(credentialResponse.tokenId).then(async (response) => {
-                if (response?.status === 200) {
-                    auth.setToken(response.data['token'])
-                    localStorage.setItem('username', response.data['username'])
-                    localStorage.setItem('firstName', response.data['firstName'])
-                    localStorage.setItem('lastName', response.data['lastName'])
-                    localStorage.setItem('picture', response.data['picture'])
-                    navigate("/")
-                }
-            }).catch((response) => {
-            }).finally(() => { setGoogleLoginLoad(false) });
-        },
-        onFailure: (e) => {
-            setGoogleLoginLoad(false)
-        },
-    })
+    // const { signIn, loaded } = useGoogleLogin({
+    //     clientId: import.meta.env.GOOGLE_CLIENT_ID,
+    //     onSuccess: credentialResponse => {
+    //         auth.loginByGoogleAuth(credentialResponse.tokenId).then(async (response) => {
+    //             if (response?.status === 200) {
+    //                 auth.setToken(response.data['token'])
+    //                 localStorage.setItem('username', response.data['username'])
+    //                 localStorage.setItem('firstName', response.data['firstName'])
+    //                 localStorage.setItem('lastName', response.data['lastName'])
+    //                 localStorage.setItem('picture', response.data['picture'])
+    //                 navigate("/")
+    //             }
+    //         }).catch((response) => {
+    //         }).finally(() => { setGoogleLoginLoad(false) });
+    //     },
+    //     onFailure: (e) => {
+    //         setGoogleLoginLoad(false)
+    //     },
+    // })
 
     return (
         <>
-            <div onClick={loaded ? () => { setGoogleLoginLoad(true); signIn() } : () => { }} className={`flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-black ${!loaded ? 'bg-mainGray text-white hover:!text-white' : ''}`}  >
-                <BsGoogle size={28}  />
+            <div className='flex justify-center'>
+
+                <GoogleLogin logo_alignment='center' ux_mode='popup' shape='pill' size='medium' text='Login' theme='outline' type='standard' clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+                    onSuccess={credentialResponse => {
+                        console.log("google pass")
+                        auth.loginByGoogleAuth(credentialResponse.credential).then(async (response) => {
+                            if (response?.status === 200) {
+                                auth.setToken(response.data['token'])
+                                localStorage.setItem('username', response.data['username'])
+                                localStorage.setItem('firstName', response.data['firstName'])
+                                localStorage.setItem('lastName', response.data['lastName'])
+                                localStorage.setItem('picture', response.data['picture'])
+                                navigate("/")
+                            }
+                        }).catch((response) => {
+                        }).finally(() => { setGoogleLoginLoad(false) });
+                    }}
+                    onError={() => {
+                        console.log("google error")
+                        setGoogleLoginLoad(false)
+                    }}
+                />
+            </div>
+            {/* <div onClick={loaded ? () => { setGoogleLoginLoad(true); signIn() } : () => { }} className={`flex border rounded-full m-auto cursor-pointer p-1.5 w-fit z-10 hover:text-black ${!loaded ? 'bg-mainGray text-white hover:!text-white' : ''}`}  >
+                <BsGoogle size={28} />
                 <div className="my-auto w-32 flex">
                     {googleLoginLoad ? <Loader size='xs' content={'Signing In..'} className='m-auto' /> : <div className='m-auto'>Sign in with google </div>}
                 </div>
-            </div>
+            </div> */}
             <Divider className="!my-6 sm:!my-4">or</Divider>
             {/* <p>{statusCode}</p> */}
 
@@ -103,10 +125,10 @@ export function LoginForm({ googleLogin }) {
                     </div>
                 </div>
                 <div className='flex justify-center'>
-                <button onClick={() => login()} className="normal w-10 h-10 rounded-full" >
-                    {loginLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
-                </button>
-                    </div>
+                    <button onClick={() => login()} className="normal w-10 h-10 rounded-full" >
+                        {loginLoad ? <Loader size='xs' /> : <ArrowRightLineIcon className='text-lg' />}
+                    </button>
+                </div>
             </div>
 
         </>

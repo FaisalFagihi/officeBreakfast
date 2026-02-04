@@ -422,6 +422,7 @@ export default function GroupPage({ id }) {
 
         setOrderItems(Items)
     }
+
     useEffect(() => {
 
 
@@ -474,7 +475,7 @@ export default function GroupPage({ id }) {
 
 
 
-
+    const unconfirmdOrders = cartItems?.filter(x => !x.isConfirmed);
 
 
     return (
@@ -563,7 +564,10 @@ export default function GroupPage({ id }) {
                                                     <div className='flex flex-col justify-between p-3 pt-0'>
                                                         <div className='flex justify-around flex-col p-1 pb-2 lg:px-1 w-full text-base'>
                                                             <div className='pb-2'>Total: <b>{(userOrderTotal + userDelivery)?.toFixed(1)} SR </b></div>
-                                                            <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
+
+                                                            <div hidden={selectedGroupStatus != 0}>
+                                                                <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </Panel>
@@ -576,7 +580,26 @@ export default function GroupPage({ id }) {
                                     <div hidden={!isOwner}>
 
                                         <div hidden={selectedGroupStatus !== 1}>
-                                            <GroupOrderingStatus orderItems={orderItems} />
+                                            <div className='flex flex-col items-center'>
+                                                <GroupOrderingStatus orderItems={orderItems} />
+                                                {unconfirmdOrders.length > 0 &&
+                                                    <>
+                                                        <div className='text-xl'>
+                                                            Uncofirmed Orders
+                                                        </div>
+                                                        <div className='flex flex-col gap-2 justify-center items-center'>
+                                                            <div className='grid gap-1 border p-3' dir='rtl'>
+
+                                                                {unconfirmdOrders.map(item => {
+                                                                    return <div>
+                                                                        {item.name}: {item.itemName}
+                                                                    </div>
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                }
+                                            </div>
                                         </div>
                                         <div hidden={selectedGroupStatus !== 2 && selectedGroupStatus !== 3}>
 
@@ -632,6 +655,7 @@ export default function GroupPage({ id }) {
                                     <div className='flex flex-col justify-between p-3 pt-0'>
                                         <div className='flex justify-between flex-col p-1 pb-2 lg:px-1 w-full text-base'>
                                             <div className='pb-2'>Total: <b>{(userOrderTotal)?.toFixed(1)} SR </b></div>
+
                                             <GroupActions isConfirmed={isUserConfirmed} isValid={selectedGroupStatus == 0 && userOrders?.length > 0} onConfirmOrderClick={() => cartController.confirmOrder(true)} onCancelOrderClick={() => cartController.confirmOrder(false)} />
                                         </div>
                                     </div>

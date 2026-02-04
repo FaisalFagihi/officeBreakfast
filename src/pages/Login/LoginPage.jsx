@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import auth from '../../modules/auth'
 import { useEffect, useState } from "react"
 import { Panel } from "../../style/Style"
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 export default function LoginPage() {
     const form = { login: "Login", signUp: "Sign Up" }
@@ -23,8 +24,9 @@ export default function LoginPage() {
                     <div hidden={active !== form.login}>
                         {/* <Divider> or </Divider> */}
                         <div className='h-96 sm:h-auto'>
-
-                            <LoginForm />
+                            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                                <LoginForm />
+                            </GoogleOAuthProvider>
                         </div>
 
                         <p className="text-center p-2">don't have account? <b style={{ cursor: "pointer" }} onClick={() => setActive(form.signUp)}>Register</b></p>

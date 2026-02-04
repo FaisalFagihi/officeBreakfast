@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { registerSW } from 'virtual:pwa-register'
 
 const updateSW = registerSW({
-  onOfflineReady() {},
+  onOfflineReady() { },
 })
 
 registerSW({ immediate: true })
@@ -17,8 +17,8 @@ updateSW()
 ReactDOM.createRoot(document.getElementById('root'))
   .render(
     <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-  </BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+    </BrowserRouter>
   )
